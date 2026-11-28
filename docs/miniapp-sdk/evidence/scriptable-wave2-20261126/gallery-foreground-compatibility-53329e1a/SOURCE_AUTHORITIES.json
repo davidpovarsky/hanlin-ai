@@ -1,0 +1,961 @@
+{
+  "canonicalStoredEntrySource": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift",
+    "sha256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+    "unchanged": true,
+    "semanticJSONSHA256": "c322dbdcda6f91d12525e5b0b3b3574c60c0c5a22ecb29abedd0affdcb53f46c",
+    "originalRegistryCommentSHA256": "66fea131922d3106c90b0341c4fff02f86de0c06932be22bb21db6d1e0c5fea8",
+    "originalForegroundEntry": {
+      "artifactDigest": "171ecc1ab7e2eb33806822a417f0efa95393c096fcd5561e414a84b0b2a2e737",
+      "compatibility": "partial",
+      "id": "app",
+      "kind": "app",
+      "requiredCapabilities": [
+        {
+          "capabilityID": "inter-app.share",
+          "purpose": "Declared in package manifest.",
+          "required": false,
+          "scope": {
+            "type": "object",
+            "value": []
+          }
+        },
+        {
+          "capabilityID": "storage",
+          "purpose": "Declared in package manifest.",
+          "required": false,
+          "scope": {
+            "type": "object",
+            "value": []
+          }
+        }
+      ],
+      "runtimePolicyID": "foreground-app-v1",
+      "runtimeProfile": "hanlin-expo",
+      "sourcePath": "source/bundle.js",
+      "supportedContexts": [
+        "mainApplication"
+      ]
+    }
+  },
+  "sourceAuthorities": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "source": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+      "sha256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+      "excerpt": [
+        {
+          "line": 915,
+          "text": "    private func discoverEntrypoints("
+        },
+        {
+          "line": 916,
+          "text": "        manifest: HanlinScriptingManifest,"
+        },
+        {
+          "line": 917,
+          "text": "        sourcePaths: [String]"
+        },
+        {
+          "line": 918,
+          "text": "    ) -> [HanlinPackageEntrypointDescriptor] {"
+        },
+        {
+          "line": 919,
+          "text": "        let available = Set(sourcePaths)"
+        },
+        {
+          "line": 920,
+          "text": "        var candidates: [(String, HanlinPackageEntrypointKind, Set<HanlinExecutionContext>, String, HanlinWidgetEngine?)] = []"
+        },
+        {
+          "line": 921,
+          "text": "        let isWidgetOnly = manifest.isWidgetOnlyPackage"
+        },
+        {
+          "line": 922,
+          "text": ""
+        },
+        {
+          "line": 923,
+          "text": "        if !isWidgetOnly {"
+        },
+        {
+          "line": 924,
+          "text": "            let appPath = manifest.entry.flatMap { available.contains($0) ? $0 : nil }"
+        },
+        {
+          "line": 925,
+          "text": "                ?? [\"index.tsx\", \"index.ts\", \"index.jsx\", \"index.js\", \"index.py\"].first { available.contains($0) }"
+        },
+        {
+          "line": 926,
+          "text": "            if let appPath {"
+        },
+        {
+          "line": 927,
+          "text": "                candidates.append((appPath, .app, [.mainApplication], \"foreground-app-v1\", nil))"
+        },
+        {
+          "line": 928,
+          "text": "            }"
+        },
+        {
+          "line": 929,
+          "text": "        }"
+        },
+        {
+          "line": 930,
+          "text": ""
+        },
+        {
+          "line": 931,
+          "text": "        // Widget entrypoint from manifest.entry when widget-only"
+        },
+        {
+          "line": 932,
+          "text": "        if isWidgetOnly, let entry = manifest.entry, available.contains(entry) {"
+        },
+        {
+          "line": 933,
+          "text": "            let engine = manifest.declaredWidgetEngine ?? .legacy"
+        },
+        {
+          "line": 934,
+          "text": "            candidates.append((entry, .widget, [.widget], \"widget-v1\", engine))"
+        },
+        {
+          "line": 935,
+          "text": "        }"
+        },
+        {
+          "line": 936,
+          "text": ""
+        },
+        {
+          "line": 937,
+          "text": "        let conventions: [(String, HanlinPackageEntrypointKind, HanlinExecutionContext, String, HanlinWidgetEngine?)] = ["
+        },
+        {
+          "line": 938,
+          "text": "            (\"assistant_tool.tsx\", .assistantTool, .mainApplication, \"assistant-tool-v1\", nil),"
+        },
+        {
+          "line": 939,
+          "text": "            (\"assistant_tool.ts\", .assistantTool, .mainApplication, \"assistant-tool-v1\", nil),"
+        },
+        {
+          "line": 940,
+          "text": "            (\"embedded_result.tsx\", .embeddedResult, .mainApplication, \"embedded-result-v1\", nil),"
+        },
+        {
+          "line": 941,
+          "text": "            (\"embedded_result.ts\", .embeddedResult, .mainApplication, \"embedded-result-v1\", nil),"
+        },
+        {
+          "line": 942,
+          "text": "            (\"chat_card.tsx\", .embeddedResult, .mainApplication, \"embedded-result-v1\", nil),"
+        },
+        {
+          "line": 943,
+          "text": "            (\"chat_card.ts\", .embeddedResult, .mainApplication, \"embedded-result-v1\", nil),"
+        },
+        {
+          "line": 944,
+          "text": "            (\"widget.jsx\", .widget, .widget, \"widget-v1\", .legacy),"
+        },
+        {
+          "line": 945,
+          "text": "            (\"widget.tsx\", .widget, .widget, \"widget-v1\", .legacy),"
+        },
+        {
+          "line": 946,
+          "text": "            (\"widget.ts\", .widget, .widget, \"widget-v1\", .legacy),"
+        },
+        {
+          "line": 947,
+          "text": "            (\"widget.js\", .widget, .widget, \"widget-v1\", .legacy),"
+        },
+        {
+          "line": 948,
+          "text": "            (\"widget.json\", .widget, .widget, \"widget-v1\", .legacy),"
+        },
+        {
+          "line": 949,
+          "text": "            (\"app_intents.tsx\", .appIntent, .appIntent, \"app-intent-v1\", nil),"
+        },
+        {
+          "line": 950,
+          "text": "            (\"intent.tsx\", .appIntent, .appIntent, \"app-intent-v1\", nil),"
+        },
+        {
+          "line": 951,
+          "text": "            (\"intent.json\", .appIntent, .appIntent, \"app-intent-v1\", nil),"
+        },
+        {
+          "line": 952,
+          "text": "            (\"live_activity.tsx\", .liveActivity, .liveActivity, \"live-activity-v1\", nil),"
+        },
+        {
+          "line": 953,
+          "text": "            (\"translation_ui_provider.tsx\", .translationUI, .translationUI, \"translation-ui-v1\", nil),"
+        },
+        {
+          "line": 954,
+          "text": "            (\"translation_ui_provider.ts\", .translationUI, .translationUI, \"translation-ui-v1\", nil),"
+        },
+        {
+          "line": 955,
+          "text": "            (\"translation.json\", .translationUI, .translationUI, \"translation-ui-v1\", nil),"
+        },
+        {
+          "line": 956,
+          "text": "            (\"translation_ui.json\", .translationUI, .translationUI, \"translation-ui-v1\", nil)"
+        },
+        {
+          "line": 957,
+          "text": "        ]"
+        },
+        {
+          "line": 958,
+          "text": "        var kinds = Set(candidates.map { $0.1 })"
+        },
+        {
+          "line": 959,
+          "text": "        for (path, kind, context, policy, defaultEngine) in conventions"
+        },
+        {
+          "line": 960,
+          "text": "            where available.contains(path)"
+        },
+        {
+          "line": 961,
+          "text": "                && !(kind == .assistantTool && [HanlinRuntimeProfile.hanlinExpo.rawValue, HanlinRuntimeProfile.hanlinNativeScript.rawValue].contains(manifest.hanlinRuntime ?? \"\"))"
+        },
+        {
+          "line": 962,
+          "text": "                && !(path == \"widget.json\" && manifest.declaredWidgetEngine == .scriptwidget)"
+        },
+        {
+          "line": 963,
+          "text": "                && kinds.insert(kind).inserted"
+        },
+        {
+          "line": 964,
+          "text": "        {"
+        },
+        {
+          "line": 965,
+          "text": "            let engine = (kind == .widget) ? (manifest.declaredWidgetEngine ?? defaultEngine) : nil"
+        },
+        {
+          "line": 966,
+          "text": "            candidates.append((path, kind, [context], policy, engine))"
+        },
+        {
+          "line": 967,
+          "text": "        }"
+        },
+        {
+          "line": 968,
+          "text": "        return candidates.map { path, kind, contexts, policy, engine in"
+        },
+        {
+          "line": 969,
+          "text": "            let requestedRuntime = manifest.hanlinRuntime ?? manifest.unknownFields[\"hanlinRuntime\"].flatMap { value -> String? in"
+        },
+        {
+          "line": 970,
+          "text": "                if case let .string(rawValue) = value { rawValue } else { nil }"
+        },
+        {
+          "line": 971,
+          "text": "            }"
+        },
+        {
+          "line": 972,
+          "text": "            let profile: HanlinRuntimeProfile = if requestedRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue {"
+        },
+        {
+          "line": 973,
+          "text": "                .hanlinNativeScript"
+        },
+        {
+          "line": 974,
+          "text": "            } else if requestedRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue || engine == .expo {"
+        },
+        {
+          "line": 975,
+          "text": "                .hanlinExpo"
+        },
+        {
+          "line": 976,
+          "text": "            } else if path.lowercased().hasSuffix(\".py\") {"
+        },
+        {
+          "line": 977,
+          "text": "                .hanlinPython"
+        },
+        {
+          "line": 978,
+          "text": "            } else {"
+        },
+        {
+          "line": 979,
+          "text": "                .scriptingJSC"
+        },
+        {
+          "line": 980,
+          "text": "            }"
+        },
+        {
+          "line": 981,
+          "text": "            return .init("
+        },
+        {
+          "line": 982,
+          "text": "                id: kind.rawValue,"
+        },
+        {
+          "line": 983,
+          "text": "                kind: kind,"
+        },
+        {
+          "line": 984,
+          "text": "                sourcePath: path,"
+        },
+        {
+          "line": 985,
+          "text": "                supportedContexts: contexts,"
+        },
+        {
+          "line": 986,
+          "text": "                runtimePolicyID: policy,"
+        },
+        {
+          "line": 987,
+          "text": "                runtimeProfile: profile,"
+        },
+        {
+          "line": 988,
+          "text": "                compatibility: .partial,"
+        },
+        {
+          "line": 989,
+          "text": "                widgetEngine: engine"
+        },
+        {
+          "line": 990,
+          "text": "            )"
+        },
+        {
+          "line": 991,
+          "text": "        }.sorted { ($0.kind.rawValue, $0.sourcePath) < ($1.kind.rawValue, $1.sourcePath) }"
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+      "source": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+      "sha256": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+      "excerpt": [
+        {
+          "line": 79,
+          "text": "public struct HanlinStoredPackageSnapshot: Codable, Hashable, Sendable {"
+        },
+        {
+          "line": 80,
+          "text": "    public let record: HanlinInstalledPackageRecord"
+        },
+        {
+          "line": 81,
+          "text": "    public let entrypoints: [HanlinPackageEntrypointDescriptor]"
+        },
+        {
+          "line": 82,
+          "text": "    public let enabled: Bool"
+        },
+        {
+          "line": 83,
+          "text": "    public let availableGenerations: [UInt64]"
+        },
+        {
+          "line": 84,
+          "text": "    public let grantedCapabilities: [HanlinCapabilityID]"
+        },
+        {
+          "line": 85,
+          "text": "    public let manifest: HanlinScriptingManifest?"
+        },
+        {
+          "line": 86,
+          "text": ""
+        },
+        {
+          "line": 87,
+          "text": "    public init("
+        },
+        {
+          "line": 88,
+          "text": "        record: HanlinInstalledPackageRecord,"
+        },
+        {
+          "line": 89,
+          "text": "        entrypoints: [HanlinPackageEntrypointDescriptor],"
+        },
+        {
+          "line": 90,
+          "text": "        enabled: Bool,"
+        },
+        {
+          "line": 91,
+          "text": "        availableGenerations: [UInt64],"
+        },
+        {
+          "line": 92,
+          "text": "        grantedCapabilities: [HanlinCapabilityID] = [],"
+        },
+        {
+          "line": 93,
+          "text": "        manifest: HanlinScriptingManifest? = nil"
+        },
+        {
+          "line": 94,
+          "text": "    ) {"
+        },
+        {
+          "line": 95,
+          "text": "        self.record = record"
+        },
+        {
+          "line": 96,
+          "text": "        self.entrypoints = entrypoints"
+        },
+        {
+          "line": 97,
+          "text": "        self.enabled = enabled"
+        },
+        {
+          "line": 98,
+          "text": "        self.availableGenerations = availableGenerations"
+        },
+        {
+          "line": 99,
+          "text": "        self.grantedCapabilities = grantedCapabilities.sorted { $0.rawValue < $1.rawValue }"
+        },
+        {
+          "line": 100,
+          "text": "        self.manifest = manifest"
+        },
+        {
+          "line": 101,
+          "text": "    }"
+        },
+        {
+          "line": 102,
+          "text": ""
+        },
+        {
+          "line": 103,
+          "text": "    public var hasLaunchableApp: Bool {"
+        },
+        {
+          "line": 104,
+          "text": "        entrypoints.contains { $0.kind == .app }"
+        },
+        {
+          "line": 105,
+          "text": "    }"
+        },
+        {
+          "line": 106,
+          "text": ""
+        },
+        {
+          "line": 107,
+          "text": "    public var hasWidgetEntrypoint: Bool {"
+        },
+        {
+          "line": 108,
+          "text": "        entrypoints.contains { $0.kind == .widget }"
+        },
+        {
+          "line": 109,
+          "text": "    }"
+        },
+        {
+          "line": 110,
+          "text": ""
+        },
+        {
+          "line": 111,
+          "text": "    public var isWidgetOnly: Bool {"
+        },
+        {
+          "line": 112,
+          "text": "        !hasLaunchableApp && hasWidgetEntrypoint"
+        },
+        {
+          "line": 113,
+          "text": "    }"
+        }
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "source": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+      "sha256": "0f19aee0d55b90cc3d38eecbb50b64357d3ec5968ca198ebec5825f85ef339ea",
+      "excerpt": [
+        {
+          "line": 125,
+          "text": "        }"
+        },
+        {
+          "line": 126,
+          "text": "    }"
+        },
+        {
+          "line": 127,
+          "text": ""
+        },
+        {
+          "line": 128,
+          "text": "    var visibleItems: [HanlinMiniAppCatalogItem] {"
+        },
+        {
+          "line": 129,
+          "text": "        items.filter { !hiddenAppIDs.contains($0.id) }"
+        },
+        {
+          "line": 130,
+          "text": "    }"
+        },
+        {
+          "line": 131,
+          "text": ""
+        },
+        {
+          "line": 132,
+          "text": "    /// Use the same validated foreground launch contract as the canonical catalog."
+        },
+        {
+          "line": 133,
+          "text": "    /// Discovery needs no host instance, global store or runtime initialization."
+        },
+        {
+          "line": 134,
+          "text": "    static func packageDiscovery(installedPackages: [HanlinStoredPackageSnapshot]) -> HanlinScriptPackageDiscovery {"
+        },
+        {
+          "line": 135,
+          "text": "        let eligible = installedPackages.filter { package in"
+        },
+        {
+          "line": 136,
+          "text": "            guard package.enabled, package.hasLaunchableApp || package.entrypoints.isEmpty else { return false }"
+        },
+        {
+          "line": 137,
+          "text": "            if let runtime = package.manifest?.hanlinRuntime {"
+        },
+        {
+          "line": 138,
+          "text": "                guard HanlinRuntimeProfile(rawValue: runtime) != nil else { return false }"
+        },
+        {
+          "line": 139,
+          "text": "            } else if let runtime = package.manifest?.unknownFields[\"hanlinRuntime\"] {"
+        },
+        {
+          "line": 140,
+          "text": "                guard case let .string(value) = runtime, HanlinRuntimeProfile(rawValue: value) != nil else { return false }"
+        },
+        {
+          "line": 141,
+          "text": "            }"
+        },
+        {
+          "line": 142,
+          "text": "            guard let descriptor = try? package.appDescriptor(),"
+        },
+        {
+          "line": 143,
+          "text": "                  (try? HanlinMiniAppLaunchPlan(descriptor: descriptor)) != nil else { return false }"
+        },
+        {
+          "line": 144,
+          "text": "            return true"
+        },
+        {
+          "line": 145,
+          "text": "        }"
+        },
+        {
+          "line": 146,
+          "text": "        return HanlinScriptPackageDiscovery(snapshots: eligible)"
+        },
+        {
+          "line": 147,
+          "text": "    }"
+        },
+        {
+          "line": 148,
+          "text": ""
+        },
+        {
+          "line": 149,
+          "text": "    func authorize(_ request: HanlinMiniAppRequest) async -> Bool {"
+        },
+        {
+          "line": 150,
+          "text": "        await authorization.authorize(request)"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+      "source": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+      "sha256": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+      "excerpt": [
+        {
+          "line": 73,
+          "text": "def verify_installed_fixture_archive(data_root, identity, catalog, archive, evidence_root):"
+        },
+        {
+          "line": 74,
+          "text": "    \"\"\"Bind exact producer ZIP -> sourceDigest -> generation -> actual source."
+        },
+        {
+          "line": 75,
+          "text": ""
+        },
+        {
+          "line": 76,
+          "text": "    PackageCenter.stage hashes imported archiveData, Bundler assigns that"
+        },
+        {
+          "line": 77,
+          "text": "    source.contentSHA256 to packageContentDigest and copies every source file."
+        },
+        {
+          "line": 78,
+          "text": "    AtomicScriptStore commits it into generation.json and the primary record."
+        },
+        {
+          "line": 79,
+          "text": "    This follows those source definitions; it does not substitute an artifact"
+        },
+        {
+          "line": 80,
+          "text": "    fingerprint or an assumed hash of decompressed ZIP members."
+        },
+        {
+          "line": 81,
+          "text": "    \"\"\""
+        },
+        {
+          "line": 82,
+          "text": "    require(isinstance(archive, dict) and re.fullmatch(SHA, archive.get(\"sha256\", \"\")),"
+        },
+        {
+          "line": 83,
+          "text": "            \"The original producer archive is not hash-bound\")"
+        },
+        {
+          "line": 84,
+          "text": "    source = raw_file(Path(archive[\"path\"]), evidence_root, 128 * 1024 * 1024)"
+        },
+        {
+          "line": 85,
+          "text": "    require(source[\"sha256\"] == archive[\"sha256\"], \"Produced archive bytes changed\")"
+        },
+        {
+          "line": 86,
+          "text": "    installed_id = identity[\"installedPackageID\"]"
+        },
+        {
+          "line": 87,
+          "text": "    require(normalized_relative(installed_id) == installed_id and \"/\" not in installed_id,"
+        },
+        {
+          "line": 88,
+          "text": "            \"Invalid installed package directory identity\")"
+        },
+        {
+          "line": 89,
+          "text": "    require(type(identity.get(\"generation\")) is int and identity[\"generation\"] > 0,"
+        },
+        {
+          "line": 90,
+          "text": "            \"Invalid current installed generation\")"
+        },
+        {
+          "line": 91,
+          "text": "    entry = catalog[\"value\"][\"packages\"][installed_id]"
+        },
+        {
+          "line": 92,
+          "text": "    record = entry[\"record\"]"
+        },
+        {
+          "line": 93,
+          "text": "    require(entry.get(\"enabled\") is True and type(record.get(\"schemaVersion\")) is int and record[\"schemaVersion\"] == 1"
+        },
+        {
+          "line": 94,
+          "text": "            and record.get(\"installedPackageID\") == installed_id"
+        },
+        {
+          "line": 95,
+          "text": "            and record.get(\"packageID\") == identity[\"packageID\"]"
+        },
+        {
+          "line": 96,
+          "text": "            and type(record.get(\"activeGeneration\")) is int"
+        },
+        {
+          "line": 97,
+          "text": "            and record[\"activeGeneration\"] == identity[\"generation\"]"
+        },
+        {
+          "line": 98,
+          "text": "            and record.get(\"sourceDigest\") == source[\"sha256\"],"
+        },
+        {
+          "line": 99,
+          "text": "            \"The current enabled package does not originate from this exact archive\")"
+        },
+        {
+          "line": 100,
+          "text": "    generation = Path(data_root) / INSTALLED / \"packages\" / installed_id / \"generations\" / str(identity[\"generation\"])"
+        },
+        {
+          "line": 101,
+          "text": "    metadata = shared.read_document(generation / \"generation.json\", data_root)"
+        },
+        {
+          "line": 102,
+          "text": "    artifact = shared.read_document(generation / \"artifact-manifest.json\", data_root)"
+        },
+        {
+          "line": 103,
+          "text": "    meta, manifest = metadata[\"value\"], artifact[\"value\"]"
+        },
+        {
+          "line": 104,
+          "text": "    require(all(equal(meta.get(key), record.get(key)) for key in"
+        },
+        {
+          "line": 105,
+          "text": "                (\"packageID\", \"version\", \"sourceDigest\", \"artifactDigest\"))"
+        },
+        {
+          "line": 106,
+          "text": "            and equal(meta.get(\"entrypoints\"), entry.get(\"entrypoints\"))"
+        },
+        {
+          "line": 107,
+          "text": "            and equal(meta.get(\"manifest\"), entry.get(\"manifest\")),"
+        },
+        {
+          "line": 108,
+          "text": "            \"Current generation metadata differs from the primary catalog\")"
+        },
+        {
+          "line": 109,
+          "text": "    require(type(manifest.get(\"schemaVersion\")) is int and manifest[\"schemaVersion\"] == 1"
+        },
+        {
+          "line": 110,
+          "text": "            and manifest.get(\"packageContentDigest\") == source[\"sha256\"]"
+        },
+        {
+          "line": 111,
+          "text": "            and manifest.get(\"cacheFingerprint\") == record.get(\"artifactDigest\"),"
+        },
+        {
+          "line": 112,
+          "text": "            \"Installed artifact provenance differs from the original imported archive\")"
+        },
+        {
+          "line": 113,
+          "text": "    files = manifest.get(\"files\")"
+        },
+        {
+          "line": 114,
+          "text": "    require(isinstance(files, list) and files, \"The installed artifact file manifest is absent\")"
+        },
+        {
+          "line": 115,
+          "text": "    by_path = {}"
+        },
+        {
+          "line": 116,
+          "text": "    for item in files:"
+        },
+        {
+          "line": 117,
+          "text": "        require(isinstance(item, dict), \"Invalid installed artifact file record\")"
+        },
+        {
+          "line": 118,
+          "text": "        path = normalized_relative(item.get(\"logicalPath\"))"
+        },
+        {
+          "line": 119,
+          "text": "        require(path not in by_path and re.fullmatch(SHA, item.get(\"sha256\", \"\"))"
+        },
+        {
+          "line": 120,
+          "text": "                and type(item.get(\"byteCount\")) is int and item[\"byteCount\"] >= 0,"
+        },
+        {
+          "line": 121,
+          "text": "                \"Invalid or duplicate installed artifact member\")"
+        },
+        {
+          "line": 122,
+          "text": "        by_path[path] = item"
+        },
+        {
+          "line": 123,
+          "text": "    fingerprint = shared.digest(\"\\n\".join(path + \":\" + by_path[path][\"sha256\"]"
+        },
+        {
+          "line": 124,
+          "text": "                                         for path in sorted(by_path)).encode())"
+        },
+        {
+          "line": 125,
+          "text": "    require(fingerprint == manifest[\"cacheFingerprint\"], \"Installed artifact fingerprint differs\")"
+        },
+        {
+          "line": 126,
+          "text": "    installed_sources = {}"
+        },
+        {
+          "line": 127,
+          "text": "    with zipfile.ZipFile(io.BytesIO(source[\"raw\"])) as archive_zip:"
+        },
+        {
+          "line": 128,
+          "text": "        entries = archive_zip.infolist()"
+        },
+        {
+          "line": 129,
+          "text": "        require(len(entries) <= 4096 and len({item.filename for item in entries}) == len(entries),"
+        },
+        {
+          "line": 130,
+          "text": "                \"The original source archive has duplicate or excessive members\")"
+        },
+        {
+          "line": 131,
+          "text": "        members = [item for item in entries if not item.is_dir()]"
+        },
+        {
+          "line": 132,
+          "text": "        require(sum(item.file_size for item in members) <= 128 * 1024 * 1024,"
+        },
+        {
+          "line": 133,
+          "text": "                \"The source archive exceeds the bounded fixture size\")"
+        },
+        {
+          "line": 134,
+          "text": "        for member in entries:"
+        },
+        {
+          "line": 135,
+          "text": "            normalized_relative(member.filename.rstrip(\"/\"))"
+        },
+        {
+          "line": 136,
+          "text": "            require(not stat.S_ISLNK(member.external_attr >> 16), \"Source archive contains a link\")"
+        },
+        {
+          "line": 137,
+          "text": "        expected = {\"source/\" + item.filename for item in members}"
+        },
+        {
+          "line": 138,
+          "text": "        require(\"source/script.json\" in expected"
+        },
+        {
+          "line": 139,
+          "text": "                and expected == {path for path in by_path if path.startswith(\"source/\")},"
+        },
+        {
+          "line": 140,
+          "text": "                \"Installed retained source does not have the exact original archive members\")"
+        },
+        {
+          "line": 141,
+          "text": "        for member in members:"
+        },
+        {
+          "line": 142,
+          "text": "            raw = archive_zip.read(member)"
+        },
+        {
+          "line": 143,
+          "text": "            path = \"source/\" + member.filename"
+        },
+        {
+          "line": 144,
+          "text": "            item = by_path[path]"
+        },
+        {
+          "line": 145,
+          "text": "            require(item[\"byteCount\"] == len(raw) and item[\"sha256\"] == shared.digest(raw),"
+        },
+        {
+          "line": 146,
+          "text": "                    \"Retained source manifest differs from original archive bytes\")"
+        },
+        {
+          "line": 147,
+          "text": "            installed = raw_file(generation / path, data_root)"
+        },
+        {
+          "line": 148,
+          "text": "            require(installed[\"bytes\"] == len(raw) and installed[\"raw\"] == raw,"
+        },
+        {
+          "line": 149,
+          "text": "                    \"Actual installed source differs from the exact producer archive\")"
+        },
+        {
+          "line": 150,
+          "text": "            installed_sources[path] = document_bytes(installed)"
+        },
+        {
+          "line": 151,
+          "text": "        author = shared.parse_json(archive_zip.read(\"script.json\"))"
+        },
+        {
+          "line": 152,
+          "text": "    return {\"archive\": document_bytes(source), \"generation\": metadata,"
+        },
+        {
+          "line": 153,
+          "text": "            \"artifactManifest\": artifact, \"installedSources\": installed_sources,"
+        },
+        {
+          "line": 154,
+          "text": "            \"authorManifest\": author, \"sourceDigestBasis\": \"SHA256 of original imported archiveData\"}"
+        }
+      ]
+    }
+  ],
+  "portableFixtureTransformations": [
+    "Load the existing storedCatalogEntryJSON unchanged, preserving its foreground compatibility/runtime/context/source/policy fields.",
+    "Construct a small actual ZIP and matching generation files solely as file-reader test input. Rebind sourceDigest/artifactDigest and per-entry artifactDigest to those actual bytes.",
+    "The legacy supported positive changes only compatibility. Negative cases alter the exact field/file named in each subtest."
+  ],
+  "limits": [
+    "The tiny ZIP is a constructed portable reader fixture, not a compiler-produced or native-accepted package.",
+    "No absent native rejected catalog row is reconstructed or claimed.",
+    "No new runtime policy eligibility rule is introduced. The original reader continues its existing exact kind/runtime/context/source and complete archive/generation checks."
+  ]
+}

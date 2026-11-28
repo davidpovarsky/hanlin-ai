@@ -1,0 +1,67 @@
+{
+  "sourceCommit": "b67cafbbbed3d98211f16400d416812ee650a3f8",
+  "sourceParent": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+  "scope": "Gallery observer compatibility and focused portable controls; native NOT_RUN",
+  "members": [
+    {
+      "path": "ENCODING.json",
+      "bytes": 1872,
+      "sha256": "8aa7136e319d6beb4b7871fae3e95a95a39efed09d1d8ac3a93c85938b86d1f6"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1279,
+      "sha256": "4ef5e2bfcede6561f3922ad275246c2e179801b55c9aa9e6582777501c007726"
+    },
+    {
+      "path": "ROOT_REVIEW.json",
+      "bytes": 3496,
+      "sha256": "f6b4fd2834ff141f723db6322cae8672300e4977391436b770fff4293e9c8316"
+    },
+    {
+      "path": "SOURCE_AUTHORITIES.json",
+      "bytes": 30575,
+      "sha256": "9558715c8059decfef145547837a32ab1f3cf5d64475cc515a6ff6382ccf4dd2"
+    },
+    {
+      "path": "SOURCE_PROOF.json",
+      "bytes": 5478,
+      "sha256": "88e4ee1eabd86bd370cd829e0ed635d43f02fc0c1229e9f104597771b548f8c4"
+    },
+    {
+      "path": "portable-green-receipt.json",
+      "bytes": 1765,
+      "sha256": "35c769bebd82f8bfe6bd9c6edd0e8eed23d0056a461bf47398d494d4d81c3000"
+    },
+    {
+      "path": "portable-green.stderr.log.gz",
+      "bytes": 751,
+      "sha256": "bad730160595d57c7937c7dbaf9182a8368b03bd1a8a098a470295b23a1e6436"
+    },
+    {
+      "path": "portable-green.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "portable-red-receipt.json",
+      "bytes": 1674,
+      "sha256": "5f7fd55fe58aa87a967301443acd8b90923e962d68b7574f9c866976740cb1e9"
+    },
+    {
+      "path": "portable-red.stderr.log.gz",
+      "bytes": 528,
+      "sha256": "d90dc7bb90979de2bde954f07d86887f5f53102b43db834aa27b48bfc82ca0b6"
+    },
+    {
+      "path": "portable-red.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 3369,
+      "sha256": "1c810beeda0a86a485f83c824ee38d386cf8ca0151ac8b56f7c372f0564bbd74"
+    }
+  ]
+}

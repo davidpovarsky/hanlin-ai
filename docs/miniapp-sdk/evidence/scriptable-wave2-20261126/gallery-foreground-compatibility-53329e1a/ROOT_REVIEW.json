@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "root",
+  "at": "2026-11-28T01:15:41.439186+00:00",
+  "decision": "APPROVED_FOR_ISOLATED_SOURCE_AND_PUBLIC_PROOF_SEAL",
+  "candidateBase": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+  "reviewedAgainstCurrentRoot": "9edbed3a8b52c3dae5e52032b3fd8f6ef40dda37",
+  "candidateManifestSHA256": "d3e604345d2c469a7fd94306e3b60e304b3c2ff82afb139524e6ecfd36f333d0",
+  "independentlyVerifiedMembers": 12,
+  "sourcePatchSHA256": "5a0ed442553563928298410546a9ba1cef0c2c16bfddecd82a471c933692855a",
+  "readerBeforeSHA256": "c64e13a04d86e628742e0472fc7c2776ba036ff72b9ecb14480b59c5587f78e8",
+  "readerAfterSHA256": "bf1a6df1b649f04c3a573da1a481359d8be45b63d81a323ee343d920eec0f4fa",
+  "newTestsSHA256": "9032085b000ab38c4fac7f2fcd64358d7a45751855956d0c482f0847412cef68",
+  "wholeReaderRecoveredByOnePredicateInverse": true,
+  "otherFunctionASTsUnchanged": 18,
+  "originalGalleryMethodsUnchanged": 16,
+  "newCIMethods": [
+    "test_original_serialized_partial_app_passes_every_archive_guard",
+    "test_supported_app_keeps_the_original_archive_admission",
+    "test_partial_app_cannot_bypass_original_identity_and_artifact_guards"
+  ],
+  "negativeSubcases": 24,
+  "contract": {
+    "originalAnalyzerDiscoverEntrypointsPartialForeground": true,
+    "canonicalSerializedFixture": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift",
+    "fixtureSHA256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+    "actualStoredApp": {
+      "artifactDigest": "171ecc1ab7e2eb33806822a417f0efa95393c096fcd5561e414a84b0b2a2e737",
+      "compatibility": "partial",
+      "id": "app",
+      "kind": "app",
+      "requiredCapabilities": [
+        {
+          "capabilityID": "inter-app.share",
+          "purpose": "Declared in package manifest.",
+          "required": false,
+          "scope": {
+            "type": "object",
+            "value": []
+          }
+        },
+        {
+          "capabilityID": "storage",
+          "purpose": "Declared in package manifest.",
+          "required": false,
+          "scope": {
+            "type": "object",
+            "value": []
+          }
+        }
+      ],
+      "runtimePolicyID": "foreground-app-v1",
+      "runtimeProfile": "hanlin-expo",
+      "sourcePath": "source/bundle.js",
+      "supportedContexts": [
+        "mainApplication"
+      ]
+    },
+    "launchabilityProjection": "kind == app",
+    "archiveVerifier": "actual original verifier with real portable ZIP and generation files; no mocks"
+  },
+  "observedPortableRed": {
+    "exit": 1,
+    "methods": 1,
+    "errors": 1,
+    "receiptSHA256": "5f7fd55fe58aa87a967301443acd8b90923e962d68b7574f9c866976740cb1e9",
+    "stderrSHA256": "fa4a79cc1f97cc586e0948dad8f931e0f0ac967ffafe3218e61adecd45f9865e"
+  },
+  "observedPortableGreen": {
+    "exit": 0,
+    "methods": 19,
+    "passes": 19,
+    "receiptSHA256": "35c769bebd82f8bfe6bd9c6edd0e8eed23d0056a461bf47398d494d4d81c3000",
+    "stderrSHA256": "ec7929de6b7f6269a4747ed8038154a7da4c32e9b68f4ce682eddd059ad270b6"
+  },
+  "sdkInputIntersection": 0,
+  "nativeOrWorkflowExecutionByReview": false,
+  "limits": [
+    "Historical rejected registry row is absent; candidate is not established as the sole native failure cause.",
+    "Portable controls establish reader contract and retained rejection guards, not compiler, app, OS or current native acceptance.",
+    "Original full CI discovery and native Gallery route remain required on integrated source."
+  ]
+}

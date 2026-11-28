@@ -1,0 +1,130 @@
+{
+  "status": "SOURCE_FROZEN_FOR_INDEPENDENT_ROOT_REVIEW",
+  "base": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-gallery-foreground-compat-20261128",
+  "changedPaths": [
+    "Scripts/ProductSplit/observe_studio_gallery.py",
+    "Scripts/CI/Tests/test_studio_gallery_compatibility.py"
+  ],
+  "source": {
+    "readerBeforeSHA256": "c64e13a04d86e628742e0472fc7c2776ba036ff72b9ecb14480b59c5587f78e8",
+    "readerAfterSHA256": "bf1a6df1b649f04c3a573da1a481359d8be45b63d81a323ee343d920eec0f4fa",
+    "testSHA256": "9032085b000ab38c4fac7f2fcd64358d7a45751855956d0c482f0847412cef68",
+    "patch": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/gallery-foreground-compatibility-53329e1a/source.patch",
+      "bytes": 12375,
+      "sha256": "5a0ed442553563928298410546a9ba1cef0c2c16bfddecd82a471c933692855a"
+    }
+  },
+  "preservation": {
+    "wholeReaderInverseByteEqual": true,
+    "topLevelFunctionCount": 19,
+    "unchangedTopLevelFunctionASTs": [
+      "validate_request",
+      "source_tree",
+      "hashes",
+      "read_zip_members",
+      "original_typecheck",
+      "verify_tooling",
+      "bind_sdk",
+      "sdk_summary",
+      "verify_sdk_unchanged",
+      "matching_projects",
+      "edited_source",
+      "verify_copies",
+      "build_facts",
+      "installed_ids",
+      "runtime_observation",
+      "current_roots",
+      "publish",
+      "observe_case"
+    ],
+    "soleChangedFunction": "installed_build",
+    "soleBehaviorDelta": "compatibility supported equality becomes supported/partial membership inside the unchanged full foreground and archive guard chain",
+    "wholeOriginalGalleryTestModuleByteEqual": true,
+    "original16TestMethods": [
+      "test_two_copies_preserve_shipped_bytes_and_allow_only_exact_first_edit",
+      "test_unpacked_source_must_match_actual_bundled_source",
+      "test_unpack_stamp_cannot_name_another_bundle",
+      "test_mutated_compiler_cannot_keep_manifest_and_version_identity",
+      "test_unlisted_tooling_file_cannot_enter_the_actual_compiler_closure",
+      "test_report_policy_uses_actual_project_override",
+      "test_editing_second_copy_is_rejected",
+      "test_edit_cannot_change_original_runtime_logic_or_compiler_options",
+      "test_extra_manifest_mutation_is_rejected",
+      "test_project_link_cannot_substitute_shared_source",
+      "test_consistent_temporary_build_retains_original_engine_policy",
+      "test_consistently_modified_zip_and_report_cannot_weaken_sdk_policy",
+      "test_consistently_modified_retained_source_cannot_replace_ui_edit",
+      "test_zip_must_equal_original_prepared_package",
+      "test_unprefixed_or_other_installed_entry_is_rejected",
+      "test_numeric_schema_and_wrong_fresh_marker_are_rejected"
+    ],
+    "canonicalStoredSwiftFixtureWholeFileEqual": true,
+    "nativeUIProductAndWorkflowPathsChanged": []
+  },
+  "portable": {
+    "red": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/gallery-foreground-compatibility-53329e1a/portable-red-original/receipt.json",
+      "bytes": 1674,
+      "sha256": "5f7fd55fe58aa87a967301443acd8b90923e962d68b7574f9c866976740cb1e9"
+    },
+    "redActual": "1 ERROR at the original supported-only foreground guard",
+    "green": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/gallery-foreground-compatibility-53329e1a/portable-green-candidate/receipt.json",
+      "bytes": 1765,
+      "sha256": "35c769bebd82f8bfe6bd9c6edd0e8eed23d0056a461bf47398d494d4d81c3000"
+    },
+    "greenActual": "19 PASS: 3 new methods plus all16 existing Gallery reader methods",
+    "newMethods": [
+      "test_original_serialized_partial_app_passes_every_archive_guard",
+      "test_supported_app_keeps_the_original_archive_admission",
+      "test_partial_app_cannot_bypass_original_identity_and_artifact_guards"
+    ],
+    "negative24ContractCases": [
+      "boolean catalog schema",
+      "boolean catalog revision",
+      "duplicate archive package",
+      "preexisting package",
+      "disabled",
+      "wrong installed identity",
+      "zero generation",
+      "boolean generation",
+      "wrong kind",
+      "duplicate app",
+      "unsupported",
+      "unknown compatibility",
+      "missing compatibility",
+      "boolean compatibility",
+      "other runtime",
+      "other context",
+      "unprefixed source",
+      "other source",
+      "changed archive bytes",
+      "changed generation metadata",
+      "changed artifact archive binding",
+      "changed artifact fingerprint",
+      "changed retained source",
+      "changed expected author manifest"
+    ],
+    "newTestsUseOriginalRealFileReadersWithoutVerifierMocks": true
+  },
+  "SDKInputPathImpact": {
+    "manifest": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/startup-sdk-f45d6edc-pass/sdk/miniapp-sdk.json",
+      "bytes": 5267911,
+      "sha256": "9510c4feeffad1d70a8243ae2bdb7eaacd1d147a654758f8fb60674a0ae7d994"
+    },
+    "pathCount": 396,
+    "changedPathIntersection": [],
+    "claim": "No direct SDK sourceInputs change; no new packed/native result is claimed."
+  },
+  "nativeEvidenceQualification": {
+    "historicalRunID": 46065846185,
+    "actualObserverErrorCount": 2,
+    "actualRejectedCatalogRow": "NOT_RETAINED",
+    "soleCause": "NOT_ESTABLISHED",
+    "currentNativeRun": "NOT_RUN"
+  },
+  "recordedAt": "2026-11-28T01:06:12.294442+00:00"
+}

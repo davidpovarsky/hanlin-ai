@@ -1,0 +1,38 @@
+{
+  "sourceBase": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+  "argv": [
+    "/usr/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_studio_gallery_compatibility",
+    "Scripts.ProductSplit.Tests.test_studio_gallery_observer"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-gallery-foreground-compat-20261128",
+  "startedAt": "2026-11-28T01:04:26.286259+00:00",
+  "finishedAt": "2026-11-28T01:04:26.847288+00:00",
+  "seconds": 0.5610190602019429,
+  "exit": 0,
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "environmentOverrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "sourceInputs": {
+    "Scripts/ProductSplit/observe_studio_gallery.py": "bf1a6df1b649f04c3a573da1a481359d8be45b63d81a323ee343d920eec0f4fa",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "5f15f5ffb4fcdaf63ef9ad396a650fce32b7b0b04eee8ba7690b013c6e8f8600",
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+    "Scripts/CI/Tests/test_studio_gallery_compatibility.py": "9032085b000ab38c4fac7f2fcd64358d7a45751855956d0c482f0847412cef68",
+    "Scripts/ProductSplit/Tests/test_studio_gallery_observer.py": "f901da7e28e5863a70cc7586b9eb9ac549f697d75f2cfb8ae816077ad6089ba2",
+    "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70"
+  },
+  "sourceUnchanged": true,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 4060,
+    "sha256": "ec7929de6b7f6269a4747ed8038154a7da4c32e9b68f4ce682eddd059ad270b6"
+  },
+  "nativeExecution": false
+}
