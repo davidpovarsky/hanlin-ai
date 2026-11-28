@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "case": "state",
+      "ownSpringBoardPID": 61496,
+      "sourceAX": {
+        "path": "attachments-r1/state/artifact-selected-members/paired-product/paired-attachments/0ADE30C2-DAE8-4376-9AD9-C5674A2B045F.txt",
+        "sha256": "04490555b861d5440bab8118a1c3f243a2b391e5525c0226dec779af4649acbb",
+        "bytes": 22124,
+        "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState()",
+        "suggestedHumanReadableName": "widget-state-final-system-accessibility_0_875CA02E-DEC8-4556-8F04-7367DD2DE417.txt",
+        "timestamp": 1795849210.49,
+        "sourceMember": "app-split-evidence/paired-product/paired-attachments/0ADE30C2-DAE8-4376-9AD9-C5674A2B045F.txt",
+        "crc32": "395c3211"
+      },
+      "lines": [
+        {
+          "line": 1,
+          "text": "Attributes: Application, 0x1153421c0, pid: 61496, label: ' '"
+        },
+        {
+          "line": 3,
+          "text": " \u2192Application, 0x1153421c0, pid: 61496, label: ' '"
+        },
+        {
+          "line": 18,
+          "text": "        Other, 0x115342580, {{0.0, 0.0}, {756.0, 1158.0}}, identifier: 'Home screen icons'"
+        },
+        {
+          "line": 41,
+          "text": "                Icon, 0x115344140, {{0.0, 0.0}, {0.0, 0.0}}, identifier: 'Hanlin MiniApps', label: 'Hanlin MiniApps'"
+        },
+        {
+          "line": 43,
+          "text": "              PageIndicator, 0x1153443c0, {{-407.0, 964.0}, {58.0, 45.0}}, identifier: 'Page control', value: Page 3 of 2"
+        },
+        {
+          "line": 58,
+          "text": "                SearchField, 0x115345680, {{211.0, 292.0}, {334.0, 48.0}}, identifier: 'dewey-search-field', placeholderValue: 'App Library'"
+        },
+        {
+          "line": 79,
+          "text": "                                Icon, 0x1153470c0, {{36.6, 490.6}, {72.0, 72.0}}, identifier: 'Hanlin MiniApps', label: 'Hanlin MiniApps'"
+        },
+        {
+          "line": 143,
+          "text": "                      Button, 0x115350140, {{261.4, 426.1}, {221.8, 37.6}}, identifier: 'com.apple.springboardhome.application-shortcut-item.delete-app', label: 'Delete App'"
+        },
+        {
+          "line": 181,
+          "text": "                    RemotePlaceholder, 0x1153530c0, pid: 61496, {{inf, inf}, {0.0, 0.0}}"
+        },
+        {
+          "line": 266,
+          "text": "            RemotePlaceholder, 0x115359b80, pid: 74428, {{inf, inf}, {0.0, 0.0}}"
+        },
+        {
+          "line": 267,
+          "text": "            RemotePlaceholder, 0x115359cc0, pid: 74428, {{inf, inf}, {0.0, 0.0}}"
+        },
+        {
+          "line": 269,
+          "text": " \u2192Application, 0x1153421c0, pid: 61496, label: ' '"
+        },
+        {
+          "line": 273,
+          "text": "    Application, 0x115359e00, pid: 61496, label: ' '"
+        }
+      ],
+      "actualFinalPage": {
+        "index": 3,
+        "count": 2,
+        "frame": [
+          -407.0,
+          964.0,
+          58.0,
+          45.0
+        ]
+      },
+      "classification": "The actual final Options context is App Library; it offers Delete App and not Edit Home Screen.",
+      "gestureScope": "One Home press, one left swipe, long-press MiniApps then Options; no other navigation occurs before the final failed Edit Home Screen wait.",
+      "candidateExclusion": "The recorded page indicator fails both visible-bounds and in-range page admission even if App Library search-field hittability cannot be recovered from the AX dump.",
+      "limits": [
+        "Final AX is post-gesture; no separate pre-press Home AX was captured.",
+        "The XCTest animation-idle waits and remote-element warnings are preserved, not attributed to an app runtime defect.",
+        "No successful Home-page admission, widget placement or target Toggle/VoiceOver action is established by these failed runs."
+      ]
+    },
+    {
+      "case": "voiceover",
+      "ownSpringBoardPID": 85561,
+      "sourceAX": {
+        "path": "attachments-r1/voiceover/artifact-selected-members/paired-product/paired-attachments/9D76D319-3446-45FF-947B-BF6E141C5614.txt",
+        "sha256": "7a742d6335fd97ffeb5b2bb62e631b5747c7a82a585b6b1c9c052c5c9fb08a5f",
+        "bytes": 22125,
+        "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues()",
+        "suggestedHumanReadableName": "widget-voiceover-final-system-accessibility_0_61E893C4-DF9E-42DC-B786-DE0455E8620E.txt",
+        "timestamp": 1795849148.345,
+        "sourceMember": "app-split-evidence/paired-product/paired-attachments/9D76D319-3446-45FF-947B-BF6E141C5614.txt",
+        "crc32": "8e9c1bf9"
+      },
+      "lines": [
+        {
+          "line": 1,
+          "text": "Attributes: Application, 0x113e226c0, pid: 85561, label: ' '"
+        },
+        {
+          "line": 3,
+          "text": " \u2192Application, 0x113e226c0, pid: 85561, label: ' '"
+        },
+        {
+          "line": 18,
+          "text": "        Other, 0x113e23700, {{0.0, 0.0}, {756.0, 1158.0}}, identifier: 'Home screen icons'"
+        },
+        {
+          "line": 41,
+          "text": "                Icon, 0x113e24140, {{0.0, 0.0}, {0.0, 0.0}}, identifier: 'Hanlin MiniApps', label: 'Hanlin MiniApps'"
+        },
+        {
+          "line": 43,
+          "text": "              PageIndicator, 0x113e243c0, {{-407.0, 964.0}, {58.0, 45.0}}, identifier: 'Page control', value: Page 3 of 2"
+        },
+        {
+          "line": 58,
+          "text": "                SearchField, 0x113e25680, {{211.0, 292.0}, {334.0, 48.0}}, identifier: 'dewey-search-field', placeholderValue: 'App Library'"
+        },
+        {
+          "line": 79,
+          "text": "                                Icon, 0x113e270c0, {{36.6, 490.6}, {72.0, 72.0}}, identifier: 'Hanlin MiniApps', label: 'Hanlin MiniApps'"
+        },
+        {
+          "line": 143,
+          "text": "                      Button, 0x113e2c140, {{261.4, 426.1}, {221.8, 37.6}}, identifier: 'com.apple.springboardhome.application-shortcut-item.delete-app', label: 'Delete App'"
+        },
+        {
+          "line": 181,
+          "text": "                    RemotePlaceholder, 0x113e2f0c0, pid: 85561, {{inf, inf}, {0.0, 0.0}}"
+        },
+        {
+          "line": 266,
+          "text": "            RemotePlaceholder, 0x113e35b80, pid: 46896, {{inf, inf}, {0.0, 0.0}}"
+        },
+        {
+          "line": 267,
+          "text": "            RemotePlaceholder, 0x113e35cc0, pid: 46896, {{inf, inf}, {0.0, 0.0}}"
+        },
+        {
+          "line": 269,
+          "text": " \u2192Application, 0x113e226c0, pid: 85561, label: ' '"
+        },
+        {
+          "line": 273,
+          "text": "    Application, 0x113e35e00, pid: 85561, label: ' '"
+        }
+      ],
+      "actualFinalPage": {
+        "index": 3,
+        "count": 2,
+        "frame": [
+          -407.0,
+          964.0,
+          58.0,
+          45.0
+        ]
+      },
+      "classification": "The actual final Options context is App Library; it offers Delete App and not Edit Home Screen.",
+      "gestureScope": "One Home press, one left swipe, long-press MiniApps then Options; no other navigation occurs before the final failed Edit Home Screen wait.",
+      "candidateExclusion": "The recorded page indicator fails both visible-bounds and in-range page admission even if App Library search-field hittability cannot be recovered from the AX dump.",
+      "limits": [
+        "Final AX is post-gesture; no separate pre-press Home AX was captured.",
+        "The XCTest animation-idle waits and remote-element warnings are preserved, not attributed to an app runtime defect.",
+        "No successful Home-page admission, widget placement or target Toggle/VoiceOver action is established by these failed runs."
+      ]
+    }
+  ]
+}

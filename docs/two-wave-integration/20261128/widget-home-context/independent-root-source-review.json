@@ -1,0 +1,26 @@
+{
+  "status": "SOURCE_APPROVED_NATIVE_HOME_ADMISSION_PENDING",
+  "at": "2026-11-28T07:49:47.098181+00:00",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "reviewedCurrentRoot": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "manifestSHA256": "e52506cf045c3e10b91a1eaa133b9c68a2e47b11e5d17209b59cedd25ff1b127",
+  "packetMembersRehashed": 19,
+  "originalReferencesRehashed": 17,
+  "sourceCandidateSHA256": "1a657ce9913094faa6974b534c7d53abc7599a3c4549445113cd3c4fbc8fb98c",
+  "candidateSourceTree": "0a1fa62953ab3b23940e3f6564378bc0c7cfa3c7",
+  "currentComposedTree": "385ae9db72bedd8960576d7e8e8a543653b132f1",
+  "currentComposedUI_SHA256": "e2c11d2f6c0d64eea19e3360aff034ba376cc8d5fa17014046ce4df5e6750443",
+  "current42TestBodiesExact": true,
+  "base38TestBodiesExact": true,
+  "reversePatchRecoversWholeBaseTree": true,
+  "independentMacReviewSHA256": "616c9deeb88e7a025147d45236f308909823e12e17d43e9b598aeca643e83add",
+  "review": "Only originalMatrix/family-gallery icon admission changes. Visible AppLibrary excluded; real Home container/in-range visible Page control and unique MiniApps icon required; original five observations at mostfour intervening publicswipes, no addedwait/poll. Original longpress/EditHome/gallery/placement/state/voiceover asserts remain.",
+  "evidence": "Both actual case-owned PIDs/AX/CRC/hash/gesture and createdvariants retained. Mac independently visually inspected both exactPNG; root verified sourceAX and attachment bytes/CRC. Original failures remain failures.",
+  "qualifiedLimits": [
+    "No pre-press HomeAX or successful positiveHome page sample was retained.",
+    "Original English Page X of Y and actual visiblecontainer assumptions must pass native; unknown or ambiguous surfaces fail.",
+    "No current widget placement, Toggle, VoiceOver action or restored native result inferred."
+  ],
+  "native": "NOT_RUN",
+  "testsRepeatedByRoot": false
+}

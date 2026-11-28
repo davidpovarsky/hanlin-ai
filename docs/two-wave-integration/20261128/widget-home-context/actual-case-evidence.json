@@ -1,0 +1,380 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-28T07:35:39.781684+00:00",
+  "owner": "/root/w2_source_resume",
+  "originalHandoff": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/state-voiceover-handoff.json",
+    "sha256": "5d876be7998ac4a470d562f6c560b7e34806f409cb9db6a5bb8303b24617b8f1",
+    "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/state-voiceover-manifest.json",
+    "manifestSHA256": "d480ed750c4ed6c0fcea2188f372e983d837ab5e101ef15f810f072e211c625b",
+    "wholeZIPDownloaded": false
+  },
+  "cases": [
+    {
+      "case": "state",
+      "runID": 46109331496,
+      "jobID": 140869127097,
+      "source": "de7758a9647122e302e996e72f3b9c63776764cc",
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "C00EFACA-260A-4199-92F6-DF70880588D8",
+        "deviceName": "HanlinPaired-46109331496",
+        "modelName": "iPad mini (A20 Pro)",
+        "osBuildNumber": "24B8117",
+        "osVersion": "27.2",
+        "platform": "iOS Simulator"
+      },
+      "nativeResult": {
+        "started": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      },
+      "selectedTests": [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState"
+      ],
+      "acceptanceStageReadback": {
+        "status": "INFRA_ERROR",
+        "ui": "TEST_FAILED",
+        "build": "EXECUTED_PASS",
+        "mini_build": "EXECUTED_PASS",
+        "ai_build": "EXECUTED_PASS",
+        "test_scope": "miniapp_widget_state_os",
+        "sha": "de7758a9647122e302e996e72f3b9c63776764cc",
+        "error": "The real system-surface observer did not retain every correlated terminal result"
+      },
+      "failureText": "failed: caught error: \"Open the real Home Screen edit mode.\"",
+      "ownSpringBoardPID": 61496,
+      "identity": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/state/artifact-selected-members/paired-product/shortcut-observer/767bb520-fb60-4b7a-9bf8-bfb685f9a103/identity.json",
+        "sha256": "2300383435d1a114d1043045caa5ae2403c8c51fe7fddd110caad9bc57c7c068",
+        "status": "READY",
+        "variants": {
+          "A": {
+            "identity": {
+              "entrypointID": "widget",
+              "generation": 1,
+              "installedPackageID": "install-script-a64b7b1719beafce04a1c25d",
+              "packageID": "script-a64b7b1719beafce04a1c25d",
+              "variantID": "f2bad477-81a6-4e35-b510-0a1c596d7bfb"
+            },
+            "displayName": "State-A-767bb520-fb60-4b7a-9bf8-bfb685f9a103",
+            "cache": null,
+            "revision": 0
+          },
+          "B": {
+            "identity": {
+              "entrypointID": "widget",
+              "generation": 1,
+              "installedPackageID": "install-script-a64b7b1719beafce04a1c25d",
+              "packageID": "script-a64b7b1719beafce04a1c25d",
+              "variantID": "28bdd755-8044-441a-87dd-ac0f82b981a8"
+            },
+            "displayName": "State-B-767bb520-fb60-4b7a-9bf8-bfb685f9a103",
+            "cache": null,
+            "revision": 0
+          }
+        }
+      },
+      "inputManifest": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/state/artifact-selected-members/paired-product/widget-state-inputs.json",
+        "sha256": "948051715222ec6bcee570dd3ff6c0e1293c089eb4fe01349b1cd9a62fcc740f",
+        "sourceFile": {
+          "bytes": 219260,
+          "sha256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4"
+        },
+        "appProduct": {
+          "HanlinMiniApps": {
+            "bytes": 40416,
+            "sha256": "8b12854aed4408e0c1d2177de044f60a5dd7a41a701a9f2222fd0f7ba9a5950e"
+          },
+          "HanlinMiniApps.debug.dylib": {
+            "bytes": 192434752,
+            "sha256": "5c44e74f60589212541a50cb3938aa45122d1da8923dd4d7dbf9adb1271f25e3"
+          },
+          "Info.plist": {
+            "bytes": 5494,
+            "sha256": "c49a86afa9eeea1c31fc5f9d518008ac4284de4b5928ded851b504e0df89d675"
+          }
+        },
+        "testProduct": {
+          "AI_HLYUITests": {
+            "bytes": 4449408,
+            "sha256": "dfd5f0e5ef672aea917702a307c607121bd620a8d1ca38ac0c98ce56b3b94ad0"
+          },
+          "Info.plist": {
+            "bytes": 742,
+            "sha256": "2e3bded9c1f6ad0abf5b7af602b9f3466a2047bcefdb25f8ed1c10fb8522057a"
+          }
+        }
+      },
+      "effectivePatch": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/state/artifact-selected-members/upstream-inputs.patch",
+        "sha256": "799fd63cc9925d10977f13f1db53469815ab624301ad6220e4d4c07ab5ff3060",
+        "pathCount": 20,
+        "doesNotModifyUIFile": true
+      },
+      "rawLog": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/state/artifact-selected-members/paired-product/paired-tests.log.gz",
+        "compressedSHA256": "db5a04caac4f4028b615e2cecf66db333a2fa365ad1ce8dfb86dbac3b23494b3",
+        "rawSHA256": "edf20307d5025c128ddaef6a040b1985695d12d6ef909c8af02a8a09a3c61241",
+        "rawBytes": 50874,
+        "lineCount": 568
+      },
+      "exactExcerpt": {
+        "file": "state-original-home-failure-excerpt.log.gz",
+        "startLine": 300,
+        "endLine": 546,
+        "rawSHA256": "d58e7892ff6be759b1f34c31c7b0c27a5ad38af60f36c81c6db2c02ada52c34e",
+        "rawBytes": 26608
+      },
+      "attachments": [
+        {
+          "path": "attachments-r1/state/artifact-selected-members/paired-product/paired-attachments/66815129-399C-48F4-9D6B-C83C0FA5BC4A.png",
+          "sha256": "a8b6101f351d899f9a7fe62b14c8b55558d2a5807ecd39cd4c56d8689ad0e7ab",
+          "bytes": 2328173,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState()",
+          "suggestedHumanReadableName": "widget-state-final-system_0_E3C3CFA5-E00F-4153-A1EA-A160E037CACA.png",
+          "timestamp": 1795849210.799,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/66815129-399C-48F4-9D6B-C83C0FA5BC4A.png",
+          "crc32": "126c2bc4"
+        },
+        {
+          "path": "attachments-r1/state/artifact-selected-members/paired-product/paired-attachments/0ADE30C2-DAE8-4376-9AD9-C5674A2B045F.txt",
+          "sha256": "04490555b861d5440bab8118a1c3f243a2b391e5525c0226dec779af4649acbb",
+          "bytes": 22124,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState()",
+          "suggestedHumanReadableName": "widget-state-final-system-accessibility_0_875CA02E-DEC8-4556-8F04-7367DD2DE417.txt",
+          "timestamp": 1795849210.49,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/0ADE30C2-DAE8-4376-9AD9-C5674A2B045F.txt",
+          "crc32": "395c3211"
+        },
+        {
+          "path": "attachments-r1/state/artifact-selected-members/paired-product/paired-attachments/948D00D6-973B-4CAA-A2ED-52EBE8BEF3DB.png",
+          "sha256": "99ae4cc2c102005b1a133fb574833454637475ff69d9f19646bb66377da52027",
+          "bytes": 586314,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState()",
+          "suggestedHumanReadableName": "widget-state-created-both-variants_0_6B3AB405-FF66-4459-8FC8-4287DA44414D.png",
+          "timestamp": 1795849007.859,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/948D00D6-973B-4CAA-A2ED-52EBE8BEF3DB.png",
+          "crc32": "512f4cdf"
+        },
+        {
+          "path": "attachments-r1/state/artifact-selected-members/paired-product/paired-attachments/42F1BA3F-8266-4051-821E-3495EE542E11.txt",
+          "sha256": "59b992a256ffea70faecd9e99d870525484bc3295dea6b30b0f62ba0ad63cf0b",
+          "bytes": 35679,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState()",
+          "suggestedHumanReadableName": "widget-state-created-both-variants-accessibility_0_DC778529-4DED-4991-9696-8EBA7E59685B.txt",
+          "timestamp": 1795849007.598,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/42F1BA3F-8266-4051-821E-3495EE542E11.txt",
+          "crc32": "3479cd61"
+        }
+      ]
+    },
+    {
+      "case": "voiceover",
+      "runID": 46109228743,
+      "jobID": 140868805677,
+      "source": "de7758a9647122e302e996e72f3b9c63776764cc",
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "EB0B87F1-E1D0-42E1-BC16-0C0ED84A4189",
+        "deviceName": "HanlinPaired-46109228743",
+        "modelName": "iPad mini (A20 Pro)",
+        "osBuildNumber": "24B8117",
+        "osVersion": "27.2",
+        "platform": "iOS Simulator"
+      },
+      "nativeResult": {
+        "started": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      },
+      "selectedTests": [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues"
+      ],
+      "acceptanceStageReadback": {
+        "status": "INFRA_ERROR",
+        "ui": "TEST_FAILED",
+        "build": "EXECUTED_PASS",
+        "mini_build": "EXECUTED_PASS",
+        "ai_build": "EXECUTED_PASS",
+        "test_scope": "miniapp_widget_voiceover_os",
+        "sha": "de7758a9647122e302e996e72f3b9c63776764cc",
+        "error": "The real system-surface observer did not retain every correlated terminal result"
+      },
+      "failureText": "failed: caught error: \"Open the real Home Screen edit mode.\"",
+      "ownSpringBoardPID": 85561,
+      "identity": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/voiceover/artifact-selected-members/paired-product/shortcut-observer/d2757cdd-2b9b-4dd9-996d-58e677fc240a/identity.json",
+        "sha256": "974a640f9dcc8388cf589b0baa291a67fd6620505418236f1a340dffb7ae59e6",
+        "status": "READY",
+        "variants": {
+          "A": {
+            "identity": {
+              "entrypointID": "widget",
+              "generation": 1,
+              "installedPackageID": "install-script-a64b7b1719beafce04a1c25d",
+              "packageID": "script-a64b7b1719beafce04a1c25d",
+              "variantID": "8f0c9986-7143-4d57-a71d-aa5b8343dc71"
+            },
+            "displayName": "VoiceOver-A-d2757cdd-2b9b-4dd9-996d-58e677fc240a",
+            "cache": null,
+            "revision": 0
+          },
+          "B": {
+            "identity": {
+              "entrypointID": "widget",
+              "generation": 1,
+              "installedPackageID": "install-script-a64b7b1719beafce04a1c25d",
+              "packageID": "script-a64b7b1719beafce04a1c25d",
+              "variantID": "dbe0e69e-f686-45b5-94e8-44fcf6adf28d"
+            },
+            "displayName": "VoiceOver-B-d2757cdd-2b9b-4dd9-996d-58e677fc240a",
+            "cache": null,
+            "revision": 0
+          }
+        }
+      },
+      "inputManifest": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/voiceover/artifact-selected-members/paired-product/widget-voiceover-inputs.json",
+        "sha256": "a820eb68b0cbef865e15432803aa750da2017f6a3f123757b82cd0a813e08511",
+        "sourceFile": {
+          "bytes": 219260,
+          "sha256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4"
+        },
+        "appProduct": {
+          "HanlinMiniApps": {
+            "bytes": 40416,
+            "sha256": "0c2c7eb226e0f5d2d77aa891025bef16b943c3fb1acdaf1ee8cc0f068fa2216f"
+          },
+          "HanlinMiniApps.debug.dylib": {
+            "bytes": 192434752,
+            "sha256": "3138562f1590792f015bd9edd97f812acbe4135b1628cf01cc20347b65d053b1"
+          },
+          "Info.plist": {
+            "bytes": 5494,
+            "sha256": "c49a86afa9eeea1c31fc5f9d518008ac4284de4b5928ded851b504e0df89d675"
+          }
+        },
+        "testProduct": {
+          "AI_HLYUITests": {
+            "bytes": 4449408,
+            "sha256": "dfd5f0e5ef672aea917702a307c607121bd620a8d1ca38ac0c98ce56b3b94ad0"
+          },
+          "Info.plist": {
+            "bytes": 742,
+            "sha256": "2e3bded9c1f6ad0abf5b7af602b9f3466a2047bcefdb25f8ed1c10fb8522057a"
+          }
+        }
+      },
+      "effectivePatch": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/voiceover/artifact-selected-members/upstream-inputs.patch",
+        "sha256": "658f6925a5650544d027c9810ae443410d8651d52a7fd647bd87139449613bc9",
+        "pathCount": 20,
+        "doesNotModifyUIFile": true
+      },
+      "rawLog": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/voiceover/artifact-selected-members/paired-product/paired-tests.log.gz",
+        "compressedSHA256": "90feff7a36aa8a3635955a25a897110762980f7594bdb100b79abb443ac9622e",
+        "rawSHA256": "d5b534bba1c5e88b582c71fff12ac73b2d7a71d03f283a76bbeebf3233b04ee3",
+        "rawBytes": 42870,
+        "lineCount": 501
+      },
+      "exactExcerpt": {
+        "file": "voiceover-original-home-failure-excerpt.log.gz",
+        "startLine": 303,
+        "endLine": 479,
+        "rawSHA256": "4a488e25e88066996a792d5d85fa0989a960e1f5faebb7e0161b5b21ec92b6b5",
+        "rawBytes": 18464
+      },
+      "attachments": [
+        {
+          "path": "attachments-r1/voiceover/artifact-selected-members/paired-product/paired-attachments/407046B1-22B4-4687-B9D8-15307437D9A0.png",
+          "sha256": "3cd6fa22e63ce7d77e5bd321f7e03e56ea92158e3f4289fa1022e142813f201e",
+          "bytes": 2328871,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues()",
+          "suggestedHumanReadableName": "widget-voiceover-final-system_0_A534E350-2755-49CE-9B39-D07F51E40D7F.png",
+          "timestamp": 1795849148.798,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/407046B1-22B4-4687-B9D8-15307437D9A0.png",
+          "crc32": "73fa0eb4"
+        },
+        {
+          "path": "attachments-r1/voiceover/artifact-selected-members/paired-product/paired-attachments/9D76D319-3446-45FF-947B-BF6E141C5614.txt",
+          "sha256": "7a742d6335fd97ffeb5b2bb62e631b5747c7a82a585b6b1c9c052c5c9fb08a5f",
+          "bytes": 22125,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues()",
+          "suggestedHumanReadableName": "widget-voiceover-final-system-accessibility_0_61E893C4-DF9E-42DC-B786-DE0455E8620E.txt",
+          "timestamp": 1795849148.345,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/9D76D319-3446-45FF-947B-BF6E141C5614.txt",
+          "crc32": "8e9c1bf9"
+        },
+        {
+          "path": "attachments-r1/voiceover/artifact-selected-members/paired-product/paired-attachments/A04D5314-9F2F-4F48-9955-7E70C0498F50.png",
+          "sha256": "42241e57095193869b0a734e4513ced417480a8437839ad8c0019fa450631413",
+          "bytes": 588986,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues()",
+          "suggestedHumanReadableName": "widget-voiceover-created-both-variants_0_29B9B02B-E38D-459A-9FBA-27E6C3949E4A.png",
+          "timestamp": 1795848943.397,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/A04D5314-9F2F-4F48-9955-7E70C0498F50.png",
+          "crc32": "9ba89e9c"
+        },
+        {
+          "path": "attachments-r1/voiceover/artifact-selected-members/paired-product/paired-attachments/6E8967F7-77CD-45AC-939D-B6C125006AE6.txt",
+          "sha256": "b1945561a2caf9ba16011c476815ce08e352a9e3220ed4f91bdbfb4b838f0b95",
+          "bytes": 35695,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues()",
+          "suggestedHumanReadableName": "widget-voiceover-created-both-variants-accessibility_0_753C960A-6DAA-467C-88E9-CF6BACE28D0A.txt",
+          "timestamp": 1795848943.093,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/6E8967F7-77CD-45AC-939D-B6C125006AE6.txt",
+          "crc32": "8f8fec05"
+        }
+      ],
+      "voiceOverLifecycle": {
+        "attachment": {
+          "path": "attachments-r1/voiceover/artifact-selected-members/paired-product/paired-attachments/567237DC-BECB-4756-8EF5-DBD94C3041E5.txt",
+          "sha256": "f432bc5ad61bf3ffb435e9037dff48b50e420dec87fad04676804368d27293dc",
+          "bytes": 628,
+          "testIdentifier": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues()",
+          "suggestedHumanReadableName": "voiceover-service-events_0_5F4447BC-4618-47BE-95A9-159A7F2C4854.json",
+          "timestamp": 1795849147.072,
+          "sourceMember": "app-split-evidence/paired-product/paired-attachments/567237DC-BECB-4756-8EF5-DBD94C3041E5.txt",
+          "crc32": "06abbb28"
+        },
+        "actualEvents": {
+          "events": [
+            {
+              "afterEnabled": false,
+              "beforeEnabled": false,
+              "finishedAt": "2026-11-28T06:53:57.977Z",
+              "finishedUptime": 6382.697554916667,
+              "operation": "unchanged",
+              "reason": "setup",
+              "requestedEnabled": false,
+              "startedAt": "2026-11-28T06:53:57.974Z",
+              "startedUptime": 6382.694881458334,
+              "status": "OK"
+            },
+            {
+              "afterEnabled": false,
+              "beforeEnabled": false,
+              "finishedAt": "2026-11-28T06:59:07.069Z",
+              "finishedUptime": 6691.789884375001,
+              "operation": "unchanged",
+              "reason": "restore-prior",
+              "requestedEnabled": false,
+              "startedAt": "2026-11-28T06:59:07.068Z",
+              "startedUptime": 6691.788678333333,
+              "status": "OK"
+            }
+          ],
+          "runID": "d2757cdd-2b9b-4dd9-996d-58e677fc240a",
+          "schema": 1
+        },
+        "targetSpeechOrToggleReached": false
+      }
+    }
+  ],
+  "verificationScope": "Only referenced original members were freshly read and SHA/size checked; referenced attachment CRCs were recomputed. W1 owns existing HTTP-range/central-directory qualification. No new download, native command, test or observer run."
+}

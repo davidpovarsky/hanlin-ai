@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "observedSource": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "candidateBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "observedFileSHA256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4",
+  "baseFileSHA256": "b1c993f84b8e9ebff3890be47797f60531f3c80a67b938e5ee5a17369fc837bd",
+  "helperRelations": [
+    {
+      "function": "placeMatrixWidget",
+      "sha256": "400d7e9728930c9a0c206dec6e65b069d872ebcdbfe6203b56a9ba2368479501",
+      "exactDeTo363": true
+    },
+    {
+      "function": "openWidgetFamilyGallery",
+      "sha256": "f01789a133165386b23626027def9a40dc434caf364041c10efdf98ce366fbed",
+      "exactDeTo363": true
+    },
+    {
+      "function": "tap",
+      "sha256": "3bfbba7dfdb1ef0809cc991e168d65f76e943841505577449b272b5108e19708",
+      "exactDeTo363": true
+    },
+    {
+      "function": "wait",
+      "sha256": "c27e716b99824edc7d43ae9f9ab1d3c85c6cbf722627aec04604c3810ded18aa",
+      "exactDeTo363": true
+    },
+    {
+      "function": "bounded",
+      "sha256": "666ee4598d009eb89442b8349c1ee10deb19564d5a411f79b45484ff8cbccead",
+      "exactDeTo363": true
+    },
+    {
+      "function": "widgetFamilyVisible",
+      "sha256": "53d386e5877610f9dcbff27a92a7f94a707088c240909ad3614a02084d51e17b",
+      "exactDeTo363": true
+    }
+  ]
+}

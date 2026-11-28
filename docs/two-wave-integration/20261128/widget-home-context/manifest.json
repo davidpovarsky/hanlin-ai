@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "kind": "compact-public-source-proof",
+  "sourceCommit": "ff625d1ad247877e64715245bd35ebdc9bc68600",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "native": "NOT_RUN",
+  "payloadCount": 12,
+  "payloadBytes": 70051,
+  "payloads": [
+    {
+      "path": "README.md",
+      "bytes": 5395,
+      "sha256": "df3389b35476c66aed72affdbc8196bcf0ebc3d530c286c28721c5e8d21ebeb4"
+    },
+    {
+      "path": "actual-case-evidence.json",
+      "bytes": 19112,
+      "sha256": "f072bacdecd2e6537de49c30caa587c77a743cbe3cd4613c03b201bc83b6e5d2"
+    },
+    {
+      "path": "actual-home-context-readback.json",
+      "bytes": 7888,
+      "sha256": "c6939f1897a65452ac636d912c0dce615ca862248f90020ef82b867420768f81"
+    },
+    {
+      "path": "apple-navigation-authorities.json",
+      "bytes": 1455,
+      "sha256": "dc2e6d8dae6259a19949a381428254bce2d30255e4de70704305f76605e97f93"
+    },
+    {
+      "path": "current-root-composition.json",
+      "bytes": 3509,
+      "sha256": "fb84e0689c9779236f2bc22fac8bd7f3032f79f95f58482ef263cc82f6594da3"
+    },
+    {
+      "path": "independent-mac-source-review.json",
+      "bytes": 5711,
+      "sha256": "616c9deeb88e7a025147d45236f308909823e12e17d43e9b598aeca643e83add"
+    },
+    {
+      "path": "independent-root-source-review.json",
+      "bytes": 1901,
+      "sha256": "4af682937c8500f03bbc2128bf4ccd33aca1f212ac72d830447f2e486e79e31f"
+    },
+    {
+      "path": "input-impact.json",
+      "bytes": 3529,
+      "sha256": "bef1278d048321e2ff87640f0fa37d73b881b1dcdf0e39a1b0b49e17b10d5dab"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 2505,
+      "sha256": "38d42e7291c5dee7f79f5b344893dd04dc332a39ff86a7befc710700660a7b9c"
+    },
+    {
+      "path": "source-binding.json",
+      "bytes": 1371,
+      "sha256": "886b9b2e6a38104860fac59e4a0b007b123f21de3ba7bf541c3c7468ef609c0f"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 15985,
+      "sha256": "5bf376b212383b7f296c072da4ea3b2c6027fe2b8849d43508a53a75fc3bef2a"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 1690,
+      "sha256": "335f5f472acce0b2bcee59df99173722afbb7df06fb542110834c08f9d22dc36"
+    }
+  ]
+}
