@@ -1,0 +1,720 @@
+{
+  "schema": 1,
+  "status": "EXECUTED_PASS",
+  "createdAt": "2026-11-28T07:39:57.673260+00:00",
+  "runID": 46109307098,
+  "jobID": 140869048523,
+  "runAttempt": 1,
+  "source": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "scope": "miniapp_studio_gallery_os",
+  "actualCounts": {
+    "selected": 5,
+    "started": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0
+  },
+  "selectedOrder": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns"
+  ],
+  "cases": [
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "status": "PASS",
+      "nativeSeconds": 278.1491080522537,
+      "nativeLogEvents": [
+        {
+          "line": 840,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+          "status": "started",
+          "seconds": null,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns]' started."
+        },
+        {
+          "line": 1485,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+          "status": "passed",
+          "seconds": 278.149,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns]' passed (278.149 seconds)."
+        }
+      ],
+      "runID": "974166c9-6d91-4c88-8178-490aaaff8815",
+      "exampleID": "expo-hello-world",
+      "completion": {
+        "path": "selected-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/974166c9-6d91-4c88-8178-490aaaff8815/completion.json",
+        "bytes": 28738,
+        "sha256": "785ee3b5313988a003d57a8c0395ddd7c6687308549acd3ea8db8e07161c824a"
+      },
+      "projectNames": [
+        "expo-hello-world-F361135B",
+        "expo-hello-world-59CEBF2C"
+      ],
+      "independentCopyUnchanged": true,
+      "shippedExampleUnchanged": true,
+      "installedIdentity": {
+        "entrypointID": "app",
+        "generation": 1,
+        "installedPackageID": "install-script-c74b112f998332c730e43d50",
+        "packageID": "script-c74b112f998332c730e43d50",
+        "variantID": "default"
+      },
+      "installedEntrypoint": {
+        "artifactDigest": "9e40fd6335a34ec5c4da51f814457b858c557191b0f41ff542c04ac09bac064a",
+        "compatibility": "partial",
+        "id": "app",
+        "kind": "app",
+        "requiredCapabilities": [],
+        "runtimePolicyID": "foreground-app-v1",
+        "runtimeProfile": "hanlin-expo",
+        "sourcePath": "source/bundle.js",
+        "supportedContexts": [
+          "mainApplication"
+        ]
+      },
+      "archiveSHA256": "a25ad32d04a9da1566ab33190827bf0d5e4669e38f9b800e8147f48145af1bbe",
+      "installedFileHashesEqual": 14,
+      "runtime": {
+        "processID": 26580,
+        "before": "Button taps: 0",
+        "after": "Button taps: 1",
+        "drawingPixelReview": null
+      },
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "checkJs": false,
+        "dependencyDeclarationsChecked": true,
+        "skipLibCheck": false,
+        "strict": true
+      }
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "status": "PASS",
+      "nativeSeconds": 439.278067946434,
+      "nativeLogEvents": [
+        {
+          "line": 122,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+          "status": "started",
+          "seconds": null,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns]' started."
+        },
+        {
+          "line": 839,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+          "status": "passed",
+          "seconds": 439.278,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns]' passed (439.278 seconds)."
+        }
+      ],
+      "runID": "51d6f70e-c781-4bc0-91fa-81f8841c756c",
+      "exampleID": "sdk-only-departure-budget",
+      "completion": {
+        "path": "selected-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/51d6f70e-c781-4bc0-91fa-81f8841c756c/completion.json",
+        "bytes": 28831,
+        "sha256": "10e7fb56c6ac1bee7ab3ba8541a844c5d0226f3796f9ee391130c728ae32e154"
+      },
+      "projectNames": [
+        "sdk-only-departure-budget-EF59BDD5",
+        "sdk-only-departure-budget-0B903CA9"
+      ],
+      "independentCopyUnchanged": true,
+      "shippedExampleUnchanged": true,
+      "installedIdentity": {
+        "entrypointID": "app",
+        "generation": 1,
+        "installedPackageID": "install-script-3d8a7b364518e519c667aba2",
+        "packageID": "script-3d8a7b364518e519c667aba2",
+        "variantID": "default"
+      },
+      "installedEntrypoint": {
+        "artifactDigest": "30d2075f673da15108b320995b4f5e4c4d23e2bc7b71d7228e8f806303536e8b",
+        "compatibility": "partial",
+        "id": "app",
+        "kind": "app",
+        "requiredCapabilities": [],
+        "runtimePolicyID": "foreground-app-v1",
+        "runtimeProfile": "hanlin-expo",
+        "sourcePath": "source/bundle.js",
+        "supportedContexts": [
+          "mainApplication"
+        ]
+      },
+      "archiveSHA256": "75a0985490f8a0f1b33f85a8cdcdcca53d8a38a6615bcf16ae575274c0da377f",
+      "installedFileHashesEqual": 14,
+      "runtime": {
+        "processID": 6782,
+        "before": "55 minutes reserved before the target",
+        "after": "35 minutes reserved before the target",
+        "drawingPixelReview": null
+      },
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "checkJs": false,
+        "dependencyDeclarationsChecked": true,
+        "skipLibCheck": false,
+        "strict": true
+      }
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "status": "PASS",
+      "nativeSeconds": 308.1294159889221,
+      "nativeLogEvents": [
+        {
+          "line": 2187,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+          "status": "started",
+          "seconds": null,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns]' started."
+        },
+        {
+          "line": 2885,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+          "status": "passed",
+          "seconds": 308.129,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns]' passed (308.129 seconds)."
+        }
+      ],
+      "runID": "d3275731-71ae-4190-b392-f4e85faabe9d",
+      "exampleID": "nativescript-hello-world",
+      "completion": {
+        "path": "selected-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/d3275731-71ae-4190-b392-f4e85faabe9d/completion.json",
+        "bytes": 30630,
+        "sha256": "f6c91d05e9ab04ec6aa53e37a785ab0447ebe1993ec15e5c8bbd2b71161eb25a"
+      },
+      "projectNames": [
+        "nativescript-hello-world-0A3BB100",
+        "nativescript-hello-world-C2BC3993"
+      ],
+      "independentCopyUnchanged": true,
+      "shippedExampleUnchanged": true,
+      "installedIdentity": {
+        "entrypointID": "app",
+        "generation": 1,
+        "installedPackageID": "install-script-d576375236500915453daf26",
+        "packageID": "script-d576375236500915453daf26",
+        "variantID": "default"
+      },
+      "installedEntrypoint": {
+        "artifactDigest": "a1fde271647bf486d916b42ee0643a430ab23562ef20e3f8045f38a229243106",
+        "compatibility": "partial",
+        "id": "app",
+        "kind": "app",
+        "requiredCapabilities": [],
+        "runtimePolicyID": "foreground-app-v1",
+        "runtimeProfile": "hanlin-nativescript",
+        "sourcePath": "source/nativescript/app/bundle.mjs",
+        "supportedContexts": [
+          "mainApplication"
+        ]
+      },
+      "archiveSHA256": "552cac1b67906e28d51eac5d95e4bfb9de2764ecc710ad7f288f59cfd53b02df",
+      "installedFileHashesEqual": 16,
+      "runtime": {
+        "processID": 60884,
+        "before": "Button taps: 0",
+        "after": "Button taps: 1",
+        "drawingPixelReview": null
+      },
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "checkJs": false,
+        "dependencyDeclarationsChecked": false,
+        "skipLibCheck": true,
+        "strict": true
+      }
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "status": "PASS",
+      "nativeSeconds": 417.29834401607513,
+      "nativeLogEvents": [
+        {
+          "line": 2886,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+          "status": "started",
+          "seconds": null,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioTableShareCopiesEditsBuildsInstallsAndRuns]' started."
+        },
+        {
+          "line": 3581,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+          "status": "passed",
+          "seconds": 417.298,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioTableShareCopiesEditsBuildsInstallsAndRuns]' passed (417.298 seconds)."
+        }
+      ],
+      "runID": "3ae49d44-e3e6-408e-a370-4d077ddef85a",
+      "exampleID": "sdk-only-table-share",
+      "completion": {
+        "path": "selected-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/3ae49d44-e3e6-408e-a370-4d077ddef85a/completion.json",
+        "bytes": 30393,
+        "sha256": "43ecd4ca00ae2863641ebf63a4d93b4aa69c773993e3329095f00fe58bdeb1ec"
+      },
+      "projectNames": [
+        "sdk-only-table-share-45F28546",
+        "sdk-only-table-share-44DDDF55"
+      ],
+      "independentCopyUnchanged": true,
+      "shippedExampleUnchanged": true,
+      "installedIdentity": {
+        "entrypointID": "app",
+        "generation": 1,
+        "installedPackageID": "install-script-eff1a99beb9bffeb48925890",
+        "packageID": "script-eff1a99beb9bffeb48925890",
+        "variantID": "default"
+      },
+      "installedEntrypoint": {
+        "artifactDigest": "515b2c4ffd9fbb060a701813d8736343ed22ee069a17187c1ffc1b63a24330c2",
+        "compatibility": "partial",
+        "id": "app",
+        "kind": "app",
+        "requiredCapabilities": [],
+        "runtimePolicyID": "foreground-app-v1",
+        "runtimeProfile": "hanlin-nativescript",
+        "sourcePath": "source/nativescript/app/bundle.mjs",
+        "supportedContexts": [
+          "mainApplication"
+        ]
+      },
+      "archiveSHA256": "051c1828e59af0318662b0fd56de7590902d8445128e0e211aa590cc9f03ca41",
+      "installedFileHashesEqual": 16,
+      "runtime": {
+        "processID": 76652,
+        "before": "3 people pay $35.42 each.",
+        "after": "2 pay $26.57; 2 pay $26.56.",
+        "drawingPixelReview": null
+      },
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "checkJs": false,
+        "dependencyDeclarationsChecked": false,
+        "skipLibCheck": true,
+        "strict": true
+      }
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "status": "PASS",
+      "nativeSeconds": 433.62380492687225,
+      "nativeLogEvents": [
+        {
+          "line": 1486,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+          "status": "started",
+          "seconds": null,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns]' started."
+        },
+        {
+          "line": 2186,
+          "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+          "method": "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+          "status": "passed",
+          "seconds": 433.624,
+          "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns]' passed (433.624 seconds)."
+        }
+      ],
+      "runID": "ce733813-ac14-4096-9c0a-0a6f21760c56",
+      "exampleID": "nativescript-image-drawing",
+      "completion": {
+        "path": "selected-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/ce733813-ac14-4096-9c0a-0a6f21760c56/completion.json",
+        "bytes": 32471,
+        "sha256": "8186a0fd52048c7a1a7faa91a03e85783079477663dd4dacd91661444549debb"
+      },
+      "projectNames": [
+        "nativescript-image-drawing-C77A1FE3",
+        "nativescript-image-drawing-C8F3C014"
+      ],
+      "independentCopyUnchanged": true,
+      "shippedExampleUnchanged": true,
+      "installedIdentity": {
+        "entrypointID": "app",
+        "generation": 1,
+        "installedPackageID": "install-script-f85537217687ffa9f3549ccb",
+        "packageID": "script-f85537217687ffa9f3549ccb",
+        "variantID": "default"
+      },
+      "installedEntrypoint": {
+        "artifactDigest": "a6b8b46beeb7bd557581dc7bc97ccb078101eca86d85326cbef230b5353de204",
+        "compatibility": "partial",
+        "id": "app",
+        "kind": "app",
+        "requiredCapabilities": [],
+        "runtimePolicyID": "foreground-app-v1",
+        "runtimeProfile": "hanlin-nativescript",
+        "sourcePath": "source/nativescript/app/bundle.mjs",
+        "supportedContexts": [
+          "mainApplication"
+        ]
+      },
+      "archiveSHA256": "6807423fde602ea60088eaaa8047d0d4255ce8502a14992fb491e1af36692864",
+      "installedFileHashesEqual": 16,
+      "runtime": {
+        "processID": 41858,
+        "before": "0° clockwise • 8 invalid inputs rejected",
+        "after": "180° clockwise • 8 invalid inputs rejected",
+        "drawingPixelReview": "NOT_CLAIMED; actual screenshots are retained for review"
+      },
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "checkJs": false,
+        "dependencyDeclarationsChecked": false,
+        "skipLibCheck": true,
+        "strict": true
+      }
+    }
+  ],
+  "originalCommands": {
+    "miniBuild": {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=4B8E5419-FD52-4AB8-BEE7-EF72E1D79C94",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "exit": 0,
+      "seconds": 1231.8034690420004,
+      "log": "mini-build.log",
+      "sha256": "8e110ec4da9ec22b4ee2622b1e2149039377643ec01dd4385261b4b4a1ba8489"
+    },
+    "aiBuild": {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=4B8E5419-FD52-4AB8-BEE7-EF72E1D79C94",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "AI_HLY",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult"
+      ],
+      "exit": 0,
+      "seconds": 1156.5481721250003,
+      "log": "ai-build.log",
+      "sha256": "cb9e4651ae45dc1f0c5148897bd71b0ecf2d86196cf096f4a876daad8c2a9306"
+    },
+    "native": {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=4B8E5419-FD52-4AB8-BEE7-EF72E1D79C94",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-collect-test-diagnostics",
+        "never",
+        "-scheme",
+        "AI_HLY",
+        "test-without-building",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/Paired.xcresult",
+        "-test-timeouts-enabled",
+        "YES",
+        "-maximum-test-execution-time-allowance",
+        "1200",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns"
+      ],
+      "exit": 0,
+      "seconds": 1967.0606393750004,
+      "log": "paired-tests.log",
+      "sha256": "faf1703558ef48f5812a3f84705e9755abff36bca7f92eb29ce58bc2d9d3fff8"
+    },
+    "selectedVerifier": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "Scripts/CI/verify_selected_tests.py",
+        "--results",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/test-nodes.json",
+        "--selectors",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns,AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns,AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns,AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns,AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns"
+      ],
+      "exit": 0,
+      "seconds": 0.34771066599932965,
+      "log": "requested-tests.log",
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    }
+  },
+  "nativeLog": {
+    "path": "selected-r1/gallery/artifact-selected-members/paired-product/paired-tests.log.gz",
+    "bytes": 27583,
+    "sha256": "ed555df10b6401ed7c57c17fb916df8368fae4734c41bfa9615fcff20beeabe2",
+    "rawSHA256": "faf1703558ef48f5812a3f84705e9755abff36bca7f92eb29ce58bc2d9d3fff8",
+    "rawBytes": 269101
+  },
+  "summary": {
+    "path": "selected-r1/gallery/artifact-selected-members/paired-product/test-summary.json",
+    "bytes": 1731,
+    "sha256": "db2df7a9e64c85bdc10b923254987dfe986e231096f41d35688b687ad5ce57d2"
+  },
+  "nodes": {
+    "path": "selected-r1/gallery/artifact-selected-members/paired-product/test-nodes.json",
+    "bytes": 5605,
+    "sha256": "ba611fc667c52407649c702e0c942d152264912bd0a2b624b3d3874c75623c0f"
+  },
+  "caseEvents": {
+    "path": "native-case-events.json",
+    "bytes": 3721,
+    "sha256": "93044394175db45fc0f38d03fabfdb33ac477b9f6f3469ae7780b8be032b8c65"
+  },
+  "observer": {
+    "path": "selected-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/observer.json",
+    "bytes": 575,
+    "sha256": "8970104d0b1ee5fc56597764f92665e318fd0399731f1face79c5e23965dd3eb"
+  },
+  "initialObserverReadinessObservationsRetained": {
+    "path": "selected-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/observations.jsonl",
+    "bytes": 694,
+    "sha256": "0a95e2cafae3e5869417694beb2e75207d85e0acece9b506ab6d5f88d4b8ed6e"
+  },
+  "runtimeWarnings": {
+    "count": 5,
+    "entries": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "Modifying state during view update, this will cause undefined behavior."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Modifying state during view update, this will cause undefined behavior."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Modifying state during view update, this will cause undefined behavior."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Modifying state during view update, this will cause undefined behavior."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Modifying state during view update, this will cause undefined behavior."
+      }
+    ],
+    "warningBacktraceOrSoleCause": "NOT_CLAIMED"
+  },
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "4B8E5419-FD52-4AB8-BEE7-EF72E1D79C94",
+    "deviceName": "HanlinPaired-46109307098",
+    "modelName": "iPad mini (A20 Pro)",
+    "osBuildNumber": "24B8117",
+    "osVersion": "27.2",
+    "platform": "iOS Simulator"
+  },
+  "effectiveSource": {
+    "path": "effective-source-qualification.json",
+    "bytes": 16048,
+    "sha256": "c4b3f3574806054e818e06022bfd0ab3a794e3c16488037958f4ad1cf7e912f1"
+  },
+  "sourceQualificationLimit": "Actual original hosted preparation is retained separately from clean Git and separate native/SDK runs.",
+  "artifactQualification": {
+    "artifactID": 15253980975,
+    "rangeOnly": true,
+    "wholeZIPDownloaded": false,
+    "wholeArtifactDigestVerified": false,
+    "CRCAndSHA256VerifiedOriginalMembers": [
+      {
+        "member": "app-split-evidence/paired-product/acceptance.json",
+        "rawSHA256": "b213a7abb9c68b56b72c4ffe4751dd749afa2233f928734903c1bc67bdbae449",
+        "rawBytes": 20460,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/commands.jsonl",
+        "rawSHA256": "402d0f193d2f4852896682ebbdd3bed87d89d46b3a0e53de1f4ef6d21224c322",
+        "rawBytes": 12436,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/paired-tests.log",
+        "rawSHA256": "faf1703558ef48f5812a3f84705e9755abff36bca7f92eb29ce58bc2d9d3fff8",
+        "rawBytes": 269101,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/test-summary.json",
+        "rawSHA256": "db2df7a9e64c85bdc10b923254987dfe986e231096f41d35688b687ad5ce57d2",
+        "rawBytes": 1731,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/test-nodes.json",
+        "rawSHA256": "ba611fc667c52407649c702e0c942d152264912bd0a2b624b3d3874c75623c0f",
+        "rawBytes": 5605,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/paired-attachments/manifest.json",
+        "rawSHA256": "9bea931c6df0f9e22b70c022df7246d44d15da03b3268e677094c28e6d2b38c0",
+        "rawBytes": 43853,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/observer.json",
+        "rawSHA256": "8970104d0b1ee5fc56597764f92665e318fd0399731f1face79c5e23965dd3eb",
+        "rawBytes": 575,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/observations.jsonl",
+        "rawSHA256": "0a95e2cafae3e5869417694beb2e75207d85e0acece9b506ab6d5f88d4b8ed6e",
+        "rawBytes": 694,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/source-sha.txt",
+        "rawSHA256": "358bfc27a01eeffc3180dc4eb1b0c9f3fb4001cfce5373779d817c3bb506f34a",
+        "rawBytes": 41,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/upstream-inputs.patch",
+        "rawSHA256": "799fd63cc9925d10977f13f1db53469815ab624301ad6220e4d4c07ab5ff3060",
+        "rawBytes": 248091,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/3ae49d44-e3e6-408e-a370-4d077ddef85a/completion.json",
+        "rawSHA256": "43ecd4ca00ae2863641ebf63a4d93b4aa69c773993e3329095f00fe58bdeb1ec",
+        "rawBytes": 30393,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/51d6f70e-c781-4bc0-91fa-81f8841c756c/completion.json",
+        "rawSHA256": "10e7fb56c6ac1bee7ab3ba8541a844c5d0226f3796f9ee391130c728ae32e154",
+        "rawBytes": 28831,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/974166c9-6d91-4c88-8178-490aaaff8815/completion.json",
+        "rawSHA256": "785ee3b5313988a003d57a8c0395ddd7c6687308549acd3ea8db8e07161c824a",
+        "rawBytes": 28738,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/ce733813-ac14-4096-9c0a-0a6f21760c56/completion.json",
+        "rawSHA256": "8186a0fd52048c7a1a7faa91a03e85783079477663dd4dacd91661444549debb",
+        "rawBytes": 32471,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/d3275731-71ae-4190-b392-f4e85faabe9d/completion.json",
+        "rawSHA256": "f6c91d05e9ab04ec6aa53e37a785ab0447ebe1993ec15e5c8bbd2b71161eb25a",
+        "rawBytes": 30630,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/requested-tests.log",
+        "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+        "rawBytes": 57,
+        "index": "selected-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/upstream-resolution.json",
+        "rawSHA256": "2eae96942ed4bacc29a0ef9ddad4b872cbb938b77a2059d6ff129d3f90ba70a4",
+        "rawBytes": 21092,
+        "index": "source-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/prepared-native/upstream-resolution.json",
+        "rawSHA256": "f311a9894194c69d31f29ab0c119153ce3eeb03bed51729a39700c987e87e34e",
+        "rawBytes": 15772,
+        "index": "source-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/prepared-native/native-artifacts.json",
+        "rawSHA256": "468712af0c7acce0d2042827e47dfdcef440a6d364f9be7a24f342977aa03813",
+        "rawBytes": 29917,
+        "index": "source-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/adapted-native-source-inputs.tar.gz",
+        "rawSHA256": "1e32b07af51e2f500e5f0644b0693d4b359af18d5a52de998a1f3bb9efdb403f",
+        "rawBytes": 1486770,
+        "index": "source-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stdout.log",
+        "rawSHA256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+        "rawBytes": 98,
+        "index": "source-r1/gallery/artifact-range-index.json"
+      },
+      {
+        "member": "app-split-evidence/paired-product/shortcut-observer/studio-sdk-manifests/3463dee88fe7ba8cb8792360a5e11ddb5e131de9bc0a67d4abbff29b6c7a3c83.json",
+        "rawSHA256": "3463dee88fe7ba8cb8792360a5e11ddb5e131de9bc0a67d4abbff29b6c7a3c83",
+        "rawBytes": 5270276,
+        "index": "source-r1/gallery/artifact-range-index.json"
+      }
+    ]
+  },
+  "excludedClaims": [
+    "Physical device",
+    "Provisioned distribution",
+    "iCloud/account",
+    "Native image pixel correctness",
+    "All editor/file-provider interactions",
+    "All original90 or other scopes"
+  ],
+  "postprocessing": {
+    "initialOptionalSourceIdentityReadFailed": "Retained as initial-core-summary-read-error.log; actual artifact has source-sha, upstream overlay and adapted source inputs instead. No native command or artifact member was repeated."
+  },
+  "newNativeOrTestExecution": false
+}

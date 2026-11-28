@@ -1,0 +1,82 @@
+[
+  {
+    "line": 122,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+    "status": "started",
+    "seconds": null,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns]' started."
+  },
+  {
+    "line": 839,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+    "status": "passed",
+    "seconds": 439.278,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns]' passed (439.278 seconds)."
+  },
+  {
+    "line": 840,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "status": "started",
+    "seconds": null,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns]' started."
+  },
+  {
+    "line": 1485,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "status": "passed",
+    "seconds": 278.149,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns]' passed (278.149 seconds)."
+  },
+  {
+    "line": 1486,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+    "status": "started",
+    "seconds": null,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns]' started."
+  },
+  {
+    "line": 2186,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+    "status": "passed",
+    "seconds": 433.624,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns]' passed (433.624 seconds)."
+  },
+  {
+    "line": 2187,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "status": "started",
+    "seconds": null,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns]' started."
+  },
+  {
+    "line": 2885,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "status": "passed",
+    "seconds": 308.129,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns]' passed (308.129 seconds)."
+  },
+  {
+    "line": 2886,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+    "status": "started",
+    "seconds": null,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioTableShareCopiesEditsBuildsInstallsAndRuns]' started."
+  },
+  {
+    "line": 3581,
+    "class": "AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests",
+    "method": "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+    "status": "passed",
+    "seconds": 417.298,
+    "raw": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testStudioTableShareCopiesEditsBuildsInstallsAndRuns]' passed (417.298 seconds)."
+  }
+]
