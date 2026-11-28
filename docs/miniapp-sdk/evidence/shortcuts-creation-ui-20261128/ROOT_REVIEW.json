@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-28T05:10:56.798009+00:00",
+  "decision": "APPROVED_NARROW_OBSERVED_SHORTCUTS_UI_CREATION_REPAIR_SOURCE_ONLY",
+  "sourceBase": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "currentRootPreimageMatches": true,
+  "file": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "candidateSHA256": "a04e44dd1dfb6b7eb6e56a540f951453152a510b47fed29f97731bcb1ad43278",
+  "patchSHA256": "0ac50ad7171688b5fed1727474defeb944554da456495619903e65826285d991",
+  "all8ManifestMembersRehashed": true,
+  "wholeFileExactInverse": true,
+  "original37MethodsAndBodiesPreserved": true,
+  "observedOwnApplicationAXPNGAndFailureLogsRehashed": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-families-system-shortcuts-9a76309c-selected-r1/case-evidence-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/F657F79A-D99D-469E-ACF1-E31C08903F5A.txt",
+      "sha256": "edaf35da05f77ad59e1b561da65aa7c1db4cc2d64f6771226152b3ade5599073"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-families-system-shortcuts-9a76309c-selected-r1/case-evidence-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/63CA2F4F-0B8D-4C33-B13C-51E29D2C663E.png",
+      "sha256": "9922deeb0ed8ad562e946a62e3f2a45c87433e1f9bc214f477ac26dd6f2a2965"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-families-system-shortcuts-9a76309c-selected-r1/case-evidence-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/96166E4F-FC1B-4B61-915F-8E012B5599F4.txt",
+      "sha256": "a0cd2d6ef73fd9065802e70b157919a360b855adafba86bf51fbee08f24ed77a"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-families-system-shortcuts-9a76309c-selected-r1/case-evidence-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/B6BFB11A-BC62-4973-8DB9-629BCC77CA1F.png",
+      "sha256": "68c365f64a40437b070590ae0e99d5260e6302f0e0563f27078d77956681218b"
+    }
+  ],
+  "rawFailureLogSHA256": "3c12815ae7755abc2ac2d6659cfb29d282d9aa0f1611abbad415e2c45a3a8bc5",
+  "findings": [
+    "Only owned com.apple.shortcuts UI is queried. Exact observed curly-apostrophe onboarding heading plus exists/enabled/hittable Continue admits at most one tap.",
+    "Creation is admitted only after that heading disappears and a real enabled/hittable button is found. Original Create Shortcut/Add labels remain, observed New Shortcut is additive.",
+    "The same original wait(12), bounded(seconds), per-case deadline, failure text and subsequent Add Action/parameter/execution/output assertions remain.",
+    "Self.shortcuts is the existing single app property. firstButton already checks existence/hittability. No new app, fabricated success, disabled native action, guard removal or observer/workflow change."
+  ],
+  "native": "NOT_RUN",
+  "requiredAcceptance": "Original whole miniapp_shortcuts_os four methods on combined source; no changed-case or API-list acceptance inferred."
+}
