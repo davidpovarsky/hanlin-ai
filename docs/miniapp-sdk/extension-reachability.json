@@ -296,7 +296,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-      "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
+      "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2"
     },
     {
       "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
@@ -794,9 +794,9 @@
     },
     "widgetHostCompiler": {
       "file": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-      "line": 39,
+      "line": 40,
       "anchor": "public static func validateHostActionTargets(",
-      "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
+      "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2"
     },
     "widgetHostExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostAction.swift",
@@ -1076,9 +1076,9 @@
     },
     "controlCompiler": {
       "file": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-      "line": 192,
+      "line": 498,
       "anchor": "HanlinOriginalScriptWidgetControls.read(data, entryPath: entryPath)",
-      "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
+      "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2"
     },
     "controlUpstream": {
       "file": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",

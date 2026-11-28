@@ -62,6 +62,8 @@ let package = Package(
             .product(name: "BasicCatalogSwiftUI", package: "a2ui"),
             .product(name: "SwiftSoup", package: "SwiftSoup")
         ]),
+        .testTarget(name: "HanlinAgentActivityCoreTests",
+                    dependencies: ["HanlinAgentActivityCore", "HanlinPresentationKit"]),
         .testTarget(name: "HanlinLocalizationTests", dependencies: ["HanlinLocalization"]),
         .testTarget(name: "HanlinChatUITests", dependencies: ["HanlinChatUI"]),
         .testTarget(name: "HanlinPresentationKitTests", dependencies: ["HanlinPresentationKit"]),

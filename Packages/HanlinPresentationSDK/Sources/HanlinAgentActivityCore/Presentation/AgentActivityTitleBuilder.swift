@@ -32,7 +32,23 @@ public enum AgentActivityTitleBuilder {
                                 ProgressSummarySanitizer.sanitize($0.title)) == normalizedTitle
                     }
                 } ?? false
-                if !isOperationLabel && !isRetainedLabel { return title }
+                // A different running sentence is still not a failure outcome.
+                // Only titles emitted by the execution producer have provenance
+                // here; arbitrary diagnostics stay in the existing disclosure.
+                let failureProfile = ToolPresentationProfileRegistry.resolve(
+                    toolName: terminal.subtitle ?? name,
+                    explicitProfile: terminal.presentationProfile ?? profile)
+                let failureLabels = [
+                    failureProfile.activity.failedTitle,
+                    String(localized: "Invalid arguments", bundle: HanlinLocalization.bundle),
+                    String(localized: "Denied", bundle: HanlinLocalization.bundle),
+                    String(localized: "Unavailable", bundle: HanlinLocalization.bundle),
+                    String(localized: "Timed out", bundle: HanlinLocalization.bundle)
+                ]
+                let isDeclaredFailure = failureLabels.contains {
+                    AgentActivityDeduplicator.normalized($0) == normalizedTitle
+                }
+                if isDeclaredFailure && !isOperationLabel && !isRetainedLabel { return title }
             }
             // Cancellation and non-semantic terminal labels name the operation;
             // the row separately presents the actual outcome and diagnostics.

@@ -30,7 +30,8 @@ public enum HanlinWidgetCompiler {
         guard let engine = manifest.declaredWidgetEngine, engine != .legacy,
               let field = manifest.unknownFields["hanlinWidget"] else { throw HanlinWidgetProgramError.invalidProgram }
         let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self, from: field.canonicalJSONData(limits: .unbounded))
-        return try prepare(engine: engine, metadata: metadata, entryPath: entryPath, files: files,
+        let widgetFiles = try AuthoringOwnership.project(manifest: manifest, entryPath: entryPath, files: files)
+        return try prepare(engine: engine, metadata: metadata, entryPath: entryPath, files: widgetFiles,
                            includesOriginalWidgetManifest: true)
     }
 
@@ -102,6 +103,311 @@ public enum HanlinWidgetCompiler {
             metadata: .init(sourceFormat: format, actions: declaration.actions, families: ["systemLarge"]),
             entryPath: declaration.sourcePath, files: scoped)
     }
+
+    /// A canonical source-bearing app has two consumers of its archive. Keep
+    /// all bytes for installation; subtract only proven app/editor inputs from
+    /// this Widget compilation. Inventory hashes do not establish ownership.
+    private enum AuthoringOwnership {
+        private typealias Object = HanlinObject<HanlinJSONValue>
+
+        static func project(manifest: HanlinScriptingManifest, entryPath: String,
+                            files: [String: Data]) throws -> [String: Data] {
+            let native = manifest.hanlinRuntime == "hanlin-nativescript" && manifest.declaredWidgetEngine == .scriptwidget
+            let expo = manifest.hanlinRuntime == "hanlin-expo" && manifest.declaredWidgetEngine == .expo
+            guard manifest.runInApp, native || expo, let envelope = files["hanlin.authoring.json"],
+                  let author = try? object(envelope), author["schemaVersion"] == .integer(1),
+                  author["sourceRoot"] == .string("source") else { return files }
+
+            let engine = native ? "nativescript" : "expo"
+            guard author["engine"] == .string(engine),
+                  let scriptBytes = files["script.json"],
+                  let sourceScriptBytes = files["source/script.json"] else { throw invalid("authoring identity") }
+            // projectInput overlays an optional retained descriptor on the
+            // outer envelope when rebuilding an already source-bearing package.
+            let inner: Object
+            if let bytes = files["source/hanlin.authoring.json"] { inner = try object(bytes) }
+            else { inner = [:] }
+            let sourceEntry = try path(string(author["entry"]))
+            let config = try path(string(author["tsconfig"]))
+            guard inner["schemaVersion"] == nil || inner["schemaVersion"] == .integer(1),
+                  inner["engine"] == nil || inner["engine"] == .string(engine),
+                  (inner["entry"] ?? author["entry"]) == .string(sourceEntry),
+                  (inner["tsconfig"] ?? author["tsconfig"]) == .string(config),
+                  files["source/" + sourceEntry] != nil,
+                  try JSONDecoder().decode(HanlinScriptingManifest.self, from: scriptBytes) == manifest else {
+                throw invalid("retained project identity")
+            }
+            var script = try object(scriptBytes)
+            var sourceScript = try object(sourceScriptBytes)
+            guard sourceScript["hanlinRuntime"] == .string("hanlin-" + engine) else {
+                throw invalid("retained runtime")
+            }
+            for key in ["entry", "runInApp", "hanlinRuntime"] { script[key] = nil; sourceScript[key] = nil }
+            guard script == sourceScript else { throw invalid("retained manifest") }
+
+            // The original readers enumerate visible files only. A hidden row
+            // may be in the producer inventory, but is not claimed rehashed.
+            let retained = try inventory(author["sourceHashes"], prefix: "source/", files: files)
+            let compiled = try inventory(author["compiledHashes"], prefix: "", files: files)
+            let visible = Set(files.keys.filter(isVisible))
+            for name in visible {
+                _ = try path(name)
+                var parts = name.split(separator: "/")
+                while parts.count > 1 {
+                    parts.removeLast()
+                    guard !visible.contains(parts.joined(separator: "/")) else { throw invalid("file/directory overlap") }
+                }
+            }
+            guard Set(retained.map { Data(("source/" + $0).utf8) }) == Set(visible.filter { $0.hasPrefix("source/") }.map { Data($0.utf8) }),
+                  Set(compiled.map { Data($0.utf8) }) == Set(visible.filter {
+                      !$0.hasPrefix("source/") && $0 != "hanlin.authoring.json" && $0 != "hanlin.validation.json"
+                  }.map { Data($0.utf8) }) else { throw invalid("incomplete visible inventory") }
+            _ = try path(entryPath)
+            guard !entryPath.hasPrefix("source/"), files[entryPath] != nil else { throw invalid("Widget/editor overlap") }
+
+            var shared = Set<String>()
+            let selectors: [HanlinJSONValue]
+            if let value = inner["resources"] {
+                guard case let .array(values) = value else { throw invalid("resources") }
+                selectors = values
+            } else { selectors = [] }
+            for value in selectors {
+                let selector = try resourcePath(string(value))
+                let matches = retained.filter { selector.isEmpty || $0 == selector || $0.hasPrefix(selector + "/") }
+                guard !matches.isEmpty || !isVisible(selector) else { throw invalid("missing resource") }
+                for name in matches {
+                    guard !name.hasPrefix("source/"), name != "source",
+                          files[name] == files["source/" + name] else { throw invalid("resource/editor overlap or changed copy") }
+                    shared.insert(name)
+                }
+            }
+            let resourceCopies = shared
+            // Native presentation sources/dependencies are also copied to the
+            // package root by the same producer. Preserve all byte-exact copies,
+            // including helpers whose dynamic import name is computed at runtime.
+            for name in retained where !name.hasPrefix("source/") && files[name] == files["source/" + name] {
+                shared.insert(name)
+            }
+            if let value = script["nativePresentations"] {
+                guard case let .object(presentations) = value else { throw invalid("presentations") }
+                for (_, value) in presentations {
+                    guard case let .object(presentation) = value else { throw invalid("presentation") }
+                    let name = try path(string(presentation["sourcePath"]))
+                    guard shared.contains(name) else { throw invalid("presentation ownership") }
+                }
+            }
+            shared.insert(entryPath)
+
+            let appRoot = native ? "nativescript/app" : ""
+            let appEntry = native ? "nativescript/app/bundle.mjs" : "bundle.js"
+            guard manifest.entry == appEntry else { throw invalid("prepared app entry") }
+            let sourcePackage: Object
+            if let bytes = files["source/package.json"] { sourcePackage = try object(bytes) }
+            else { sourcePackage = [:] }
+            let appPackage = try package(at: appRoot, engine: engine, source: sourcePackage, files: files)
+            let tools = try assistantRoots(script: script, inner: inner, sourceEntry: sourceEntry,
+                                           appRoot: appRoot, native: native, retained: retained)
+            var excluded = Set(retained.map { "source/" + $0 })
+
+            if native {
+                let outputs = try moduleOutputs(root: appRoot, retained: retained, files: files)
+                guard let entryOutput = outputs[sourceEntry], let wrapper = files[appEntry],
+                      try importSpecifier(wrapper, prefix: "import ", suffix: ";\n") == "./modules/" + entryOutput else {
+                    throw invalid("prepared NativeScript entry module")
+                }
+                excluded.insert(appEntry)
+                excluded.insert(appRoot + "/package.json")
+                for output in outputs.values {
+                    excluded.insert(appRoot + "/modules/" + output)
+                    excluded.insert(appRoot + "/modules/" + output + ".map")
+                }
+                for tool in tools {
+                    let toolPackage = try package(at: tool.root, engine: engine, source: sourcePackage, files: files)
+                    guard toolPackage == appPackage, let output = outputs[tool.source],
+                          let wrapper = files[tool.root + "/bundle.mjs"],
+                          let firstLine = String(data: wrapper, encoding: .utf8)?.split(separator: "\n", omittingEmptySubsequences: false).first,
+                          try importSpecifier(Data((String(firstLine) + "\n").utf8), prefix: "import * as tool from ", suffix: ";\n") == "./modules/" + output else {
+                        throw invalid("prepared assistant module")
+                    }
+                    excluded.insert(tool.root + "/bundle.mjs")
+                    excluded.insert(tool.root + "/package.json")
+                    for output in outputs.values {
+                        for suffix in [output, output + ".map"] {
+                            let original = appRoot + "/modules/" + suffix
+                            let copy = tool.root + "/modules/" + suffix
+                            guard files[copy] == files[original] else { throw invalid("assistant module copy") }
+                            excluded.insert(copy)
+                        }
+                    }
+                }
+                // The producer copies each declared resource both at the root
+                // and into every native app's modules directory. Preserve every
+                // alias before subtracting emitted modules with the same name.
+                for root in [appRoot] + tools.map(\.root) {
+                    for name in resourceCopies {
+                        guard files[root + "/modules/" + name] == files[name] else { throw invalid("native resource copy") }
+                    }
+                    for name in shared {
+                        let alias = root + "/modules/" + name
+                        if let bytes = files[alias], bytes == files[name] { excluded.remove(alias) }
+                    }
+                }
+            } else {
+                for root in [appRoot] + tools.map(\.root) {
+                    let prepared = try package(at: root, engine: engine, source: sourcePackage, files: files)
+                    guard prepared == appPackage else { throw invalid("assistant package copy") }
+                    let bundle = joined(root, "bundle.js")
+                    guard files[bundle] != nil, files[bundle + ".map"] != nil else { throw invalid("Metro output pair") }
+                    excluded.insert(bundle)
+                    excluded.insert(bundle + ".map")
+                }
+            }
+            // Declaring an app output as shared keeps its original parser and
+            // size limits. No hash row grants permission to erase that resource.
+            excluded.subtract(shared)
+            return files.filter { !excluded.contains($0.key) }
+        }
+
+        private static func inventory(_ value: HanlinJSONValue?, prefix: String,
+                                      files: [String: Data]) throws -> Set<String> {
+            guard case let .object(rows)? = value, !rows.isEmpty else { throw invalid("inventory") }
+            var visible = Set<String>()
+            for (name, value) in rows {
+                _ = try path(name)
+                let expected = try string(value)
+                guard HanlinWidgetProgram.isSHA256(expected) else { throw invalid("inventory digest") }
+                guard isVisible(name) else { continue }
+                guard visible.insert(name).inserted, let bytes = files[prefix + name], HanlinWidgetCompiler.digest(bytes) == expected else {
+                    throw invalid("inventory bytes or aliased path")
+                }
+            }
+            return visible
+        }
+
+        private static func moduleOutputs(root: String, retained: Set<String>, files: [String: Data]) throws -> [String: String] {
+            // sourceRoot is a debugger location (possibly a URL), not an input
+            // ownership boundary. Do not resolve it; bind the actual module path
+            // and retained source bytes instead.
+            var outputs: [String: String] = [:]
+            for name in retained {
+                let url = URL(fileURLWithPath: name)
+                let ext = url.pathExtension
+                guard ["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"].contains(ext),
+                      ![".d.ts", ".d.mts", ".d.cts"].contains(where: { name.hasSuffix($0) }) else { continue }
+                let stem = String(name.dropLast(ext.count))
+                let extensions = ext == "mts" || ext == "mjs" ? ["mjs"] : ext == "cts" || ext == "cjs" ? ["cjs"] : ["js", "mjs"]
+                for output in extensions.map({ stem + $0 }) {
+                    let file = root + "/modules/" + output
+                    guard files[file] != nil, let mapBytes = files[file + ".map"],
+                          let map = try? object(mapBytes), map["version"] == .integer(3),
+                          map["file"] == .string(URL(fileURLWithPath: output).lastPathComponent),
+                          case .string(_)? = map["sourceRoot"],
+                          case let .array(sources)? = map["sources"], sources.count == 1,
+                          case let .string(source) = sources[0], source == name || source.hasSuffix("/" + name),
+                          case let .array(contents)? = map["sourcesContent"], contents.count == 1,
+                          case let .string(content) = contents[0], Data(content.utf8) == files["source/" + name] else { continue }
+                    guard outputs.updateValue(output, forKey: name) == nil else { throw invalid("ambiguous emitted module") }
+                }
+            }
+            return outputs
+        }
+
+        private struct AssistantRoot { let root: String; let source: String }
+
+        private static func assistantRoots(script: Object, inner: Object, sourceEntry: String,
+                                           appRoot: String, native: Bool, retained: Set<String>) throws -> [AssistantRoot] {
+            let declarations: [HanlinJSONValue]
+            if let value = script["entrypoints"] {
+                guard case let .array(entries) = value else { throw invalid("entrypoints") }
+                declarations = entries
+            } else { declarations = [] }
+            let sources: Object
+            if let value = inner["assistantTools"] {
+                guard case let .object(entries) = value else { throw invalid("assistant sources") }
+                sources = entries
+            } else { sources = [:] }
+            var identifiers = Set<String>()
+            var roots: [AssistantRoot] = []
+            for value in declarations {
+                guard case let .object(entry) = value else { throw invalid("entrypoint") }
+                guard entry["kind"] == .string("assistantTool") else { continue }
+                let id = try string(entry["id"])
+                let source = try path(string(sources[id]))
+                let output = try path(string(entry["sourcePath"]))
+                let parts = output.split(separator: "/")
+                guard !id.isEmpty, id != "app", id != "widget", identifiers.insert(id).inserted,
+                      retained.contains(source), source != sourceEntry,
+                      parts.count > 1, parts.last.map({ String($0) }) == (native ? "bundle.mjs" : "bundle.js") else { throw invalid("assistant entry") }
+                let root = parts.dropLast().joined(separator: "/")
+                guard !overlaps(root, "source"), (!native || !overlaps(root, appRoot)),
+                      !roots.contains(where: { overlaps($0.root, root) }) else { throw invalid("assistant root overlap") }
+                roots.append(.init(root: root, source: source))
+            }
+            guard identifiers == Set(sources.keys) else { throw invalid("assistant source inventory") }
+            return roots
+        }
+
+        private static func package(at root: String, engine: String, source: Object, files: [String: Data]) throws -> Object {
+            guard let bytes = files[joined(root, "package.json")] else { throw invalid("prepared package") }
+            let prepared = try object(bytes)
+            guard prepared["main"] == .string(engine == "expo" ? "bundle.js" : "bundle.mjs"),
+                  prepared["hanlinRuntime"] == .string("hanlin-" + engine),
+                  prepared["name"] == source["name"], prepared["version"] == source["version"],
+                  engine != "nativescript" || prepared["type"] == .string("module") else { throw invalid("prepared package identity") }
+            return prepared
+        }
+
+        private static func importSpecifier(_ bytes: Data, prefix: String, suffix: String) throws -> String {
+            guard let text = String(data: bytes, encoding: .utf8), text.hasPrefix(prefix), text.hasSuffix(suffix) else {
+                throw invalid("prepared wrapper")
+            }
+            let quoted = text.dropFirst(prefix.count).dropLast(suffix.count)
+            return try string(HanlinJSONValue.decodeCanonicalJSON(Data(quoted.utf8), limits: .unbounded))
+        }
+
+        private static func object(_ data: Data) throws -> Object {
+            guard case let .object(value) = try HanlinJSONValue.decodeCanonicalJSON(data, limits: .unbounded) else {
+                throw invalid("metadata object")
+            }
+            return value
+        }
+
+        private static func string(_ value: HanlinJSONValue?) throws -> String {
+            guard case let .string(value)? = value else { throw invalid("metadata string") }
+            return value
+        }
+
+        private static func path(_ value: String) throws -> String {
+            guard !value.isEmpty, !value.hasPrefix("/"), !value.contains("\\"), !value.contains(":"),
+                  !value.unicodeScalars.contains(where: { $0.value < 32 }),
+                  value.split(separator: "/", omittingEmptySubsequences: false).allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." }) else {
+                throw invalid("relative path")
+            }
+            return value
+        }
+
+        private static func resourcePath(_ value: String) throws -> String {
+            guard !value.isEmpty, !value.hasPrefix("/"), !value.contains("\\"), !value.contains(":"),
+                  !value.unicodeScalars.contains(where: { $0.value < 32 }) else { throw invalid("resource path") }
+            var parts: [Substring] = []
+            for part in value.split(separator: "/") {
+                if part == "." { continue }
+                if part == ".." {
+                    guard !parts.isEmpty else { throw invalid("escaping resource") }
+                    parts.removeLast()
+                } else { parts.append(part) }
+            }
+            return parts.joined(separator: "/")
+        }
+
+        private static func isVisible(_ path: String) -> Bool { !path.split(separator: "/").contains { $0.hasPrefix(".") } }
+        private static func joined(_ root: String, _ name: String) -> String { root.isEmpty ? name : root + "/" + name }
+        private static func overlaps(_ left: String, _ right: String) -> Bool { left == right || left.hasPrefix(right + "/") || right.hasPrefix(left + "/") }
+        private static func invalid(_ reason: String) -> HanlinWidgetProgramError {
+            .compilationFailed("Mixed Widget input ownership is invalid: " + reason)
+        }
+    }
+
 
     private static func prepare(engine: HanlinWidgetEngine, metadata: HanlinWidgetPackageMetadata,
                                 entryPath: String, files: [String: Data],
