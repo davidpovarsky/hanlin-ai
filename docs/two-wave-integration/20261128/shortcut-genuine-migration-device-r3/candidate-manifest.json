@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "qualification.json",
+      "bytes": 1436,
+      "sha256": "cb2b7463714cf9b4603623d721661519e854d880adcff9103dd117bf4874f17b"
+    },
+    {
+      "path": "r2-to-r3.patch",
+      "bytes": 1685,
+      "sha256": "a8135550a6fee9b438c652215ca7da550d1dec464801bc120b6a97f92e5b2215"
+    },
+    {
+      "path": "r2-to-r3.patch.gz",
+      "bytes": 511,
+      "sha256": "126533035462da68d038f43153f81165890f3bcf859554a4bc916a3e8c2b3f9d"
+    },
+    {
+      "path": "run_paired_acceptance.py",
+      "bytes": 114067,
+      "sha256": "bbaaf97bb38c1e473770b21608848309d183e21ff87340032e5481555b709f5a"
+    }
+  ]
+}
