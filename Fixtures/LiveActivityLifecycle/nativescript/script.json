@@ -1,0 +1,25 @@
+{
+  "name": "Live Activity Lifecycle NativeScript",
+  "version": "1.0.0",
+  "description": "Separate original API lifecycle fixture with real activity IDs, eight authored region markers, and a private returned-operation journal.",
+  "hanlinAppID": "hanlin.activity.lifecycle.nativescript",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "rectangle.badge.clock",
+  "color": "#2455B2",
+  "capabilities": [
+    "storage",
+    "live-activity"
+  ],
+  "actions": [],
+  "widgetEngine": "scriptwidget",
+  "hanlinWidget": {
+    "abiVersion": 1,
+    "sourceFormat": "jsx",
+    "families": [
+      "systemMedium"
+    ],
+    "actions": []
+  }
+}
