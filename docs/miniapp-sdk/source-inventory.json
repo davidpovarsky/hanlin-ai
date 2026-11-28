@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "167219a491a844ae838041f195c12abe9800dac3",
+  "sourceCommit": "de7758a9647122e302e996e72f3b9c63776764cc",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -8669,8 +8669,8 @@
             },
             {
               "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-              "sha256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
-              "line": 2040
+              "sha256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+              "line": 2041
             }
           ]
         },
@@ -15484,8 +15484,8 @@
         },
         {
           "source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-          "sha256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
-          "line": 1566,
+          "sha256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+          "line": 1567,
           "anchor": "func executeHeadlessAction("
         },
         {
@@ -15565,7 +15565,7 @@
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50"
+      "sha256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
