@@ -402,6 +402,7 @@ final class HanlinScriptingPlatform {
         case .importing, .previewReady, .installing: idle = false
         }
         guard idle, !isTransferringProductData, activeStoreOperations == 0,
+              !HanlinMiniAppSystemEntrypoints.shared.hasPendingWork,
               !HanlinScriptingApplicationSession.hasPendingDisposals,
               !isLaunching, !isExecutingHeadlessNativeScriptAction, !isProcessingResumeCommands,
               queuedNativeScriptAdmissions.isEmpty, activeApplicationID == nil, shortcutPresentation == nil,

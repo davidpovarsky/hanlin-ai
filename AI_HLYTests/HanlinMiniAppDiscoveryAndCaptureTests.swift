@@ -320,6 +320,273 @@ final class HanlinMiniAppDiscoveryAndCaptureTests: XCTestCase {
         captures.releaseWindow(secondWindow)
     }
 
+    func testCatalogPublicationAwaitsCaptureButNotSpotlight() async throws {
+        let snapshot = try package(installation: UUID().uuidString.lowercased(), runtime: .hanlinExpo,
+                                   generation: 1, name: "Published before indexing")
+        let writeStarted = expectation(description: "Real projection boundary entered")
+        let captureStarted = expectation(description: "Existing Capture boundary entered")
+        let publicationFinished = expectation(description: "Capture completed without an index acknowledgment")
+        let writeGate = SpotlightTestGate(), captureGate = SpotlightTestGate()
+        defer {
+            writeGate.finish(.failure(CancellationError()))
+            captureGate.finish(.failure(CancellationError()))
+        }
+        var publicationReturned = false
+        var capturedRecords: [HanlinMiniAppSystemRecord] = []
+        let entrypoints = HanlinMiniAppSystemEntrypoints(productIdentifier: "com.itorah.hanlinminiapps",
+            isProductTransferActive: { false }, indexOperation: { records in
+                XCTAssertEqual(records.map(\.entrypoint.kind), [.spotlight])
+                writeStarted.fulfill()
+                try await writeGate.wait()
+            }, reconcileCapture: { records in
+                capturedRecords = records
+                captureStarted.fulfill()
+                try? await captureGate.wait()
+            })
+        let publication = Task {
+            await entrypoints.reconcile(packages: [snapshot], artifactRoot: { _ in nil })
+            publicationReturned = true
+            publicationFinished.fulfill()
+        }
+        await fulfillment(of: [writeStarted, captureStarted], timeout: 3)
+        XCTAssertEqual(entrypoints.records.count, 2)
+        XCTAssertEqual(capturedRecords.map(\.entrypoint.kind), [.capture])
+        XCTAssertFalse(publicationReturned, "The existing Capture await must remain a readiness boundary.")
+        XCTAssertTrue(entrypoints.hasPendingWork)
+
+        captureGate.finish(.success(()))
+        await fulfillment(of: [publicationFinished], timeout: 3)
+        XCTAssertTrue(publicationReturned, "Spotlight is optional OS maintenance, not catalog readiness.")
+        XCTAssertTrue(entrypoints.hasPendingWork, "A pending system operation still prevents product transfer.")
+        writeGate.finish(.success(()))
+        await publication.value
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertFalse(entrypoints.hasPendingWork)
+        XCTAssertNil(entrypoints.spotlightError)
+    }
+
+    func testSpotlightWorkerCoalescesToLatestPublishedRecords() async throws {
+        let installation = UUID().uuidString.lowercased()
+        let snapshots = try (1...3).map {
+            try package(installation: installation, runtime: .hanlinNativeScript,
+                        generation: UInt64($0), name: "Generation \($0)")
+        }
+        let firstWriteStarted = expectation(description: "First index write held")
+        let firstWrite = SpotlightTestGate()
+        defer { firstWrite.finish(.failure(CancellationError())) }
+        var writes: [[UInt64]] = []
+        var activeWrites = 0, maximumActiveWrites = 0
+        let entrypoints = HanlinMiniAppSystemEntrypoints(productIdentifier: "com.itorah.hanlinminiapps",
+            isProductTransferActive: { false }, indexOperation: { records in
+                activeWrites += 1
+                maximumActiveWrites = max(maximumActiveWrites, activeWrites)
+                defer { activeWrites -= 1 }
+                writes.append(records.map(\.generation))
+                if writes.count == 1 {
+                    firstWriteStarted.fulfill()
+                    try await firstWrite.wait()
+                }
+            }, reconcileCapture: { _ in })
+        await entrypoints.reconcile(packages: [snapshots[0]], artifactRoot: { _ in nil })
+        await fulfillment(of: [firstWriteStarted], timeout: 3)
+        await entrypoints.reconcile(packages: [snapshots[1]], artifactRoot: { _ in nil })
+        await entrypoints.reconcile(packages: [snapshots[2]], artifactRoot: { _ in nil })
+        XCTAssertEqual(entrypoints.spotlightRecords.map(\.generation), [3])
+        XCTAssertEqual(writes, [[1]], "Publications must not start competing index writes.")
+        firstWrite.finish(.success(()))
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertEqual(writes, [[1], [3]], "The single worker must drain the latest desired generation.")
+        XCTAssertEqual(maximumActiveWrites, 1)
+        XCTAssertFalse(entrypoints.hasPendingWork)
+    }
+
+    func testFailedSpotlightWriteCannotReusePreviousSuccessfulProjection() async throws {
+        let snapshot = try package(installation: UUID().uuidString.lowercased(), runtime: .hanlinExpo,
+                                   generation: 1, name: "Still installed")
+        let deletionStarted = expectation(description: "A potentially partial deletion is held")
+        let deletion = SpotlightTestGate()
+        defer { deletion.finish(.failure(CancellationError())) }
+        var writes: [[UInt64]] = []
+        let entrypoints = HanlinMiniAppSystemEntrypoints(productIdentifier: "com.itorah.hanlinminiapps",
+            isProductTransferActive: { false }, indexOperation: { records in
+                writes.append(records.map(\.generation))
+                if writes.count == 2 {
+                    deletionStarted.fulfill()
+                    try await deletion.wait()
+                }
+            }, reconcileCapture: { _ in })
+        await entrypoints.reconcile(packages: [snapshot], artifactRoot: { _ in nil })
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        await entrypoints.reconcile(packages: [], artifactRoot: { _ in nil })
+        await fulfillment(of: [deletionStarted], timeout: 3)
+        await entrypoints.reconcile(packages: [snapshot], artifactRoot: { _ in nil })
+        deletion.finish(.failure(SpotlightTestFailure.rejected))
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertEqual(writes, [[1], [], [1]], "A partial failed write invalidates the older success cache.")
+        XCTAssertEqual(entrypoints.spotlightRecords.map(\.generation), [1])
+        XCTAssertNil(entrypoints.spotlightError, "Only the real subsequent successful write clears the error.")
+        XCTAssertFalse(entrypoints.hasPendingWork)
+    }
+
+    func testSpotlightFailureRemainsVisibleUntilRealRetry() async throws {
+        let snapshot = try package(installation: UUID().uuidString.lowercased(), runtime: .hanlinExpo,
+                                   generation: 1, name: "Retry")
+        var rejectNextWrite = true
+        var writes = 0
+        let entrypoints = HanlinMiniAppSystemEntrypoints(productIdentifier: "com.itorah.hanlinminiapps",
+            isProductTransferActive: { false }, indexOperation: { _ in
+                writes += 1
+                if rejectNextWrite {
+                    rejectNextWrite = false
+                    throw SpotlightTestFailure.rejected
+                }
+            }, reconcileCapture: { _ in })
+        await entrypoints.reconcile(packages: [snapshot], artifactRoot: { _ in nil })
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertEqual(writes, 1, "A failed worker must not retry indefinitely by itself.")
+        XCTAssertNotNil(entrypoints.spotlightError)
+        XCTAssertFalse(entrypoints.hasPendingWork)
+        await entrypoints.reconcile(packages: [snapshot], artifactRoot: { _ in nil })
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertEqual(writes, 2, "A failed attempt must not be cached as indexed.")
+        XCTAssertNil(entrypoints.spotlightError)
+
+        rejectNextWrite = true
+        do {
+            try await entrypoints.reindexSpotlight()
+            XCTFail("The explicit system reindex callback must receive the actual failure.")
+        } catch SpotlightTestFailure.rejected { }
+        XCTAssertFalse(entrypoints.hasPendingWork)
+        await entrypoints.reconcile(packages: [snapshot], artifactRoot: { _ in nil })
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertEqual(writes, 4, "The explicit failed write also invalidates an earlier successful cache.")
+    }
+
+    func testExplicitReindexAcknowledgesOnlyCompletedLatestProjection() async throws {
+        let installation = UUID().uuidString.lowercased()
+        let initial = try package(installation: installation, runtime: .hanlinNativeScript,
+                                  generation: 1, name: "Initial")
+        let latest = try package(installation: installation, runtime: .hanlinNativeScript,
+                                 generation: 2, name: "Latest")
+        let explicitStarted = expectation(description: "Explicit reindex actually entered its write")
+        let latestStarted = expectation(description: "Latest-generation write actually entered")
+        let explicitGate = SpotlightTestGate(), latestGate = SpotlightTestGate()
+        defer {
+            explicitGate.finish(.failure(CancellationError()))
+            latestGate.finish(.failure(CancellationError()))
+        }
+        var writes: [[UInt64]] = []
+        var activeWrites = 0, maximumActiveWrites = 0
+        var latestObserved = false, acknowledged = false
+        let entrypoints = HanlinMiniAppSystemEntrypoints(productIdentifier: "com.itorah.hanlinminiapps",
+            isProductTransferActive: { false }, indexOperation: { records in
+                activeWrites += 1
+                maximumActiveWrites = max(maximumActiveWrites, activeWrites)
+                defer { activeWrites -= 1 }
+                writes.append(records.map(\.generation))
+                if writes.count == 2 {
+                    explicitStarted.fulfill()
+                    try await explicitGate.wait()
+                }
+                if records.first?.generation == 2 {
+                    if !latestObserved {
+                        latestObserved = true
+                        latestStarted.fulfill()
+                    }
+                    try await latestGate.wait()
+                }
+            }, reconcileCapture: { _ in })
+        await entrypoints.reconcile(packages: [initial], artifactRoot: { _ in nil })
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        let explicit = Task {
+            try await entrypoints.reindexSpotlight()
+            acknowledged = true
+        }
+        await fulfillment(of: [explicitStarted], timeout: 3)
+        XCTAssertFalse(acknowledged)
+        XCTAssertTrue(entrypoints.hasPendingWork)
+        await entrypoints.reconcile(packages: [latest], artifactRoot: { _ in nil })
+        explicitGate.finish(.success(()))
+        await fulfillment(of: [latestStarted], timeout: 3)
+        XCTAssertFalse(acknowledged, "The callback cannot acknowledge an outdated generation.")
+        latestGate.finish(.success(()))
+        try await explicit.value
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertTrue(acknowledged)
+        XCTAssertEqual(writes.last, [2])
+        XCTAssertEqual(maximumActiveWrites, 1)
+        XCTAssertFalse(entrypoints.hasPendingWork)
+        let completedWrites = writes.count
+        await entrypoints.reconcile(packages: [latest], artifactRoot: { _ in nil })
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertEqual(writes.count, completedWrites, "A late older caller cannot replace the newest success cache.")
+    }
+
+    func testSpotlightWorkOwnsTransferAdmissionUntilCompletion() async throws {
+        let installation = UUID().uuidString.lowercased()
+        let initial = try package(installation: installation, runtime: .hanlinExpo,
+                                  generation: 1, name: "Initial")
+        let replacement = try package(installation: installation, runtime: .hanlinExpo,
+                                      generation: 2, name: "After transfer")
+        let writeStarted = expectation(description: "Index operation is pending")
+        let writeGate = SpotlightTestGate()
+        defer { writeGate.finish(.failure(CancellationError())) }
+        var transferActive = false
+        var writes = 0, captures = 0
+        let entrypoints = HanlinMiniAppSystemEntrypoints(productIdentifier: "com.itorah.hanlinminiapps",
+            isProductTransferActive: { transferActive }, indexOperation: { _ in
+                writes += 1
+                if writes == 1 {
+                    writeStarted.fulfill()
+                    try await writeGate.wait()
+                }
+            }, reconcileCapture: { _ in captures += 1 })
+        await entrypoints.reconcile(packages: [initial], artifactRoot: { _ in nil })
+        XCTAssertTrue(entrypoints.hasPendingWork, "Ownership begins before the worker's first suspension.")
+        await fulfillment(of: [writeStarted], timeout: 3)
+        XCTAssertTrue(entrypoints.hasPendingWork)
+        writeGate.finish(.success(()))
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertFalse(entrypoints.hasPendingWork, "A retained completed serialization tail is not active work.")
+        transferActive = true
+        do {
+            try await entrypoints.reindexSpotlight()
+            XCTFail("An explicit callback cannot start an index write during product transfer.")
+        } catch HanlinProductTransferError.busy { }
+        await entrypoints.reconcile(packages: [replacement], artifactRoot: { _ in nil })
+        XCTAssertEqual(writes, 1)
+        XCTAssertEqual(captures, 1)
+        XCTAssertEqual(entrypoints.spotlightRecords.map(\.generation), [1])
+        XCTAssertFalse(entrypoints.hasPendingWork)
+        transferActive = false
+        await entrypoints.reconcile(packages: [replacement], artifactRoot: { _ in nil })
+        await entrypoints.waitForPendingSpotlightReconciliation()
+        XCTAssertEqual(writes, 2)
+        XCTAssertEqual(captures, 2)
+        XCTAssertEqual(entrypoints.spotlightRecords.map(\.generation), [2])
+    }
+
+    private enum SpotlightTestFailure: Error { case rejected }
+
+    @MainActor
+    private final class SpotlightTestGate {
+        private var result: Result<Void, any Error>?
+        private var waiters: [CheckedContinuation<Void, any Error>] = []
+
+        func wait() async throws {
+            if let result { return try result.get() }
+            try await withCheckedThrowingContinuation { waiters.append($0) }
+        }
+
+        func finish(_ result: Result<Void, any Error>) {
+            guard self.result == nil else { return }
+            self.result = result
+            let current = waiters
+            waiters.removeAll()
+            for waiter in current { waiter.resume(with: result) }
+        }
+    }
+
     private func package(installation: String, runtime: HanlinRuntimeProfile, generation: UInt64,
                          name: String, enabled: Bool = true, actionCount: Int = 1) throws -> HanlinStoredPackageSnapshot {
         let source = runtime == .hanlinExpo ? "bundle.js" : "nativescript/app/bundle.mjs"
