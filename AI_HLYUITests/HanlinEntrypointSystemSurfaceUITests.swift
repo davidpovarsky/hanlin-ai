@@ -2908,6 +2908,13 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             let original = try XCTUnwrap(field.value as? String, "The actual path field has no readable current value.")
             if !original.isEmpty {
                 field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: original.count))
+                let remaining = try XCTUnwrap(field.value as? String, "The actual path field has no readable value after backward deletion.")
+                try require(remaining.count <= original.count && original.hasSuffix(remaining),
+                            "The path field changed beyond the original suffix during clearing.")
+                for _ in remaining {
+                    try require(Date() < deadline, "The original Studio case deadline expired while clearing its observed path suffix.")
+                    field.typeKey(XCUIKeyboardKey.forwardDelete, modifierFlags: [])
+                }
             }
             try require(field.value as? String == "", "The actual path field did not become empty before replacement.")
         } else if let original = field.value as? String, !original.isEmpty {
@@ -3122,6 +3129,22 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         let state = application.state
         guard state != .notRunning && state != .unknown else { return nil }
         let exact = NSPredicate(format: "label IN %@ OR identifier IN %@", labels as NSArray, labels as NSArray)
+        if !buttons && labels != ["On My iPad"] {
+            // Folder names belong to File View cells; their label children are not the folder action.
+            let fileViews = application.collectionViews.matching(identifier: "File View")
+                .allElementsBoundByAccessibilityElement.filter {
+                    $0.exists && $0.isEnabled && $0.isHittable
+                }
+            guard fileViews.count == 1 else { return nil }
+            let containerIdentifiers = labels.map { "\($0), Container" }
+            let containers = fileViews[0].cells.allElementsBoundByAccessibilityElement.filter { cell in
+                guard cell.exists && cell.isEnabled && cell.isHittable else { return false }
+                let hasExactName = cell.staticTexts.matching(exact).allElementsBoundByAccessibilityElement
+                    .contains { $0.exists && $0.isEnabled && $0.isHittable }
+                return labels.contains(cell.identifier) || containerIdentifiers.contains(cell.identifier) || hasExactName
+            }
+            return containers.count == 1 ? containers[0] : nil
+        }
         let queries = buttons ? [application.buttons] : [application.cells, application.staticTexts]
         return queries.flatMap { $0.matching(exact).allElementsBoundByAccessibilityElement }
             .first { $0.exists && $0.isEnabled && $0.isHittable }
