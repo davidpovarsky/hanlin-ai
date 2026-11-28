@@ -1083,14 +1083,57 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                 "orientation": widgetFamilyOrientationName(), "hostTerminated": mini.state == .notRunning]
     }
 
-    private func openWidgetFamilyGallery(sizeLabel: String) throws {
-        var selectedIcon: XCUIElement?
-        for _ in 0..<5 {
-            selectedIcon = widgetFamilyVisible(springboard.icons.matching(NSPredicate(format: "label == %@", "Hanlin MiniApps")))
-                .first { $0.frame.maxY < self.springboard.frame.maxY - 140 }
-            if selectedIcon != nil { break }
-            springboard.swipeLeft()
+    private func widgetHomeScreenIcon() throws -> XCUIElement? {
+        var reachedFirstPage = false
+        for attempt in 0..<5 {
+            let screen = springboard.frame
+            try require(screen.width > 0 && screen.height > 0 &&
+                        [screen.minX, screen.minY, screen.maxX, screen.maxY].allSatisfy { $0.isFinite },
+                        "The owned Home Screen has no finite visible frame.")
+            // App Library exposes the same app icon label, but a different menu.
+            let library = springboard.searchFields.matching(
+                NSPredicate(format: "identifier == %@", "dewey-search-field"))
+            if !widgetFamilyVisible(library).isEmpty {
+                if attempt < 4 { springboard.swipeRight() }
+                continue
+            }
+            let homes = springboard.otherElements.matching(
+                NSPredicate(format: "identifier == %@", "Home screen icons"))
+                .allElementsBoundByIndex.filter {
+                    $0.exists && $0.frame.width > 0 && $0.frame.height > 0 && screen.contains($0.frame)
+                }
+            try require(homes.count == 1, "The actual Home Screen icon container is missing or ambiguous.")
+            let pages = widgetFamilyVisible(homes[0].descendants(matching: .pageIndicator).matching(
+                NSPredicate(format: "identifier == %@", "Page control")))
+            try require(pages.count == 1, "The current Home Screen page indicator is not uniquely visible.")
+            let pageValue = try XCTUnwrap(pages[0].value as? String, "The Home Screen page has no actual value.")
+            let fields = pageValue.split(separator: " ")
+            try require(fields.count == 4 && fields[0] == "Page" && fields[2] == "of",
+                        "The actual Home Screen page value is unrecognized.")
+            let page = try XCTUnwrap(Int(fields[1]), "The Home Screen page index is invalid.")
+            let count = try XCTUnwrap(Int(fields[3]), "The Home Screen page count is invalid.")
+            try require(page > 0 && count > 0 && page <= count,
+                        "The current surface is outside the actual Home Screen pages.")
+            let icons = widgetFamilyVisible(homes[0].descendants(matching: .icon).matching(
+                NSPredicate(format: "label == %@", "Hanlin MiniApps")))
+                .filter { $0.frame.maxY < screen.maxY - 140 }
+            try require(icons.count <= 1, "Multiple MiniApps icons are visible on the same Home Screen page.")
+            if let icon = icons.first { return icon }
+            if page == 1 { reachedFirstPage = true }
+            if attempt == 4 { break }
+            if !reachedFirstPage && page > 1 {
+                springboard.swipeRight()
+            } else if page < count {
+                springboard.swipeLeft()
+            } else {
+                break
+            }
         }
+        return nil
+    }
+
+    private func openWidgetFamilyGallery(sizeLabel: String) throws {
+        let selectedIcon = try widgetHomeScreenIcon()
         let icon = try XCTUnwrap(selectedIcon, "The installed MiniApps Home Screen icon is absent.")
         let placeholders = springboard.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Choose a widget instance"))
         try require(widgetFamilyMarkerCount() == 0 && widgetFamilyVisible(placeholders).isEmpty,
@@ -1367,18 +1410,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         // This reuses the original SpringBoard gallery/configuration path.
         // A fresh matching native fallback event later proves the actual family.
         XCUIDevice.shared.press(.home)
-        let screen = springboard.frame
-        var selectedIcon: XCUIElement?
-        for _ in 0..<5 {
-            selectedIcon = springboard.icons.matching(NSPredicate(format: "label == %@", "Hanlin MiniApps"))
-                .allElementsBoundByIndex.first { icon in
-                    let frame = icon.frame
-                    return icon.isHittable && frame.minX >= screen.minX && frame.maxX <= screen.maxX &&
-                        frame.minY >= screen.minY && frame.maxY < screen.maxY - 140
-                }
-            if selectedIcon != nil { break }
-            springboard.swipeLeft()
-        }
+        let selectedIcon = try widgetHomeScreenIcon()
         let icon = try XCTUnwrap(selectedIcon, "The installed MiniApps Home Screen icon is absent.")
         icon.press(forDuration: 1.2)
         let editHome = springboard.buttons["Edit Home Screen"].firstMatch
