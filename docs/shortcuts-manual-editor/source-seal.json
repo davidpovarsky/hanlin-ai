@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-28T13:24:59.036776+00:00",
+  "sourceCommit": "8274b62bcc2d8d4317cf471ca6dc77e6336f146c",
+  "parent": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "sourceSHA256": "9db4c641cc130f036c828a60f0bfe32615dc4c0407dfcaac5deecfc6c581a95b",
+  "sourceBytes": 296085,
+  "candidateManifestSHA256": "9dc54a956f7974390a3f89fc12c4993e294b6ed8e3855e759b2699b42436cba3",
+  "rootReviewSHA256": "8f47fe06413dc824e82695045c2ff59b35d8314623808549a145fa17d391f549",
+  "onlyOneSourcePath": true,
+  "gitObjectVerified": true,
+  "cleanAfterSourceCommit": true,
+  "nativeCompilation": "NOT_RUN",
+  "nativeAcceptance": "NOT_RUN"
+}

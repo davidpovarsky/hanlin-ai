@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "sourceCommit": "8274b62bcc2d8d4317cf471ca6dc77e6336f146c",
+  "base": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "payloadCount": 11,
+  "payloadBytes": 59521,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2978,
+      "sha256": "ce46d4dbb732f28129311074440dfefc22c49f610eee272674f1232ab2e78272"
+    },
+    {
+      "path": "case-reconciliation.json",
+      "bytes": 9324,
+      "sha256": "a920775cec95459fc0c9afa7182571da0027a6fb8026b5d6dbc67b0492771389"
+    },
+    {
+      "path": "import-query-sampled-boundary.json.gz",
+      "bytes": 6719,
+      "sha256": "d70c1a96ba04e4b1ef571156eeb7573c529f9075c802661623d8ec6b18c94106",
+      "encoding": "lossless gzip",
+      "rawBytes": 41511,
+      "rawSHA256": "b57d95c32cab958f1ac32bed5cdfb444dc851184a63045a2fe38e18f3220ae79"
+    },
+    {
+      "path": "paired-tests.log.gz",
+      "bytes": 10002,
+      "sha256": "1a0fd56be8b1755f47fb274aedbc4f36e1e876d2127cc24ac128e9464e57383e",
+      "encoding": "lossless gzip",
+      "rawBytes": 75438,
+      "rawSHA256": "2531ae95285c00f8a4924aef958c23f6e63c56e5ba63d93c55cb1836eb3b9d52"
+    },
+    {
+      "path": "raw-member-verification.json.gz",
+      "bytes": 8137,
+      "sha256": "929296f4dec63ac9dad2fcd13475384e3d3ed104f0ade30930a7182bd30ce696",
+      "encoding": "lossless gzip",
+      "rawBytes": 49193,
+      "rawSHA256": "86924bac633fe327dd7b191e826f8c657962675214b3a6ba3641c55ca2d1acc7"
+    },
+    {
+      "path": "root-independent-review.json",
+      "bytes": 2916,
+      "sha256": "8f47fe06413dc824e82695045c2ff59b35d8314623808549a145fa17d391f549"
+    },
+    {
+      "path": "source-authorities-and-consumers.json.gz",
+      "bytes": 4299,
+      "sha256": "6f4c88f83085f90378639173cddacea3fda69a128cc83e97e6e8425d434c8a70",
+      "encoding": "lossless gzip",
+      "rawBytes": 30520,
+      "rawSHA256": "faea694623b73153c2a4a523f1fda3fb545c4a8c1bdef431d7144c734f9d4039"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 1251,
+      "sha256": "378eee6b29620ba9b671655be0d65f8f6ffe4da16f581a3b409a08234dc5e188"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 698,
+      "sha256": "39deda1b5fa3a6e6985ace4db7476f3effed72619cbb7fb17e619577eb76ffa9"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 1873,
+      "sha256": "f18d648167a6ae7c55e14182e34a6564204a969bd6a34c54daf2b39c46283567",
+      "encoding": "lossless gzip",
+      "rawBytes": 8980,
+      "rawSHA256": "ec95a19b8cf3bd51be28e8c8d92a5f88abb3cdea2b3f72d11eb7e12be4625d27"
+    },
+    {
+      "path": "visual-and-AX-review.json",
+      "bytes": 11324,
+      "sha256": "4d549af6e864f5537faec11ad3b6777c7d9f9588e0df68bd3b50a0d8087d7678"
+    }
+  ],
+  "sourceSHA256": "9db4c641cc130f036c828a60f0bfe32615dc4c0407dfcaac5deecfc6c581a95b",
+  "rootReviewSHA256": "8f47fe06413dc824e82695045c2ff59b35d8314623808549a145fa17d391f549",
+  "nativeAcceptance": "NOT_RUN"
+}

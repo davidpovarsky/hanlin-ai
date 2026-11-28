@@ -1,0 +1,204 @@
+{
+  "runID": 46137490523,
+  "headSHA": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "originalSelectedCommands": [
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=842149BD-F8E1-42DD-9E33-45FFC05C9AAE",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "exit": 0,
+      "seconds": 1280.421011084,
+      "log": "mini-build.log",
+      "sha256": "ad2c9b0c49a04f87d15664ca55653023f1a285d1e5019b143fe212da53149646"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=842149BD-F8E1-42DD-9E33-45FFC05C9AAE",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "AI_HLY",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult"
+      ],
+      "exit": 0,
+      "seconds": 888.2353039159998,
+      "log": "ai-build.log",
+      "sha256": "bda6270e95ab74d0754cee62f2380a7d41e89c15ad01db6dcb3e6e98b7011a30"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=842149BD-F8E1-42DD-9E33-45FFC05C9AAE",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-collect-test-diagnostics",
+        "never",
+        "-scheme",
+        "AI_HLY",
+        "test-without-building",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/Paired.xcresult",
+        "-test-timeouts-enabled",
+        "YES",
+        "-maximum-test-execution-time-allowance",
+        "600",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult"
+      ],
+      "exit": 65,
+      "seconds": 959.3703683330004,
+      "log": "paired-tests.log",
+      "sha256": "2531ae95285c00f8a4924aef958c23f6e63c56e5ba63d93c55cb1836eb3b9d52"
+    }
+  ],
+  "actualCases": [
+    {
+      "name": "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult()",
+      "nodeIdentifier": "HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult()",
+      "durationInSeconds": 261.99043095111847,
+      "result": "Failed"
+    },
+    {
+      "name": "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult()",
+      "nodeIdentifier": "HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult()",
+      "durationInSeconds": 199.0670360326767,
+      "result": "Failed"
+    },
+    {
+      "name": "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult()",
+      "nodeIdentifier": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult()",
+      "durationInSeconds": 180.7603509426117,
+      "result": "Failed"
+    },
+    {
+      "name": "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult()",
+      "nodeIdentifier": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult()",
+      "durationInSeconds": 94.17728197574615,
+      "result": "Failed"
+    }
+  ],
+  "summary": {
+    "totalTestCount": 4,
+    "passedTests": 0,
+    "failedTests": 4,
+    "skippedTests": 0,
+    "testFailures": [
+      {
+        "failureText": "Failed to get matching snapshots: Timed out while evaluating UI query.",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "testName": "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult()"
+      },
+      {
+        "failureText": "failed: caught error: \"Search the functioning Shortcuts gallery.\"",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 2,
+        "testIdentifierString": "HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+        "testName": "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult()"
+      },
+      {
+        "failureText": "failed: caught error: \"Search the functioning Shortcuts gallery.\"",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 3,
+        "testIdentifierString": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "testName": "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult()"
+      },
+      {
+        "failureText": "failed: caught error: \"Search the functioning Shortcuts gallery.\"",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 4,
+        "testIdentifierString": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+        "testName": "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult()"
+      }
+    ],
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "842149BD-F8E1-42DD-9E33-45FFC05C9AAE",
+          "deviceName": "HanlinPaired-46137490523",
+          "modelName": "iPad mini (A20 Pro)",
+          "osBuildNumber": "24B8117",
+          "osVersion": "27.2",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 4,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ]
+  },
+  "rawControllerStatus": "INFRA_ERROR",
+  "rawControllerError": "The real system-surface observer did not retain every correlated terminal result",
+  "classification": [
+    "Both original product builds PASS; original four-case test command exits65.",
+    "First Expo background case fails during the import-status Any query before Shortcuts. It is not a saved-action result failure.",
+    "Expo foreground reaches the real manual editor and queries a Search field; old label filter admits only Search Actions or Search for apps and actions.",
+    "Both NativeScript cases reach creation panes named New Shortcut 2 or New Shortcut 3. The old exact New Shortcut navigation query never taps their Editor control.",
+    "The last three have READY identity records but no completion. Secondary observer/controller INFRA_ERROR does not replace four actual failed XCTest cases."
+  ],
+  "nativeRepairAcceptance": "NOT_RUN",
+  "unproven": [
+    "The import query stack does not establish a product deadlock or a final compiler result.",
+    "Contextual Search and numeric navigation behavior are source-only candidates until the unchanged native route executes."
+  ]
+}

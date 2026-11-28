@@ -1,0 +1,212 @@
+{
+  "actualPNGReviews": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/AC790666-56EB-4977-97AE-B2D1573DAE91.png",
+      "bytes": 497096,
+      "sha256": "9fb9537b1f7f1db102796f78f46650b29032432053605924d66f447ce9e3ede2",
+      "case": "HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult()",
+      "method": "Actual PNG viewed with sentinel_read_media by W1; no synthetic rendering",
+      "observation": "Manual editor: left New Shortcut and Add actions from the right to create a shortcut; right Search/action categories and Hanlin MiniApps app row. No selected action or saved result is established."
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/41DE78C5-F044-4ED8-A467-592E0DE460DC.png",
+      "bytes": 563376,
+      "sha256": "0bcc23e2f70189aa2707278564753e6fafd206a1303b3be2b5cc32282e1c2629",
+      "case": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult()",
+      "method": "Actual PNG viewed with sentinel_read_media by W1; no synthetic rendering",
+      "observation": "Left All Shortcuts library with Search; right New Shortcut 2 and Editor button, Preparing support for describe a shortcut. The manual action editor was not entered."
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/A129D0AC-73FC-47E5-9156-9C009009D755.png",
+      "bytes": 727517,
+      "sha256": "1019ba0852faa03c23a1ff0cb8bddb337d991d0cb1ee6feff04d54d6452a83b1",
+      "case": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult()",
+      "method": "Actual PNG viewed with sentinel_read_media by W1; no synthetic rendering",
+      "observation": "Left All Shortcuts library with Search; right New Shortcut 3 and Editor button, Preparing support for describe a shortcut. The manual action editor was not entered."
+    }
+  ],
+  "AXSources": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/E5088472-3506-405B-AEB8-A9FD10ABFF52.txt",
+      "bytes": 6219,
+      "sha256": "695f072809220af1b4526c1cf2e61d1d9b06e50ab9ba1c1a12e0c1b310d28600",
+      "relevantRows": [
+        {
+          "line": 13,
+          "text": "                      NavigationBar, 0x1154048c0, {{0.0, 32.0}, {280.0, 108.0}}, identifier: 'All Shortcuts'"
+        },
+        {
+          "line": 15,
+          "text": "                        StaticText, 0x115404b40, {{66.0, 43.5}, {103.0, 21.0}}, label: 'All Shortcuts'"
+        },
+        {
+          "line": 17,
+          "text": "                        SearchField, 0x115406d00, {{16.0, 86.0}, {248.0, 44.0}}, label: 'Search', placeholderValue: 'Search'"
+        },
+        {
+          "line": 32,
+          "text": "                                      Button, 0x115405f40, {{16.0, 144.0}, {248.0, 112.0}}, identifier: 'shortcut.button.run', label: 'Play, New Shortcut'"
+        },
+        {
+          "line": 35,
+          "text": "                                        StaticText, 0x115406080, {{32.0, 220.9}, {109.0, 20.5}}, label: 'New Shortcut'"
+        },
+        {
+          "line": 52,
+          "text": "                      NavigationBar, 0x115412300, {{281.0, 32.0}, {475.0, 54.0}}, identifier: '_TtC9ShortcutsP33_5A6DD2238BCF5ED8887E2D852EDD3B1F31EditorPlaceholderView'"
+        },
+        {
+          "line": 53,
+          "text": "                        Button, 0x115412440, {{295.0, 36.0}, {36.0, 36.0}}, label: 'New Shortcut'"
+        }
+      ]
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/47C85A6A-016B-466D-A46C-E2A675037AFE.txt",
+      "bytes": 7163,
+      "sha256": "06dfd5f659c8caecd1d945e0343588580a4cdd25a946feacb7b3d11486afdf21",
+      "relevantRows": [
+        {
+          "line": 13,
+          "text": "                      NavigationBar, 0x113e012c0, {{0.0, 32.0}, {280.0, 108.0}}, identifier: 'All Shortcuts'"
+        },
+        {
+          "line": 15,
+          "text": "                        StaticText, 0x113e00000, {{66.0, 43.5}, {103.0, 21.0}}, label: 'All Shortcuts'"
+        },
+        {
+          "line": 17,
+          "text": "                        SearchField, 0x113e00280, {{16.0, 86.0}, {248.0, 44.0}}, label: 'Search', placeholderValue: 'Search'"
+        },
+        {
+          "line": 32,
+          "text": "                                      Button, 0x113e02580, {{16.0, 144.0}, {248.0, 112.0}}, identifier: 'shortcut.button.run', label: 'Play, New Shortcut 2'"
+        },
+        {
+          "line": 35,
+          "text": "                                        StaticText, 0x113e02940, {{32.0, 220.9}, {123.5, 20.5}}, label: 'New Shortcut 2'"
+        },
+        {
+          "line": 40,
+          "text": "                                      Button, 0x113e02e40, {{16.0, 273.0}, {248.0, 112.0}}, identifier: 'shortcut.button.run', label: 'Play, New Shortcut'"
+        },
+        {
+          "line": 43,
+          "text": "                                        StaticText, 0x113e03200, {{32.0, 349.9}, {109.0, 20.5}}, label: 'New Shortcut'"
+        },
+        {
+          "line": 60,
+          "text": "                      NavigationBar, 0x114754500, {{281.0, 32.0}, {475.0, 54.0}}, identifier: '_TtC9ShortcutsP33_5A6DD2238BCF5ED8887E2D852EDD3B1F31EditorPlaceholderView'"
+        },
+        {
+          "line": 61,
+          "text": "                        Button, 0x114757840, {{295.0, 36.0}, {36.0, 36.0}}, label: 'New Shortcut'"
+        }
+      ]
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/C7AC3420-3B4C-4025-BF7B-35853D654D92.txt",
+      "bytes": 7422,
+      "sha256": "a9a9af0e7298cbece5789841ad75a02d01f37e3195fb7ae8d3eeb8d3f0bd09e6",
+      "relevantRows": [
+        {
+          "line": 14,
+          "text": "    Window (Main), 0x112d2d040, {{0.0, 0.0}, {756.0, 1158.0}}, identifier: 'SBSwitcherWindow:Main'"
+        },
+        {
+          "line": 90,
+          "text": " →Find: Application 'com.apple.springboard'"
+        }
+      ]
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/D345E1CE-BA96-441C-8A56-F772E70968EA.txt",
+      "bytes": 7422,
+      "sha256": "a9a16f64f05a57c678cf8b2a3248091d584555c42b72cb526b0ba5294960c40f",
+      "relevantRows": [
+        {
+          "line": 14,
+          "text": "    Window (Main), 0x11541b980, {{0.0, 0.0}, {756.0, 1158.0}}, identifier: 'SBSwitcherWindow:Main'"
+        },
+        {
+          "line": 90,
+          "text": " →Find: Application 'com.apple.springboard'"
+        }
+      ]
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/96F42893-9E1D-487B-A72C-2B448353465E.txt",
+      "bytes": 7422,
+      "sha256": "327d191c2265c059b185aa7beec100b4445a5e3197e507336d3d227db4fdce74",
+      "relevantRows": [
+        {
+          "line": 14,
+          "text": "    Window (Main), 0x1154692c0, {{0.0, 0.0}, {756.0, 1158.0}}, identifier: 'SBSwitcherWindow:Main'"
+        },
+        {
+          "line": 90,
+          "text": " →Find: Application 'com.apple.springboard'"
+        }
+      ]
+    }
+  ],
+  "serializedSnapshots": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/shortcuts-snapshot-intake-r3/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/7F8DF3BF-8A8F-4712-BB56-8A5C5E9F02ED",
+      "bytes": 157017,
+      "sha256": "0b10020f1be85da28e00f7b3b49b65d7df50ac954e0628dc56585e23976ab650",
+      "objectCount": 2508,
+      "relevantExactStrings": [
+        "All Shortcuts",
+        "All Shortcuts",
+        "All Shortcuts",
+        "Search",
+        "All Shortcuts",
+        "New Shortcut",
+        "No Shortcut Selected",
+        "All Shortcuts"
+      ],
+      "qualification": "Retained serialized snapshots expose precreation/placeholder state, not the later manual-editor pane. Attachment timing is not assumed to prove the captured UI tree."
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/shortcuts-snapshot-intake-r3/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/CD34273D-623E-4423-AB1E-BB9B60C74A62",
+      "bytes": 43381,
+      "sha256": "bd79cf1a7117880e0a45419a1a593b78758d83167da57dc1decc5aa77c05e438",
+      "objectCount": 871,
+      "relevantExactStrings": [
+        "All Shortcuts",
+        "All Shortcuts",
+        "All Shortcuts",
+        "Search",
+        "All Shortcuts",
+        "New Shortcut",
+        "New Shortcut",
+        "No Shortcut Selected"
+      ],
+      "qualification": "Retained serialized snapshots expose precreation/placeholder state, not the later manual-editor pane. Attachment timing is not assumed to prove the captured UI tree."
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/shortcuts-snapshot-intake-r3/attachments-r1/shortcuts/artifact-selected-members/paired-product/paired-attachments/4B483D0D-B15B-46D9-8C57-96F6E32F4B15",
+      "bytes": 48471,
+      "sha256": "77902cabe92b2f0b4341521b682e24607b0c63576fabd943b5a4111d1fe98e87",
+      "objectCount": 971,
+      "relevantExactStrings": [
+        "All Shortcuts",
+        "All Shortcuts",
+        "All Shortcuts",
+        "Search",
+        "All Shortcuts",
+        "New Shortcut 2",
+        "New Shortcut",
+        "New Shortcut",
+        "No Shortcut Selected"
+      ],
+      "qualification": "Retained serialized snapshots expose precreation/placeholder state, not the later manual-editor pane. Attachment timing is not assumed to prove the captured UI tree."
+    }
+  ],
+  "limits": [
+    "Three final-system AX exports are SpringBoard switcher trees, not Shortcuts editor trees.",
+    "Own Shortcuts start trees establish the distinct All Shortcuts navigation-bar Search; the three final PNGs and actual query log establish later visible UI state.",
+    "No PNG/AX for first Expo import failure was exported in the first-case manifest; its retained spindump is separate."
+  ]
+}
