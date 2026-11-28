@@ -279,6 +279,24 @@ class AffectedValidationPlannerTests(unittest.TestCase):
                 self.plan_files([path])
             self.assertEqual(ctx.exception.unmapped_paths, [path])
 
+    def test_component_fixture_has_exact_original_owner_without_unreviewed_siblings(self) -> None:
+        for path in ("Fixtures/WidgetComponents/script.json", "Fixtures/WidgetComponents/widget.jsx"):
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "canonical_product_split": ["directly modified: " + path],
+                })
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests", "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        for path in ("Fixtures/WidgetComponents/unreviewed.jsx", "Fixtures/WidgetComponents/nested/widget.jsx"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
     def test_native_list_fixture_inputs_use_the_original_split_owner(self) -> None:
         paths = (
             "Fixtures/ShortcutNativeLists/expo/App.tsx",

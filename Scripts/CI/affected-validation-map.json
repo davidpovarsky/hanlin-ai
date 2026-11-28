@@ -1726,6 +1726,8 @@
         "Fixtures/ShortcutNativeLists/nativescript/proof.ts",
         "Fixtures/ShortcutNativeLists/nativescript/script.json",
         "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json",
+        "Fixtures/WidgetComponents/script.json",
+        "Fixtures/WidgetComponents/widget.jsx",
         "Packages/HanlinMiniAppsBridge/**",
         "HanlinMiniAppsExtensions/**"
       ],

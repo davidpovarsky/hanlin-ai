@@ -990,6 +990,12 @@ def observe(args, stopping=lambda: False):
                 last_error = None
                 time.sleep(0.25)
                 continue
+            if request.get("surface") == "widgetComponents":
+                from observe_widget_components import observe_case
+                observe_case(args, request, directory, evidence, seen)
+                last_error = None
+                time.sleep(0.25)
+                continue
             if request.get("surface") == "widgetLayout":
                 from observe_widget_layout import observe_case
                 observe_case(args, request, directory, evidence, seen, widget_fixture)
@@ -1152,6 +1158,8 @@ def main():
                         help="Original source/product attempt manifest, only for two-instance WidgetKit state acceptance")
     parser.add_argument("--widget-voiceover-inputs", type=Path,
                         help="Original source/product attempt manifest for the separate public VoiceOver widget pilot")
+    parser.add_argument("--widget-components-inputs", type=Path,
+                        help="Current source/product/fixture manifest for one real Large component pilot")
     parser.add_argument("--widget-layout-inputs", type=Path,
                         help="Original source/product attempt manifest for the separate real Medium control-layout pilot")
     parser.add_argument("--widget-families-inputs", type=Path,

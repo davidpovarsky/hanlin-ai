@@ -527,6 +527,310 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
 
+    func testMiniAppsLargeWidgetComponentsTrackActualNativeState() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        let orientationPreparation = try prepareWidgetFamilyInitialOrientation()
+        let prior = XCUIDevice.shared.orientation
+        let priorName = widgetFamilyOrientationName()
+        let runID = UUID().uuidString.lowercased()
+        let instanceName = "Components-systemLarge-" + runID
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root; runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "expo", "surface": "widgetComponents",
+                  "fixtureTitle": "Widget Components Pilot", "instanceName": instanceName,
+                  "expectedFamily": "systemLarge", "sizeLabel": "Large", "priorOrientation": priorName,
+                  "status": "RUNNING", "test": name, "startedAt": widgetStateTimestamp()]
+        if let orientationPreparation { record["orientationPreparation"] = orientationPreparation }
+        var boundPlacement = false
+        var removed = false
+        var restored = false
+        defer {
+            if boundPlacement && !removed {
+                do { record["cleanup"] = try removeWidgetComponents(named: instanceName); removed = true }
+                catch { record["cleanupFailure"] = String(describing: error) }
+            }
+            if !restored {
+                XCUIDevice.shared.orientation = prior
+                if wait(25, until: { self.widgetFamilyOrientationName() == priorName && self.widgetFamilyScreenMatches(priorName) }) {
+                    record["orientationRestoration"] = widgetFamilyRestoration(priorName)
+                } else {
+                    record["restorationFailure"] = "The initial orientation was assigned but not effectively observed."
+                }
+            }
+            capture(mini, "widget-components-final-mini")
+            capture(springboard, "widget-components-final-system")
+            record["finishedAt"] = widgetStateTimestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            try require(priorName != "unknown", "A real initial orientation is required for the component pilot.")
+            try checkpoint("preparing")
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try importWidgetComponentsAndCreateInstance(named: instanceName)
+            capture(mini, "widget-components-instance-created")
+            try checkpoint("widget-components-instance-created")
+            let identity = try response("identity.json", timeout: 25)
+            try require(identity["status"] as? String == "READY", "The exact fresh component instance was not admitted.")
+            record["attemptID"] = try string(identity, "attemptID")
+            record["sourceSHA"] = try string(identity, "sourceSHA")
+            record["installedIdentity"] = identity
+
+            XCUIDevice.shared.press(.home)
+            try setWidgetFamilyOrientation("portrait")
+            _ = try XCTUnwrap(widgetHomeScreenIcon(), "The real Home page must precede component placement.")
+            let componentCount = widgetFamilyVisible(widgetComponentQuery("count", in: springboard)).count
+            try require(componentCount == 0, "An existing visible component widget cannot be reused or removed.")
+            record["preComponentPlacement"] = ["visibleComponentCount": componentCount,
+                "screenFrame": widgetStateFrame(springboard.frame), "orientation": widgetFamilyOrientationName(),
+                "at": widgetStateTimestamp(), "uptime": ProcessInfo.processInfo.systemUptime]
+            capture(springboard, "widget-components-before-placement")
+            try openWidgetFamilyGallery(sizeLabel: "Large")
+            try checkpoint("widget-components-arm-placement")
+            let armed = try response("placement-armed.json", timeout: 25)
+            try require(armed["status"] as? String == "READY", "The actual offered Large page was not armed.")
+            let addWidget = try widgetFamilyUnique(springboard.buttons.matching(
+                NSPredicate(format: "label MATCHES %@", "\\s*Add Widget\\s*")), "The actual gallery Add Widget action is ambiguous.")
+            try tap(addWidget, "Place the actually offered Large widget.")
+            record["addWidgetTappedAt"] = widgetStateTimestamp()
+            record["unboundPlacementCreated"] = true
+            if springboard.buttons["Done"].firstMatch.exists { try tap(springboard.buttons["Done"].firstMatch, "Finish the actual placement.") }
+            let placeholders = springboard.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Choose a widget instance"))
+            try require(wait(25) { self.widgetFamilyVisible(placeholders).count == 1 },
+                        "The new configuration placeholder is missing or ambiguous.")
+            let placeholder = try XCTUnwrap(widgetFamilyVisible(placeholders).first)
+            capture(springboard, "widget-components-new-placeholder")
+            placeholder.press(forDuration: 1.5)
+            try tap(springboard.buttons["Edit Widget"].firstMatch, "Configure this new physical widget.")
+            try tapWidgetInstanceChooseButton("Open this row's real Widget instance Choose button.")
+            let entity = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+                NSPredicate(format: "label CONTAINS %@", instanceName)), "The exact fresh component instance is not offered.")
+            try tap(entity, "Select this case's named component variant.")
+            XCUIDevice.shared.press(.home)
+            mini.terminate()
+            try require(mini.state == .notRunning, "The component pilot requires a terminated host.")
+
+            let initialAt = widgetStateTimestamp()
+            let initialUptime = ProcessInfo.processInfo.systemUptime
+            let initialBinding = try confirmWidgetComponents(named: instanceName, count: 0,
+                                                              label: "widget-components-configuration-0")
+            boundPlacement = true
+            record["unboundPlacementCreated"] = false
+            var observations = [try captureWidgetComponents(index: 0, count: 0, requestedAt: initialAt,
+                requestedUptime: initialUptime, configuration: initialBinding)]
+            record["observations"] = observations
+            record["hostTerminated"] = mini.state == .notRunning
+            try checkpoint("widget-components-placed")
+            let placement = try response("observation-0.json", timeout: 35)
+            try require(placement["status"] as? String == "READY", "The actual native components and fresh Large render were not admitted.")
+
+            let actionID = UUID().uuidString.lowercased()
+            record["actionID"] = actionID
+            record["armConfiguration"] = try confirmWidgetComponents(named: instanceName, count: 0,
+                                                                      label: "widget-components-arm-configuration")
+            record["armUI"] = try widgetComponentsObservation(count: 0)
+            try checkpoint("widget-components-arm-action")
+            let arm = try response("action-armed.json", timeout: 25)
+            try require(arm["status"] as? String == "READY", "The current real Add action was not armed.")
+            let elements = try widgetComponentPlacement(count: 0)
+            var tapObservation: [String: Any] = ["actionID": actionID, "beganAt": widgetStateTimestamp(),
+                                                "beganUptime": ProcessInfo.processInfo.systemUptime]
+            try tap(elements.add, "Invoke the native component widget Add action.")
+            tapObservation["returnedAt"] = widgetStateTimestamp()
+            tapObservation["returnedUptime"] = ProcessInfo.processInfo.systemUptime
+            record["tap"] = tapObservation
+            let requestedAt = widgetStateTimestamp()
+            let requestedUptime = ProcessInfo.processInfo.systemUptime
+            let configuration = try confirmWidgetComponents(named: instanceName, count: 1,
+                                                              label: "widget-components-configuration-1")
+            observations.append(try captureWidgetComponents(index: 1, count: 1, requestedAt: requestedAt,
+                requestedUptime: requestedUptime, configuration: configuration))
+            record["observations"] = observations
+            record["hostTerminated"] = mini.state == .notRunning
+            try checkpoint("widget-components-applied")
+            let applied = try response("observation-1.json", timeout: 35)
+            try require(applied["status"] as? String == "READY", "The real nonce/revision and individually observed updated components did not qualify.")
+
+            record["cleanup"] = try removeWidgetComponents(named: instanceName)
+            removed = true
+            XCUIDevice.shared.orientation = prior
+            try require(wait(25) { self.widgetFamilyOrientationName() == priorName && self.widgetFamilyScreenMatches(priorName) },
+                        "The actual initial orientation was not restored.")
+            record["orientationRestoration"] = widgetFamilyRestoration(priorName)
+            capture(springboard, "widget-components-restored")
+            restored = true
+            try checkpoint("widget-components-complete")
+            let completion = try response("completion.json", timeout: 30)
+            try require(completion["status"] as? String == "EXECUTED_PASS", "Final component/source/container/cleanup qualification did not pass.")
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"; record["error"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func widgetComponentQuery(_ component: String, in element: XCUIElement) -> XCUIElementQuery {
+        element.descendants(matching: .any).matching(NSPredicate(format: "identifier == %@", "hanlin-component-" + component))
+    }
+
+    private func widgetComponentPlacement(count: Int) throws
+        -> (container: XCUIElement, marker: XCUIElement, add: XCUIElement, window: XCUIElement) {
+        let markers = widgetComponentQuery("count", in: springboard)
+        try require(wait(25) {
+            let rows = self.widgetFamilyVisible(markers)
+            return rows.count == 1 && rows[0].label == "Components count: " + String(count)
+                && rows[0].value as? String == String(count)
+        }, "The real component marker is absent, stale or ambiguous.")
+        let marker = try XCTUnwrap(widgetFamilyVisible(markers).first)
+        let addQuery = springboard.buttons.matching(NSPredicate(format: "identifier == %@", "hanlin-component-add"))
+        let additions = widgetFamilyVisible(addQuery)
+        try require(additions.count == 1 && additions[0].isEnabled, "The actual native Add button is absent or ambiguous.")
+        let add = try XCTUnwrap(additions.first)
+        let candidates = springboard.descendants(matching: .any).containing(
+            NSPredicate(format: "identifier == %@", "hanlin-component-count")).allElementsBoundByIndex
+        try require(candidates.count <= 32, "The observed marker ancestor query exceeded its finite bound.")
+        let containers = candidates.filter {
+            $0.exists && $0.isHittable && $0.frame.width > 0 && $0.frame.height > 0
+                && $0.frame != springboard.frame && springboard.frame.contains($0.frame)
+                && $0.frame.contains(marker.frame) && $0.frame.contains(add.frame)
+                && widgetComponentQuery("count", in: $0).count == 1 && widgetComponentQuery("add", in: $0).count == 1
+        }.sorted { $0.frame.width * $0.frame.height < $1.frame.width * $1.frame.height }
+        let container = try XCTUnwrap(containers.first, "The native AX tree does not expose a contained component widget.")
+        let area = container.frame.width * container.frame.height
+        try require(containers.filter { $0.frame.width * $0.frame.height == area }.allSatisfy { $0.frame == container.frame },
+                    "The smallest actual component container is ambiguous.")
+        let windows = springboard.windows.containing(NSPredicate(format: "identifier == %@", "hanlin-component-count"))
+            .allElementsBoundByIndex.filter {
+                $0.exists && $0.isHittable && springboard.frame.contains($0.frame) && $0.frame.contains(container.frame)
+            }
+        try require(windows.count == 1 && mini.state == .notRunning, "The physical widget must belong to one actual window with its host terminated.")
+        return (container, marker, add, try XCTUnwrap(windows.first))
+    }
+
+    private func widgetComponentAttributes(_ element: XCUIElement) -> [String: Any] {
+        var value: Any = NSNull()
+        if let text = element.value as? String { value = text }
+        return ["identifier": element.identifier, "label": element.label, "value": value,
+                "elementType": String(describing: element.elementType), "elementTypeRaw": Int(element.elementType.rawValue),
+                "exists": element.exists, "hittable": element.isHittable, "enabled": element.isEnabled,
+                "frame": widgetStateFrame(element.frame)]
+    }
+
+    private func widgetComponentsObservation(count: Int) throws -> [String: Any] {
+        let placement = try widgetComponentPlacement(count: count)
+        var components: [String: Any] = [:]
+        for name in ["count", "add", "progress", "gauge", "chart", "symbol", "link"] {
+            let rows = widgetFamilyVisible(widgetComponentQuery(name, in: placement.container))
+            try require(rows.count == 1, "The actual component identifier is missing or ambiguous: " + name)
+            let element = try XCTUnwrap(rows.first)
+            try require(placement.container.frame.contains(element.frame), "The native component lies outside its owned widget.")
+            components[name] = widgetComponentAttributes(element)
+        }
+        return ["visibleComponentCount": widgetFamilyVisible(widgetComponentQuery("count", in: springboard)).count,
+                "hostTerminated": mini.state == .notRunning, "orientation": widgetFamilyOrientationName(),
+                "screenFrame": widgetStateFrame(springboard.frame), "widgetFrame": widgetStateFrame(placement.container.frame),
+                "window": ["owner": "com.apple.springboard", "matchingWindowCount": 1,
+                           "identifier": placement.window.identifier, "exists": placement.window.exists,
+                           "hittable": placement.window.isHittable, "frame": widgetStateFrame(placement.window.frame)],
+                "components": components]
+    }
+
+    private func confirmWidgetComponents(named name: String, count: Int, label: String) throws -> [String: Any] {
+        let before = try widgetComponentPlacement(count: count)
+        let frame = before.container.frame; let windowFrame = before.window.frame
+        before.container.press(forDuration: 1.5)
+        try tap(springboard.buttons["Edit Widget"].firstMatch, "Read this component widget's exact saved name.")
+        let selected = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", name, name)),
+            "The actual configuration does not expose this case's fresh named component variant.")
+        let selectedLabel = selected.label; let value = selected.value as? String ?? ""
+        try require(selectedLabel.contains(name) || value.contains(name), "A different configured instance cannot qualify this component widget.")
+        capture(springboard, label)
+        XCUIDevice.shared.press(.home)
+        let after = try widgetComponentPlacement(count: count)
+        try require(after.container.frame == frame && after.window.frame == windowFrame,
+                    "Reading configuration changed the actual widget/window association.")
+        return ["instanceName": name, "label": selectedLabel, "value": value, "frame": widgetStateFrame(frame),
+                "verifiedAt": widgetStateTimestamp(), "verifiedUptime": ProcessInfo.processInfo.systemUptime,
+                "attachmentLabel": label]
+    }
+
+    private func captureWidgetComponents(index: Int, count: Int, requestedAt: String,
+                                         requestedUptime: TimeInterval, configuration: [String: Any]) throws -> [String: Any] {
+        var row = try widgetComponentsObservation(count: count)
+        row["index"] = index; row["requestedAt"] = requestedAt; row["requestedUptime"] = requestedUptime
+        row["configuration"] = configuration
+        let label = "widget-components-observation-" + String(index)
+        row["attachmentLabel"] = label
+        capture(springboard, label)
+        row["capturedAt"] = widgetStateTimestamp(); row["capturedUptime"] = ProcessInfo.processInfo.systemUptime
+        return row
+    }
+
+    private func removeWidgetComponents(named name: String) throws -> [String: Any] {
+        let markers = widgetFamilyVisible(widgetComponentQuery("count", in: springboard))
+        try require(markers.count == 1, "Cleanup cannot choose between physical component widgets.")
+        let marker = try XCTUnwrap(markers.first)
+        let count = try XCTUnwrap(Int(marker.value as? String ?? ""), "The real component marker value is not an integer.")
+        try require(count >= 0, "The actual component state is invalid for owned removal.")
+        let binding = try confirmWidgetComponents(named: name, count: count, label: "widget-components-cleanup-configuration")
+        let placement = try widgetComponentPlacement(count: count)
+        placement.container.press(forDuration: 1.5)
+        try tap(springboard.buttons["Remove Widget"].firstMatch, "Remove only this freshly verified named component widget.")
+        let confirm = try widgetFamilyUnique(springboard.alerts.buttons.matching(
+            NSPredicate(format: "label == 'Remove' OR label == 'Remove Widget'")), "The real removal confirmation is unavailable.")
+        let confirmationLabel = confirm.label
+        capture(springboard, "widget-components-remove-confirmation")
+        try tap(confirm, "Confirm removal of the owned component widget.")
+        try require(wait(25) { self.widgetFamilyVisible(self.widgetComponentQuery("count", in: self.springboard)).isEmpty },
+                    "The actual component widget remains visible after removal.")
+        capture(springboard, "widget-components-removed")
+        return ["instanceName": name, "configuration": binding, "action": "Remove Widget",
+                "confirmationLabel": confirmationLabel, "visibleComponentCountAfter": widgetFamilyVisible(widgetComponentQuery("count", in: springboard)).count,
+                "hostTerminated": mini.state == .notRunning, "removedAt": widgetStateTimestamp(),
+                "removedUptime": ProcessInfo.processInfo.systemUptime]
+    }
+
+    private func importWidgetComponentsAndCreateInstance(named instanceName: String) throws {
+        try tap(mini.buttons["hanlin-apps-add"].firstMatch, "Open the shipping MiniApps catalog.")
+        try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Open the original package importer.")
+        let list = mini.collectionViews["hanlin-package-import-list"].firstMatch
+        try require(list.waitForExistence(timeout: bounded(15)), "The original import list is unavailable.")
+        let archive = list.buttons["Hanlin-Expo-Widget-Components"].firstMatch
+        try reveal(archive, in: list, message: "The exact component source package was not staged.")
+        try tap(archive, "Import the authored components through the original Widget compiler.")
+        let install = mini.buttons["hanlin-package-install"].firstMatch
+        let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+        let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+        try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
+                    "The component import did not reach a concrete original compiler outcome.")
+        capture(mini, "widget-components-import-preview")
+        try require(!importError.exists && !diagnostics.exists && install.exists, "The original compiler rejected the component fixture.")
+        try tap(install, "Install through the original production preview.")
+        try require(wait(45) { !install.exists || importError.exists }, "The real component installer did not finish.")
+        try require(!importError.exists, "The original installer reported a component import error.")
+        try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Return to the real installed package list.")
+        let card = mini.buttons["hanlin-package-card-Widget Components Pilot"].firstMatch
+        try reveal(card, in: mini, message: "The installed component widget-only package is absent.")
+        try tap(card, "Open the component package's original Package Information.")
+        let field = mini.textFields["hanlin-widget-instance-name"].firstMatch
+        try reveal(field, in: mini, message: "The original independent-instance editor is unavailable.")
+        try tap(field, "Name this new component widget instance.")
+        field.typeText(instanceName)
+        let create = mini.buttons["hanlin-widget-create-instance"].firstMatch
+        try reveal(create, in: mini, message: "The original create-instance action is unavailable.")
+        try tap(create, "Create the component instance through production UI.")
+        try require(mini.staticTexts[instanceName].firstMatch.waitForExistence(timeout: bounded(15)),
+                    "The actual new component instance was not published.")
+    }
+
     func testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation() throws {
         let family = "systemMedium"
         let sizeLabel = "Medium"
