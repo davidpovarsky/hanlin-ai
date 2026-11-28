@@ -4517,4 +4517,241 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         return try XCTUnwrap(actual)
     }
 
+
+    func testNativeScriptSavedJSONListSurvivesFiveToNineParameterAppUpgrade() throws {
+        try savedShortcutMigration(.nativescript)
+    }
+
+    func testExpoSavedJSONListSurvivesFiveToNineParameterAppUpgrade() throws {
+        try savedShortcutMigration(.expo)
+    }
+
+    private func savedShortcutMigration(_ engine: Engine) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        let runID = UUID().uuidString.lowercased()
+        let name = "Hanlin-migration-" + engine.rawValue + "-" + String(runID.prefix(8))
+        let values: [Any] = ["שלום", runID, 7, 2.5, true, false]
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root; runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": engine.rawValue, "surface": "shortcutMigration",
+                  "fixtureAppID": "hanlin.shortcutlists." + engine.rawValue,
+                  "testMethod": engine == .nativescript ?
+                    "testNativeScriptSavedJSONListSurvivesFiveToNineParameterAppUpgrade" :
+                    "testExpoSavedJSONListSurvivesFiveToNineParameterAppUpgrade",
+                  "savedShortcutName": name, "startedAt": timestamp(), "status": "RUNNING"]
+        try checkpoint("preparing")
+        defer {
+            capture(shortcuts, "migration-final-shortcuts")
+            capture(mini, "migration-final-miniapps")
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            // The runner has installed the genuine admitted old-five product.
+            // This existing importer is called exactly once, before the upgrade.
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launch()
+            try openNativeListFixture(engine)
+            try checkpoint("migration-installed")
+            let identity = try response("identity.json", timeout: 30)
+            try require(identity["status"] as? String == "READY" &&
+                        identity["oldParameterCount"] as? Int == 5,
+                        "The actual old five-parameter product/fixture was not admitted.")
+            try requireSystemApp("shortcuts", identity: identity)
+            try createMigrationJSONShortcut(identity: identity, values: values, name: name)
+            record["builtInChain"] = ["Get Text from Input", "Show Result"]
+            try tap(firstButton(shortcuts, ["Done"]), "Save the original five-parameter Shortcut once.")
+            capture(shortcuts, "migration-old-saved")
+            shortcuts.terminate(); mini.terminate()
+            for step in 0...1 {
+                // Only the first branch above creates/imports/configures anything.
+                // Both branches now reopen the same unique saved system Shortcut.
+                shortcuts.launch()
+                let saved = try reopenMigrationShortcut(name)
+                record["editor"] = try readMigrationEditor(
+                    identity: identity, values: values, name: name, saved: saved)
+                record["step"] = step
+                record["systemLaunchObserved"] = false
+                capture(shortcuts, "migration-saved-editor-\(step)")
+                try checkpoint("migration-arm")
+                let armed = try response("armed-\(step).json", timeout: 30)
+                try require(armed["status"] as? String == "ARMED" && armed["step"] as? Int == step,
+                            "The observer did not arm this exact saved old/current action.")
+                try require(shortcuts.state == .runningForeground && mini.state != .runningForeground,
+                            "The real Shortcuts application must own the saved action's execution.")
+                try tap(firstButton(shortcuts, ["Run Shortcut", "Run"]),
+                        "Execute the unchanged saved legacy JSON action through its real built-in chain.")
+                record["systemLaunchObserved"] = true
+                try checkpoint("migration-sent")
+                let completion = try nativeListCompletion(step)
+                try require(completion["status"] as? String == "EXECUTED_PASS",
+                            "The saved migration action did not produce its genuine native result.")
+                let result = try XCTUnwrap(completion["result"] as? [String: Any])
+                record["renderedResult"] = try readNativeListShownResult(result, step: step)
+                let systemForeground = shortcuts.state == .runningForeground
+                let miniForeground = mini.state == .runningForeground
+                try require(systemForeground && !miniForeground,
+                            "The saved background migration action changed its actual presentation.")
+                record["shortcutsForeground"] = systemForeground
+                record["miniAppsForeground"] = miniForeground
+                try checkpoint("migration-chain-read")
+                if step == 0 {
+                    let baseline = try response("baseline.json", timeout: 15)
+                    try require(baseline["status"] as? String == "BASELINE_VERIFIED",
+                                "The genuine old-app native/private/visible result was not acknowledged.")
+                    record["baseline"] = baseline
+                    try tap(firstButton(shortcuts, ["Done", "Close"]), "Dismiss the actual old-app Show Result.")
+                    shortcuts.terminate(); mini.terminate()
+                    let shortcutState = shortcuts.state
+                    let miniState = mini.state
+                    try require(shortcutState == .notRunning && miniState == .notRunning,
+                                "Both actual apps must stop before the one in-place installation.")
+                    record["shortcutsNotRunning"] = shortcutState == .notRunning
+                    record["miniAppsNotRunning"] = miniState == .notRunning
+                    record["shortcutsStateBeforeUpgrade"] = shortcutState.rawValue
+                    record["miniAppsStateBeforeUpgrade"] = miniState.rawValue
+                    capture(springboard, "migration-before-upgrade")
+                    try checkpoint("migration-upgrade-requested")
+                    // The separate setup owns one original install300. This wait
+                    // still shares this new case's single 420-second deadline.
+                    let upgraded = try response("upgraded.json", timeout: 300)
+                    try require(upgraded["status"] as? String == "UPGRADED" &&
+                                upgraded["oldParameterCount"] as? Int == 5 &&
+                                upgraded["currentParameterCount"] as? Int == 9,
+                                "The original one-time upgrade or preserved storage admission failed.")
+                    record["upgrade"] = upgraded
+                } else {
+                    let final = try response("completion.json", timeout: 15)
+                    try require(final["status"] as? String == "EXECUTED_PASS" &&
+                                final["nativeExecutions"] as? Int == 2,
+                                "Both actual executions of this same saved Shortcut must pass.")
+                    record["completion"] = final
+                }
+            }
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"; record["error"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func createMigrationJSONShortcut(identity: [String: Any], values: [Any], name: String) throws {
+        shortcuts.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        shortcuts.launch()
+        try createSystemShortcut("Create the genuine old-app system Shortcut.")
+        let search = try findShortcutActionSearch("Search the actual old-app action gallery.")
+        search.typeText("Hanlin MiniApps")
+        try tap(shortcuts.staticTexts["Hanlin MiniApps"].firstMatch, "Open the original indexed app.")
+        try tap(shortcuts.staticTexts["Run MiniApp Action"].firstMatch, "Add the original five-parameter action.")
+        try tap(firstButton(shortcuts, ["Action", "Script Action"]), "Choose the original installed action once.")
+        try tap(shortcuts.staticTexts[try string(identity, "actionDisplayName")].firstMatch,
+                "Select the actual old installed array-echo entity once.")
+        if shortcuts.buttons["Show More"].firstMatch.exists { shortcuts.buttons["Show More"].firstMatch.tap() }
+        try tap(shortcuts.buttons["Input Type"].firstMatch, "Select the original legacy JSON input mode.")
+        try tap(shortcuts.staticTexts["Dictionary or List (JSON)"].firstMatch,
+                "Use the real pre-change dictionary/list JSON choice.")
+        let raw = try XCTUnwrap(String(data: JSONSerialization.data(withJSONObject: values, options: [.sortedKeys]),
+                                       encoding: .utf8))
+        try fillShortcutParameter("Input", value: raw)
+        let mode = try shortcutModeSwitch()
+        let actualBackground = try observedSwitchValue(mode)
+        try require(actualBackground == false, "The actual old action must default to background.")
+        try addShortcutAction("Get Text from Input")
+        try addShortcutAction("Show Result")
+        try renameShortcut(name)
+    }
+
+    private func migrationElementObservation(_ element: XCUIElement) -> [String: Any] {
+        let frame = element.frame
+        return ["elementType": element.elementType.rawValue, "identifier": element.identifier,
+                "label": element.label, "value": element.value as? String ?? "",
+                "frame": ["x": frame.minX, "y": frame.minY, "width": frame.width, "height": frame.height],
+                "observedAt": timestamp()]
+    }
+
+    private func reopenMigrationShortcut(_ name: String) throws -> [String: Any] {
+        var matches: [XCUIElement] = []
+        try require(wait(15) {
+            matches = self.shortcuts.descendants(matching: .any)
+                .matching(NSPredicate(format: "label == %@", name)).allElementsBoundByIndex
+                .filter { $0.exists && $0.isHittable && $0.isEnabled }
+            return matches.count == 1
+        }, "The same unique saved Shortcut is absent or ambiguous after process restart/upgrade.")
+        let observed = migrationElementObservation(matches[0])
+        matches[0].press(forDuration: 1.2)
+        try tap(firstButton(shortcuts, ["Edit", "Edit Shortcut"]), "Read the existing saved Shortcut without recreating it.")
+        return observed
+    }
+
+    private func migrationNamedEditorElement(_ title: String) throws -> XCUIElement {
+        var found: XCUIElement?
+        try require(wait(10) {
+            let buttons = self.shortcuts.buttons.matching(identifier: title).allElementsBoundByIndex
+                .filter { $0.exists && $0.isHittable }
+            if buttons.count == 1 { found = buttons[0]; return true }
+            guard buttons.isEmpty else { return false }
+            let texts = self.shortcuts.staticTexts.matching(identifier: title).allElementsBoundByIndex
+                .filter { $0.exists && $0.isHittable }
+            if texts.count == 1 { found = texts[0]; return true }
+            return false
+        }, "The saved editor does not expose exactly one actual " + title + " element.")
+        return try XCTUnwrap(found)
+    }
+
+    private func readMigrationEditor(
+        identity: [String: Any], values: [Any], name: String, saved: [String: Any]
+    ) throws -> [String: Any] {
+        let action = try migrationNamedEditorElement(try string(identity, "actionDisplayName"))
+        let backgroundControl = try shortcutModeSwitch()
+        let background = try observedSwitchValue(backgroundControl)
+        try require(background == false, "The real saved Shortcut changed its background choice.")
+        var mode: XCUIElement?
+        try require(wait(10) {
+            let buttons = self.shortcuts.buttons.matching(
+                NSPredicate(format: "label == %@ OR value == %@", "Dictionary or List (JSON)", "Dictionary or List (JSON)"))
+                .allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
+            if buttons.count == 1 { mode = buttons[0]; return true }
+            guard buttons.isEmpty else { return false }
+            let texts = self.shortcuts.staticTexts.matching(identifier: "Dictionary or List (JSON)")
+                .allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
+            if texts.count == 1 { mode = texts[0]; return true }
+            return false
+        }, "Read the existing legacy JSON mode without selecting or rewriting it.")
+        var input: (element: XCUIElement, raw: String, parsed: [Any])?
+        try require(wait(10) {
+            let candidates = self.shortcuts.textFields.allElementsBoundByIndex +
+                self.shortcuts.textViews.allElementsBoundByIndex +
+                self.shortcuts.buttons.matching(NSPredicate(format: "value BEGINSWITH '[' OR label BEGINSWITH '['"))
+                    .allElementsBoundByIndex
+            var found: [(XCUIElement, String, [Any])] = []
+            for element in candidates where element.exists && element.isHittable {
+                let strings = Set([element.value as? String ?? "", element.label])
+                let decoded = strings.compactMap { raw -> (String, [Any])? in
+                    guard let data = raw.data(using: .utf8),
+                          let value = try? JSONSerialization.jsonObject(with: data) as? [Any],
+                          self.equalTypedJSON(value, values) else { return nil }
+                    return (raw, value)
+                }
+                if decoded.count == 1 { found.append((element, decoded[0].0, decoded[0].1)) }
+            }
+            guard found.count == 1 else { return false }
+            input = (found[0].0, found[0].1, found[0].2)
+            return true
+        }, "Read exactly one unchanged mixed scalar JSON array from the actual saved editor.")
+        let actualInput = try XCTUnwrap(input)
+        _ = try migrationNamedEditorElement("Get Text from Input")
+        _ = try migrationNamedEditorElement("Show Result")
+        return ["savedShortcutName": name, "savedAndReopened": true, "processRestarted": true,
+                "inputMode": "Dictionary or List (JSON)", "inputParameter": "input",
+                "openWhenRun": background, "values": actualInput.parsed, "rawInput": actualInput.raw,
+                "builtInChain": ["Get Text from Input", "Show Result"], "savedElement": saved,
+                "actionElement": migrationElementObservation(action),
+                "modeElement": migrationElementObservation(try XCTUnwrap(mode)),
+                "inputElement": migrationElementObservation(actualInput.element)]
+    }
 }

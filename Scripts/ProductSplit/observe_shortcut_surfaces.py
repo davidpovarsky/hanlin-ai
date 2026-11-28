@@ -972,6 +972,12 @@ def observe(args, stopping=lambda: False):
             if request.get("phase") in ("preparing", "finished"):
                 time.sleep(0.25)
                 continue
+            if request.get("surface") == "shortcutMigration":
+                from observe_shortcut_migration import observe_case
+                observe_case(args, request, directory, evidence, seen)
+                last_error = None
+                time.sleep(0.25)
+                continue
             if request.get("surface") == "nativeLists":
                 from observe_shortcut_native_lists import observe_case
                 observe_case(args, request, directory, evidence, seen)
@@ -1164,6 +1170,8 @@ def main():
                         help="Original source/product attempt manifest for the separate real Medium control-layout pilot")
     parser.add_argument("--widget-families-inputs", type=Path,
                         help="Original source/product attempt manifest for four real Home Screen family and rotation cases")
+    parser.add_argument("--migration-inputs", type=Path,
+                        help="Actual old/current product and saved-Shortcut migration admission")
     parser.add_argument("--native-list-inputs", type=Path,
                         help="Current source/product/fixture manifest for four saved NativeScript native-list cases")
     parser.add_argument("--system-inputs", type=Path,

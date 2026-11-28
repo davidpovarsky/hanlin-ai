@@ -75,6 +75,17 @@ TEST_PLANS["miniapp_native_lists_expo_os"] = ([
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSavedBooleanListReopensThenClearsToEmpty",
 ], 4)
 
+MIGRATION_SCOPES = {
+    "miniapp_shortcut_migration_nativescript_os": "nativescript",
+    "miniapp_shortcut_migration_expo_os": "expo",
+}
+TEST_PLANS["miniapp_shortcut_migration_nativescript_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedJSONListSurvivesFiveToNineParameterAppUpgrade",
+], 1)
+TEST_PLANS["miniapp_shortcut_migration_expo_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSavedJSONListSurvivesFiveToNineParameterAppUpgrade",
+], 1)
+
 TEST_PLANS["miniapp_shortcuts_os"] = ([
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
@@ -1074,6 +1085,10 @@ def start_shortcut_observer(derived, simulator, state):
             "--output", str(observer_output), "--duration",
             "7200" if TEST_SCOPE in {"miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else
             "5400" if TEST_SCOPE == "miniapp_system_surfaces_os" else "2100"]
+    if TEST_SCOPE in MIGRATION_SCOPES:
+        if state["migration_inputs"]["runnerBundleID"] != bundle:
+            raise RuntimeError("The current migration AI runner differs from its descriptor")
+        argv += ["--migration-inputs", state["migration_inputs"]["path"]]
     if TEST_SCOPE in {"miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os"}:
         from observe_shortcut_native_lists import create_inputs
         engine = "expo" if TEST_SCOPE == "miniapp_native_lists_expo_os" else "nativescript"
@@ -1148,6 +1163,7 @@ def main():
     simulator = None
     adapter_assets = None
     shortcut_observer = None
+    migration_upgrade_setup = None
     system_input_producer = None
     studio_input_producer = None
     system_resources = None
@@ -1165,6 +1181,17 @@ def main():
         if RUN_EXTRA26:
             state["requested_test_scope"] = REQUESTED_TEST_SCOPE
             state["continuation_scope"] = "Original paired54, then the unchanged original extra26 on these same products"
+        if TEST_SCOPE in MIGRATION_SCOPES:
+            from shortcut_migration_contract import admit_old
+            old_admission = admit_old(
+                os.environ.get("SHORTCUT_MIGRATION_OLD_ADMISSION", ""),
+                os.environ.get("SHORTCUT_MIGRATION_OLD_ADMISSION_SHA256", ""),
+                MIGRATION_SCOPES[TEST_SCOPE], ROOT)
+            state["migration_old_admission"] = {
+                key: old_admission[key] for key in ("path", "bytes", "sha256")}
+            state["scope"] = "One genuine old-five/current-nine in-place upgrade of the same saved legacy JSON-array Shortcut on " + MIGRATION_SCOPES[TEST_SCOPE]
+            state["model_boundary"] = "Real old/current products, unchanged original archive, system UI, native command/private result and explicit one-install setup; no model fixture"
+            state["acceptance_boundary"] = "One fresh owned iPad Simulator per engine; no native-list editor, reimport, recreated Shortcut or physical-device claim"
         if TEST_SCOPE == "miniapp_shortcut_long_running_os":
             state["long_running_scope"] = {"cases": 4, "profile": "paced-35-v1",
                 "scope": "Real saved background return/cancel after >300s on both engines; paced finite work, Simulator only"}
@@ -1344,7 +1371,14 @@ def main():
         # Install both original products before asking either for shared state.
         # One measured cold install already consumed 176.55s of the former 180s
         # limit. This single bounded attempt retains its actual timing and exit.
-        for bundle, product in products.items():
+        initial_products = products
+        if TEST_SCOPE in MIGRATION_SCOPES:
+            from upgrade_shortcut_migration import prepare
+            state["migration_inputs"] = prepare(ROOT, derived, EVIDENCE, state, simulator,
+                                                MIGRATION_SCOPES[TEST_SCOPE], command)
+            initial_products = dict(products)
+            initial_products["com.itorah.hanlinminiapps"] = Path(state["migration_inputs"]["oldAppPath"])
+        for bundle, product in initial_products.items():
             command(["xcrun", "simctl", "install", simulator, str(product)],
                 bundle + "-install.log", timeout=300)
         containers = {}
@@ -1381,6 +1415,13 @@ def main():
             documents.mkdir(exist_ok=True)
             from observe_widget_components import stage_fixture
             state["widget_components_input"] = stage_fixture(ROOT, state["sha"], EVIDENCE, documents)
+        if TEST_SCOPE in MIGRATION_SCOPES:
+            from upgrade_shortcut_migration import stage_fixture
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.hanlinminiapps", "data"], "migration-old-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            state["migration_staged_archive"] = stage_fixture(state["migration_inputs"], documents)
         if TEST_SCOPE in {"miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "native-list-mini-data-container.txt")
@@ -1504,7 +1545,7 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
-        if TEST_SCOPE in {"miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             if TEST_SCOPE == "miniapp_system_surfaces_os":
                 adapter_assets = start_native_adapter_assets(
                     state, system_resources, state["system_surface_inputs"]["value"]["transportLog"])
@@ -1515,16 +1556,26 @@ def main():
                 state["studio_inputs_manifest"] = create_manifest(EVIDENCE)
                 studio_input_producer = start(simulator, state["studio_inputs_manifest"], state)
             shortcut_observer = start_shortcut_observer(derived, simulator, state)
+        if TEST_SCOPE in MIGRATION_SCOPES:
+            from upgrade_shortcut_migration import start
+            migration_upgrade_setup = start(ROOT, EVIDENCE, state["migration_inputs"], state)
         result = EVIDENCE / "Paired.xcresult"
         argv = test_base + ["-scheme", "AI_HLY", "test-without-building",
             "-resultBundlePath", str(result),
             "-test-timeouts-enabled", "YES", "-maximum-test-execution-time-allowance",
             "1200" if TEST_SCOPE in {"miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "600"]
         argv += ["-only-testing:" + selector for selector in selectors]
+        if TEST_SCOPE in MIGRATION_SCOPES:
+            from upgrade_shortcut_migration import test_command
+            argv = test_command(argv, state["migration_inputs"])
         code, _ = command(argv, "paired-tests.log",
                           timeout=7200 if TEST_SCOPE in {"miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else
                           5400 if TEST_SCOPE == "miniapp_system_surfaces_os" else 2100,
                           allow_failure=True)
+        if migration_upgrade_setup:
+            from upgrade_shortcut_migration import finish
+            state["migration_upgrade_exit"] = finish(migration_upgrade_setup, state)
+            migration_upgrade_setup = None
         if system_input_producer:
             finish_system_surface_input_producer(system_input_producer, state)
             system_input_producer = None
@@ -1556,7 +1607,7 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
-        if TEST_SCOPE in {"miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The real system-surface observer did not retain every correlated terminal result")
         if TEST_SCOPE == "miniapp_system_surfaces_os" and not state["system_surface_share_inputs"].get("allSelectedInputsStaged"):
@@ -1565,6 +1616,9 @@ def main():
         if TEST_SCOPE == "miniapp_studio_editor_os" and not state["studio_source_inputs"].get("allSelectedInputsStaged"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The actual Files import case did not receive its independently bound ordinary source input")
+        if TEST_SCOPE in MIGRATION_SCOPES and state.get("migration_upgrade_exit") != 0:
+            state["status"] = "INFRA_ERROR"
+            raise RuntimeError("The actual one-install migration setup did not complete")
         if state["status"] != "EXECUTED_PASS":
             raise RuntimeError("Original native acceptance did not pass every case in the recorded scope")
         if RUN_EXTRA26:
@@ -1602,6 +1656,9 @@ def main():
                 except Exception as capture:
                     state["diagnostic_errors"].append(str(capture))
     finally:
+        if migration_upgrade_setup:
+            from upgrade_shortcut_migration import finish
+            finish(migration_upgrade_setup, state)
         if system_input_producer:
             finish_system_surface_input_producer(system_input_producer, state)
         if studio_input_producer:
@@ -1616,7 +1673,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")
