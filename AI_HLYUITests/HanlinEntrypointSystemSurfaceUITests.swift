@@ -4002,7 +4002,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
     private func nativeListEditor(_ kind: NativeListKind) throws -> XCUIElement {
-        let parameter = shortcuts.buttons[kind.title].allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
+        let parameter = shortcuts.buttons.matching(identifier: kind.title).allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
         try require(parameter.count == 1,
                     "The current native " + kind.title + " parameter must be uniquely exposed; inspect retained AX.")
         parameter[0].tap()
@@ -4087,7 +4087,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
     private func closeNativeListEditor(_ editor: XCUIElement) throws {
-        let done = editor.buttons["Done"].allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
+        let done = editor.buttons.matching(identifier: "Done").allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
         try require(done.count == 1, "The actual native editor has no unique Done control.")
         done[0].tap()
         try require(wait(5) { !editor.exists || !editor.isHittable }, "The real native editor did not close.")
