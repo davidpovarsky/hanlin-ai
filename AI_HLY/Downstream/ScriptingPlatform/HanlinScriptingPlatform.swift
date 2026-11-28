@@ -2672,6 +2672,7 @@ final class HanlinScriptingPlatform {
                     throw HanlinInvocationNotStarted()
                 }
                 if command.invocation.continueInForeground, !hasNativeScriptApplicationSession,
+                   command.invocation.delivery?.source != .share,
                    let appEntry = package.entrypoints.first(where: {
                        $0.kind == .app && $0.runtimeProfile == .hanlinNativeScript
                    }), declaredAction.handler == appEntry.sourcePath {
