@@ -287,7 +287,174 @@ private struct ControlledTextModel: LanguageModelV3 {
     func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult { await source.install() }
 }
 
+private enum InvalidationDrainFixtureError: Error, Equatable {
+    case rejectedFinalWrite
+}
+
+private actor InvalidationDrainStore: HanlinConversationStore {
+    let base = HanlinInMemoryConversationStore()
+    let rejectsFinalWrite: Bool
+    private var held: CheckedContinuation<Void, Never>?
+    private var observer: CheckedContinuation<Void, Never>?
+    private(set) var reachedFinalWrite = false
+    private(set) var released = false
+
+    init(rejectsFinalWrite: Bool = false) { self.rejectsFinalWrite = rejectsFinalWrite }
+
+    func load(_ id: UUID, namespace: HanlinConversationNamespace) async throws -> HanlinConversationRecord? {
+        await base.load(id, namespace: namespace)
+    }
+
+    func save(_ record: HanlinConversationRecord, replacing revision: UInt64?) async throws {
+        if !reachedFinalWrite, case .failed = record.entries.last?.payload {
+            reachedFinalWrite = true
+            if !released {
+                await withCheckedContinuation { continuation in
+                    held = continuation
+                    observer?.resume(); observer = nil
+                }
+            }
+            if rejectsFinalWrite { throw InvalidationDrainFixtureError.rejectedFinalWrite }
+        }
+        try await base.save(record, replacing: revision)
+    }
+
+    func delete(_ id: UUID, namespace: HanlinConversationNamespace, replacing revision: UInt64) async throws {
+        try await base.delete(id, namespace: namespace, replacing: revision)
+    }
+
+    func waitUntilHeld() async {
+        if reachedFinalWrite { return }
+        await withCheckedContinuation { observer = $0 }
+    }
+
+    func release() {
+        released = true
+        held?.resume(); held = nil
+    }
+}
+
 @Suite struct AgentSessionTests {
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func invalidationDrainJoinsTheActualProducerAndFinalCanonicalWrite() async throws {
+        let namespace = try HanlinConversationNamespace(app: "drain-fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = SyntheticFixtureHost(context: context), source = ControlledTextSource()
+        let store = InvalidationDrainStore(), events = SessionEvents()
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ControlledTextModel(source: source)))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        var completionCallbacks = 0
+        session.onRunCompletion = { _ in completionCallbacks += 1 }
+        let stream = try await session.stream(messages: [.init(role: .user, text: "Original writer")],
+            modelReference: .init(provider: "fixture", modelID: "controlled"))
+        let consumer = Task { @MainActor in
+            do { for try await event in stream { await events.record(event.event) } }
+            catch { /* The real revoked producer terminates with its original error. */ }
+        }
+        defer {
+            consumer.cancel()
+            Task { await store.release(); await source.finish() }
+        }
+        await source.waitUntilInstalled()
+        await events.waitForStep()
+        await session.invalidate() // The existing fast revocation must not wait for this gated save.
+        await store.waitUntilHeld()
+        #expect(session.isRunning)
+        #expect(completionCallbacks == 1) // This callback deliberately precedes the final save.
+
+        var returned = false
+        let drain = Task { @MainActor in
+            try await session.invalidateAndDrain()
+            returned = true
+        }
+        await Task.yield()
+        #expect(!returned && session.isRunning)
+        await store.release()
+        try await drain.value
+        await consumer.value
+        await source.finish()
+        #expect(returned && !session.isRunning)
+        let loaded = try await store.load(identity.conversationID, namespace: namespace)
+        let saved = try #require(loaded)
+        #expect(saved.entries.contains { if case .failed = $0.payload { return true }; return false })
+        #expect(await host.executions == 0)
+        try await session.invalidateAndDrain() // Joining the same terminated writer is idempotent.
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func invalidationDrainPropagatesTheOriginalFinalPersistenceFailure() async throws {
+        let namespace = try HanlinConversationNamespace(app: "drain-failure", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = SyntheticFixtureHost(context: context), source = ControlledTextSource()
+        let store = InvalidationDrainStore(rejectsFinalWrite: true), events = SessionEvents()
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ControlledTextModel(source: source)))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        let stream = try await session.stream(messages: [.init(role: .user, text: "Original failing writer")],
+            modelReference: .init(provider: "fixture", modelID: "controlled"))
+        let consumer = Task { @MainActor in
+            do { for try await event in stream { await events.record(event.event) } }
+            catch { /* The original store rejection remains a producer failure. */ }
+        }
+        defer {
+            consumer.cancel()
+            Task { await store.release(); await source.finish() }
+        }
+        await source.waitUntilInstalled()
+        await events.waitForStep()
+        await session.invalidate()
+        await store.waitUntilHeld()
+        #expect(session.isRunning)
+        let drain = Task { @MainActor in try await session.invalidateAndDrain() }
+        await store.release()
+        do { try await drain.value; Issue.record("A failed canonical write was declared drained successfully") }
+        catch { #expect(error as? InvalidationDrainFixtureError == .rejectedFinalWrite) }
+        await consumer.value
+        await source.finish()
+        #expect(!session.isRunning)
+        do { try await session.invalidateAndDrain(); Issue.record("A repeated drain discarded the original writer failure") }
+        catch { #expect(error as? InvalidationDrainFixtureError == .rejectedFinalWrite) }
+        let loaded = try await store.load(identity.conversationID, namespace: namespace)
+        let saved = try #require(loaded)
+        #expect(!saved.entries.contains { if case .failed = $0.payload { return true }; return false })
+        #expect(await host.executions == 0)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func invalidationDrainCannotInventCompletionForAnUnjoinedPreparation() async throws {
+        let namespace = try HanlinConversationNamespace(app: "drain-preparation", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: namespace, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = GatedContextHost(context: context)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
+        await host.gateContext()
+        let preparation = Task { @MainActor in
+            try await session.stream(messages: [.init(role: .user, text: "Original preparation")],
+                modelReference: .init(provider: "fixture", modelID: "scripted"))
+        }
+        await host.waitUntilContextIsSuspended()
+        var contextReleased = false
+        defer {
+            preparation.cancel()
+            if !contextReleased { Task { await host.releaseCapturedContext() } }
+        }
+        do { try await session.invalidateAndDrain(); Issue.record("An active preparation without a producer was treated as complete") }
+        catch { #expect(error as? HanlinHostError == .unresolvedWrite) }
+        #expect(session.isRunning)
+        await host.releaseCapturedContext()
+        contextReleased = true
+        do { _ = try await preparation.value; Issue.record("Revoked preparation admitted a producer") }
+        catch { /* The original current-context guard rejects the resumed preparation. */ }
+        #expect(!session.isRunning)
+        #expect(await host.base.executions == 0)
+        try await session.invalidateAndDrain()
+    }
+
     @Test func generalMutationDuplicateAndChangedArgumentsCannotRedispatch() async throws {
         let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
         let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())

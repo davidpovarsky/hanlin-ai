@@ -212,7 +212,333 @@ private final class ProviderCredentialTestFixture {
     }
 }
 
+private actor OwnerControlledTextSource {
+    private var continuation: AsyncThrowingStream<LanguageModelV3StreamPart, Error>.Continuation?
+    private var observer: CheckedContinuation<Void, Never>?
+
+    func install() -> LanguageModelV3StreamResult {
+        let pair = AsyncThrowingStream<LanguageModelV3StreamPart, Error>.makeStream()
+        continuation = pair.continuation
+        observer?.resume(); observer = nil
+        return .init(stream: pair.stream)
+    }
+
+    func waitUntilInstalled() async {
+        if continuation != nil { return }
+        await withCheckedContinuation { observer = $0 }
+    }
+
+    func finish() {
+        continuation?.yield(.finish(finishReason: .init(unified: .stop), usage: .init(), providerMetadata: nil))
+        continuation?.finish()
+    }
+}
+
+private struct OwnerControlledTextModel: LanguageModelV3 {
+    let provider = "owner-drain-fixture"
+    let modelId = "owner-drain-fixture"
+    let source: OwnerControlledTextSource
+
+    func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult {
+        throw HanlinHostError.unsupportedProviderCapability
+    }
+
+    func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {
+        await source.install()
+    }
+}
+
 @Suite @MainActor struct HanlinAppAgentSessionOwnerTests {
+    @Test(.timeLimit(.minutes(1)))
+    func sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original same-owner restart", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let source = OwnerControlledTextSource(), config = configuration()
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+            engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source))) },
+            toolAdapter: nil, messages: [.init(role: .user, text: "Original")], systemPrompt: nil)
+        defer { owner.cancel(); Task { await source.finish() } }
+        await source.waitUntilInstalled()
+        let originalSession = try #require(owner.session)
+        #expect(originalSession.isRunning)
+        let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: first.sceneID,
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let queue = AppPartQueue([try .init(messageID: next.rowID, partID: UUID(), sequence: 0, payload: .textDelta("Replacement"))])
+
+        owner.cancel()
+        #expect(owner.session == nil)
+        // No yield, timer or old consumer drain separates Stop from this original admission.
+        let replacement = try await owner.stream(request: next, modelContext: context, configuration: config,
+            engineFactory: { factory(config, queue: queue) }, toolAdapter: nil,
+            messages: [.init(role: .user, text: "Replacement")], systemPrompt: nil)
+        #expect(!originalSession.isRunning)
+        let current = try #require(owner.session)
+        #expect(current.identity != originalSession.identity)
+        #expect(current.identity.conversationID == originalSession.identity.conversationID)
+        for try await event in replacement { try owner.receive(event, uiRunID: next.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: next.uiRunID)
+        await source.finish()
+        do { for try await _ in stream {} }
+        catch { /* The previous original run remains cancelled rather than replayed. */ }
+        #expect(owner.bindings.contains { $0.reference.rowID == next.rowID && $0.session == current.identity })
+        #expect(row.agentSDKRecordData != nil)
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original foreign writer", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id)
+        let owner = HanlinAppAgentSessionOwner(), other = HanlinAppAgentSessionOwner()
+        let source = OwnerControlledTextSource(), config = configuration()
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+            engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source))) },
+            toolAdapter: nil, messages: [.init(role: .user, text: "Original")], systemPrompt: nil)
+        defer { owner.cancel(); other.cancel(); Task { await source.finish() } }
+        await source.waitUntilInstalled()
+        let originalSession = try #require(owner.session)
+        let foreign = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        var constructed = false
+        do {
+            _ = try await other.stream(request: foreign, modelContext: context, configuration: config,
+                engineFactory: {
+                    constructed = true
+                    return HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source)))
+                }, toolAdapter: nil, messages: [.init(role: .user, text: "Foreign")], systemPrompt: nil)
+            Issue.record("A different owner bypassed the original canonical-writer exclusion")
+        } catch { #expect(error as? HanlinHostError == .unresolvedWrite) }
+        #expect(!constructed && other.session == nil && originalSession.isRunning)
+        await source.finish()
+        for try await event in stream { try owner.receive(event, uiRunID: first.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: first.uiRunID)
+        #expect(!originalSession.isRunning)
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func cancellationDuringPriorDrainCannotAdmitALateReplacement() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original cancelled drain admission", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let source = OwnerControlledTextSource(), config = configuration()
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+            engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source))) },
+            toolAdapter: nil, messages: [.init(role: .user, text: "Original")], systemPrompt: nil)
+        await source.waitUntilInstalled()
+        let originalSession = try #require(owner.session)
+        let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: first.sceneID,
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let previousInvalidation = originalSession.onSessionInvalidated
+        var revokedDuringDrain = false
+        var duplicatePreparationRejected = false
+        originalSession.onSessionInvalidated = { value in
+            previousInvalidation?(value)
+            revokedDuringDrain = true
+            do {
+                _ = try owner.prepareDataAccess(request: next, modelContext: context)
+                Issue.record("A second preparation entered while the original replacement was draining")
+            } catch {
+                duplicatePreparationRejected = (error as? HanlinHostError) == .duplicateInvocation
+            }
+            owner.cancel()
+        }
+        defer {
+            originalSession.onSessionInvalidated = previousInvalidation
+            owner.cancel()
+            Task { await source.finish() }
+        }
+        owner.cancel()
+        let access = try owner.prepareDataAccess(request: next, modelContext: context)
+        var constructed = false
+        do {
+            _ = try await owner.stream(request: next, modelContext: context, configuration: config,
+                engineFactory: {
+                    constructed = true
+                    return HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source)))
+                }, toolAdapter: nil, messages: [.init(role: .user, text: "Must not start")],
+                systemPrompt: nil, dataAccess: access)
+            Issue.record("Cancellation during the actual prior drain admitted a replacement")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(revokedDuringDrain && duplicatePreparationRejected && !constructed && owner.session == nil)
+        #expect(throws: HanlinHostError.staleContext) {
+            try owner.requireDataAccess(access, request: next, modelContext: context)
+        }
+        #expect(!originalSession.isRunning)
+        await source.finish()
+        do { for try await _ in stream {} }
+        catch { /* The original run remains revoked. */ }
+    }
+
+    @Test(.timeLimit(.minutes(1)), arguments: [false, true])
+    func activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary: Bool) async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Active original history", type: "chat")
+        if !temporary { context.insert(row); try context.save() }
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let source = OwnerControlledTextSource(), config = configuration()
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: temporary, interaction: nil)
+        let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+            engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source))) },
+            toolAdapter: nil, messages: [.init(role: .user, text: "Old history")], systemPrompt: nil)
+        defer { owner.cancel(); Task { await source.finish() } }
+        await source.waitUntilInstalled()
+        let originalSession = try #require(owner.session)
+        var oldEvents = stream.makeAsyncIterator()
+        let firstObserved = try await oldEvents.next()
+        let firstEvent = try #require(firstObserved)
+        try owner.receive(firstEvent, uiRunID: first.uiRunID)
+        #expect(originalSession.isRunning)
+
+        let replacement = try owner.clearHistory(conversation: row, conversationID: id,
+            modelContext: context, temporary: temporary, replacementText: "Original history cleared")
+        #expect(replacement.record === row && owner.session == nil && owner.bindings.isEmpty)
+        let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: first.sceneID,
+            rowID: UUID(), uiRunID: UUID(), temporary: temporary, interaction: nil)
+        let queue = AppPartQueue([try .init(messageID: next.rowID, partID: UUID(), sequence: 0, payload: .textDelta("New history"))])
+        // The original clear and this new request have no scheduling delay between them.
+        let newStream = try await owner.stream(request: next, modelContext: context, configuration: config,
+            engineFactory: { factory(config, queue: queue) }, toolAdapter: nil,
+            messages: [.init(role: .user, text: "New history")], systemPrompt: nil)
+        #expect(!originalSession.isRunning)
+        do { try await originalSession.invalidateAndDrain(); Issue.record("The old Session's real CAS rejection was erased") }
+        catch { #expect(error as? HanlinHostError == .storeConflict) }
+        let current = try #require(owner.session)
+        #expect(current.identity != originalSession.identity)
+        for try await event in newStream { try owner.receive(event, uiRunID: next.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: next.uiRunID)
+        #expect(owner.bindings.allSatisfy { $0.reference.rowID == next.rowID && $0.session == current.identity })
+        #expect(!owner.bindings.isEmpty)
+        await source.finish()
+        do { while let _ = try await oldEvents.next() {} }
+        catch { /* The original cancelled writer keeps its real failure. */ }
+        if temporary {
+            #expect(row.agentSDKRecordData == nil && row.modelContext == nil)
+            #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+            #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
+        } else {
+            let bytes = try #require(row.agentSDKRecordData)
+            let record = try JSONDecoder().decode(HanlinConversationRecord.self, from: bytes)
+            #expect(!record.entries.contains { $0.runID == firstEvent.runID })
+            #expect(record.entries.contains { $0.runID != firstEvent.runID })
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)), arguments: [false, true])
+    func changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary: Bool) async throws {
+        // Both real store modes cover a changed receipt; the persistent case also
+        // keeps a genuine unsupported-record clear failure, using the original decoder.
+        for failedClear in (temporary ? [false] : [false, true]) {
+            let container = try database(), context = container.mainContext
+            let row = ChatRecords(name: "Unqualified clear", type: "chat")
+            if !temporary { context.insert(row); try context.save() }
+            let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+            let source = OwnerControlledTextSource(), config = configuration()
+            let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+                rowID: UUID(), uiRunID: UUID(), temporary: temporary, interaction: nil)
+            let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+                engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source))) },
+                toolAdapter: nil, messages: [.init(role: .user, text: "Old writer")], systemPrompt: nil)
+            defer { owner.cancel(); Task { await source.finish() } }
+            await source.waitUntilInstalled()
+            let originalSession = try #require(owner.session)
+            #expect(originalSession.isRunning)
+            let expectedError: HanlinHostError
+            if failedClear {
+                let unsupported = HanlinConversationRecord(formatVersion: HanlinConversationRecord.currentFormat + 1,
+                    namespace: originalSession.identity.context.namespace, conversationID: id, revision: 0)
+                row.agentSDKRecordData = try JSONEncoder().encode(unsupported)
+                try context.save()
+                do {
+                    _ = try owner.clearHistory(conversation: row, conversationID: id,
+                        modelContext: context, temporary: false, replacementText: "Must not appear")
+                    Issue.record("An unsupported original record produced a successful clear receipt")
+                } catch { #expect(error as? HanlinHostError == .unsupportedVersion) }
+                expectedError = .unsupportedVersion
+            } else {
+                let firstClear = try owner.clearHistory(conversation: row, conversationID: id,
+                    modelContext: context, temporary: temporary, replacementText: "First clear receipt")
+                let changedClear = try owner.clearHistory(conversation: row, conversationID: id,
+                    modelContext: context, temporary: temporary, replacementText: "Changed clear receipt")
+                #expect(firstClear !== changedClear && changedClear.record === row)
+                expectedError = .storeConflict
+            }
+            let preservedBytes = row.agentSDKRecordData
+            let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: first.sceneID,
+                rowID: UUID(), uiRunID: UUID(), temporary: temporary, interaction: nil)
+            var constructed = false
+            do {
+                _ = try await owner.stream(request: next, modelContext: context, configuration: config,
+                    engineFactory: {
+                        constructed = true
+                        return HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source)))
+                    }, toolAdapter: nil, messages: [.init(role: .user, text: "Must not start")], systemPrompt: nil)
+                Issue.record("A failed or changed original clear receipt authorized another writer")
+            } catch { #expect(error as? HanlinHostError == expectedError) }
+            #expect(!constructed && owner.session == nil && !originalSession.isRunning)
+            #expect(row.agentSDKRecordData == preservedBytes)
+            if temporary {
+                #expect(row.modelContext == nil)
+                #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+            }
+            await source.finish()
+            do { for try await _ in stream {} }
+            catch { /* Keep the original failed producer outcome. */ }
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Deleted during original invalidation", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let source = OwnerControlledTextSource(), config = configuration()
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+            engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source))) },
+            toolAdapter: nil, messages: [.init(role: .user, text: "Original finished run")], systemPrompt: nil)
+        await source.waitUntilInstalled()
+        await source.finish()
+        for try await event in stream { try owner.receive(event, uiRunID: first.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: first.uiRunID)
+        let originalSession = try #require(owner.session)
+        let previousInvalidation = originalSession.onSessionInvalidated
+        var deleted = false
+        originalSession.onSessionInvalidated = { value in
+            previousInvalidation?(value)
+            context.delete(row)
+            do { try context.save(); deleted = true }
+            catch { Issue.record(error) }
+        }
+        defer { originalSession.onSessionInvalidated = previousInvalidation; owner.cancel() }
+        let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        var constructed = false
+        do {
+            _ = try await owner.stream(request: next, modelContext: context, configuration: config,
+                engineFactory: {
+                    constructed = true
+                    return HanlinAISDKAgentEngine(configuration: config, model: .v3(OwnerControlledTextModel(source: source)))
+                }, toolAdapter: nil, messages: [.init(role: .user, text: "Must not start")],
+                systemPrompt: nil, dataAccess: nil)
+            Issue.record("A deleted original row reached new engine admission after invalidation")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(deleted && !constructed && owner.session == nil)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+    }
+
     @Test func originalConsentExpiresRevokesAndRejectsStaleSheetAnswers() async throws {
         let ns = try HanlinConversationNamespace(app: "hanlin", account: "consent", workspace: "test", space: UUID().uuidString)
         let identity = HanlinHostSession(conversationID: UUID(), context: .init(namespace: ns, sceneID: UUID(), generation: UUID()))

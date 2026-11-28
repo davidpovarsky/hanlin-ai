@@ -53,6 +53,11 @@ final class HanlinAppConversationStore: HanlinConversationStore {
         try readOriginalRecord(id, namespace: namespace)
     }
 
+    /// Captures the exact original CAS record without yielding during an owner's history clear.
+    func canonicalHistorySnapshot() throws -> HanlinConversationRecord? {
+        try readOriginalRecord(conversationID, namespace: namespace)
+    }
+
     /// A read/check/write stays in one synchronous MainActor operation. A suspended caller
     /// cannot validate an older revision and then overwrite a clear-history revision.
     private func readOriginalRecord(_ id: UUID, namespace: HanlinConversationNamespace) throws -> HanlinConversationRecord? {

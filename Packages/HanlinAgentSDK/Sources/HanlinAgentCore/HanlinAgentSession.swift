@@ -278,6 +278,19 @@ public final class HanlinAgentSession {
         await dispatcher.invalidate(identity)
     }
 
+    /// Retire this owner's actual writer before admitting a replacement Session.
+    /// Revocation stays immediate; a completion callback alone is not a persistence barrier.
+    public func invalidateAndDrain() async throws {
+        let producer = producerTask
+        let writer = persistenceTail
+        await invalidate()
+        await producer?.value
+        try await writer?.value
+        try await persistenceTail?.value
+        // A preparation/inline writer with no captured producer cannot be declared drained.
+        guard activeRun == nil else { throw HanlinHostError.unresolvedWrite }
+    }
+
     /// Surface deletion/replacement is explicit host lifecycle, independent of sheet visibility.
     public func revokeInteraction(_ origin: HanlinHostInteractionOrigin) {
         interactionOrigins.remove(origin)

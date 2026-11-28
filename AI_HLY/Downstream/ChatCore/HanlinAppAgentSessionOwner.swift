@@ -34,6 +34,8 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var pendingConsentOperation: (requestID: UUID, operation: RuntimeUserOperation)?
     @ObservationIgnored private var completion: HanlinAgentRunCompletion?
     @ObservationIgnored private var starting = false
+    @ObservationIgnored private var revocationGeneration = UUID()
+    @ObservationIgnored private var pendingInvalidation: Task<Void, Error>?
     @ObservationIgnored private var historyGeneration: UUID?
     @ObservationIgnored private var dataAccessBinding: DataAccessBinding?
     @ObservationIgnored private var inlineOrigins: [String: HanlinHostInteractionOrigin] = [:]
@@ -324,30 +326,43 @@ final class HanlinAppAgentSessionOwner {
                 messages: [HanlinAISDKMessage], systemPrompt: String?, dataAccess: DataAccess? = nil,
                 transport: HanlinAISDKTurnTransport? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         let userOperation = RuntimeUserOperation.current
+        try Task.checkCancellation()
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
+        starting = true
+        defer { starting = false }
+        let admissionGeneration = revocationGeneration
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
         if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
         _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
             conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
         let registration = HanlinConversationRunLease.register(owner: self,
             container: modelContext.container, conversationID: request.conversationID)
+        try await pendingInvalidation?.value
+        try Task.checkCancellation()
+        guard revocationGeneration == admissionGeneration, !registration.isRevoked,
+              activeUIRunID == nil else { throw HanlinHostError.staleContext }
+        if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
+        _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
+            conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
         // Preserve the existing canonical writer before loading/replaying its
         // record into another owner or constructing another model engine.
         guard !splitCoordinator.hasRunningSession(for: request.conversationID) else {
             throw HanlinHostError.unresolvedWrite
         }
         historyGeneration = nil
-        starting = true
-        defer { starting = false }
         let namespace = try Self.namespace(conversationID: request.conversationID, temporary: request.temporary, modelContext: modelContext)
         let matches = session?.identity.conversationID == request.conversationID
             && session?.identity.context.namespace == namespace && session?.identity.context.sceneID == request.sceneID
             && Self.sameEngineConfiguration(modelConfiguration, configuration)
         if !matches {
             guard request.interaction == nil else { throw HanlinHostError.staleContext }
-            await invalidate(preservingDataAccess: dataAccess)
-            guard !registration.isRevoked else { throw HanlinHostError.staleContext }
+            let invalidationGeneration = await invalidate(preservingDataAccess: dataAccess)
+            try await pendingInvalidation?.value
+            try Task.checkCancellation()
+            guard revocationGeneration == invalidationGeneration, !registration.isRevoked else { throw HanlinHostError.staleContext }
             if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
+            _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
+                conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
             let generation = UUID()
             contextGeneration = generation
             let originalEngine = try await engineFactory()
@@ -527,10 +542,38 @@ final class HanlinAppAgentSessionOwner {
             originalStore = HanlinAppConversationStore(context: modelContext, conversation: conversation,
                 namespace: namespace, conversationID: conversationID, temporary: temporary)
         }
+        let retiringSession = session
+        let ownsRetiringWriter = store === originalStore && retiringSession?.isRunning == true
+            && retiringSession?.identity.conversationID == conversationID
+            && retiringSession?.identity.context.namespace == namespace
         cancel()
+        let originalInvalidation = pendingInvalidation
         let replacement = try HanlinConversationMutation.clearHistory(conversation, in: modelContext,
             temporary: temporary, replacementText: replacementText, originalStore: originalStore)
         store = originalStore
+        if ownsRetiringWriter, let retiringSession, let originalInvalidation {
+            // This successful original clear, not cancellation alone, authorizes the empty CAS barrier.
+            guard let cleared = try originalStore.canonicalHistorySnapshot(), cleared.entries.isEmpty,
+                  cleared.model == nil, cleared.draft.isEmpty,
+                  conversation.messages?.count == 1, conversation.messages?.first === replacement,
+                  replacement.record === conversation else { throw HanlinHostError.storeConflict }
+            let retiredIdentity = retiringSession.identity
+            pendingInvalidation = Task { @MainActor [weak self] in
+                do { try await originalInvalidation.value }
+                catch {
+                    guard error as? HanlinHostError == .storeConflict,
+                          let self, self.store === originalStore, self.session == nil,
+                          retiringSession.identity == retiredIdentity, !retiringSession.isRunning,
+                          originalStore.belongsTo(context: modelContext, conversation: conversation, temporary: temporary)
+                    else { throw error }
+                    guard try originalStore.canonicalHistorySnapshot() == cleared,
+                          conversation.messages?.count == 1, conversation.messages?.first === replacement,
+                          replacement.record === conversation else { throw error }
+                    // The original Session still retains its failed CAS task. Only this exact
+                    // owner's successful clear receipt permits a new writer of the new revision.
+                }
+            }
+        }
         bindings = []
         inlineToolRowID = nil
         inlineToolIsRunning = false
@@ -543,7 +586,10 @@ final class HanlinAppAgentSessionOwner {
         revokeSessionAuthority()
     }
 
-    private func revokeSessionAuthority() {
+    @discardableResult
+    private func revokeSessionAuthority() -> UUID {
+        let generation = UUID()
+        revocationGeneration = generation
         consent.revoke()
         inlineOrigins.removeAll()
         for task in inlineToolTasks.values { task.cancel() }
@@ -555,18 +601,37 @@ final class HanlinAppAgentSessionOwner {
         if let session { presentation?.invalidated(session.identity) }
         activeUIRunID = nil; activeReference = nil
         activeUserOperation = nil
+        return generation
     }
 
-    func invalidate() async { await invalidate(preservingDataAccess: nil) }
+    func invalidate() async { _ = await invalidate(preservingDataAccess: nil) }
 
-    private func invalidate(preservingDataAccess access: DataAccess?) async {
+    private func invalidate(preservingDataAccess access: DataAccess?) async -> UUID {
         // Replacing the model engine does not replace the already admitted request.
         // Any external revoke/cancel still clears the lease synchronously, and stream
         // checks its exact epoch again after this suspension.
-        if let access, dataAccessBinding?.access == access { revokeSessionAuthority() }
-        else { revoke() }
-        if let session { await session.invalidate() }
+        let originalSession = session
+        if dataAccessBinding?.access != access { dataAccessBinding = nil }
+        let generation = revokeSessionAuthority()
         session = nil; host = nil; engine = nil; modelConfiguration = nil; completion = nil
+        enqueueInvalidation(originalSession)
+        // Keep any failure on the task so a subsequent stream cannot admit it.
+        _ = await pendingInvalidation?.result
+        return generation
+    }
+
+    private func enqueueInvalidation(_ originalSession: HanlinAgentSession?) {
+        guard let originalSession else { return }
+        let previous = pendingInvalidation
+        pendingInvalidation = Task { @MainActor in
+            let previousResult = await previous?.result
+            var failure: Error?
+            do { try await originalSession.invalidateAndDrain() }
+            catch { failure = error }
+            // An earlier failure must not skip cleanup of this actual Session.
+            try previousResult?.get()
+            if let failure { throw failure }
+        }
     }
 
     func invalidate(uiRunID: UUID) async {
@@ -578,7 +643,7 @@ final class HanlinAppAgentSessionOwner {
         let originalSession = session
         revoke()
         session = nil; host = nil; engine = nil; modelConfiguration = nil; completion = nil
-        Task { await originalSession?.invalidate() }
+        enqueueInvalidation(originalSession)
     }
 
     /// Reuses the one original private decoder for cold read-only correlation, never admission.
