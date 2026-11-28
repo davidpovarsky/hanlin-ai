@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "1044876bd3b8b689c7882573fbff3be246f2a2cb",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1669,
+      "sha256": "feee308539b8aa1b1c3bc35260ee8a60dadc574ced59e0d57a33044a9c5be338"
+    },
+    {
+      "path": "fixture-api-audit.json",
+      "bytes": 1525,
+      "sha256": "67058f28cb6a59de058a3099c56a37ef348d9a374e04ac6d7f7971a5f554ed43"
+    },
+    {
+      "path": "independent-root-source-review.json",
+      "bytes": 1573,
+      "sha256": "6ea2cc768c56465a42517062c402eb29844daa0be09a864046d66bcfca1fac6c"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 1987,
+      "sha256": "592258d918db366ed8cca5f298c4604555a6f64f4de6ede68e77df3dd71ad760"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 460,
+      "sha256": "4f3446382cb2febf3ecb20682cb4c4835ca7e998ff861bf7e5bc1e11e661c8ef"
+    }
+  ]
+}

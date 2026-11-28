@@ -1,0 +1,39 @@
+{
+  "classification": "TEST_FIXTURE_TYPED_STORAGE_CORRECTION_SOURCE_ONLY",
+  "base": "5baa01fb0c2102c45c2d1167dde2cec92ac658de",
+  "changedPath": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+  "originalSHA256": "b2b27092a2b4157d7e4a73858fd7bb70c274d53f43f10d0fc7f3b8eb188ce3cd",
+  "candidateSHA256": "1f19fadfa4112a8a93f6ad3c3a2c42452566eb56932f537dc8097f9cfee8464c",
+  "patchSHA256": "450c320968c6fffdb382e286f3fa7a354a89e3d79ca5969ba4cdde6b7a37c94d",
+  "change": "Only two shared fixture call names: setJSON to existing set. Arguments, actual runtime and false/9 expectations are unchanged.",
+  "preservation": {
+    "wholeFileTwoNameInverse": true,
+    "allEightTestBodiesByteIdentical": true,
+    "allAssertionsAndIssueCallsByteIdentical": true,
+    "originalTwoRetainedOraclesUnchanged": true,
+    "productionChangedPaths": [],
+    "SDK396Intersection": [],
+    "nativeMethodCount": 10
+  },
+  "actualPriorOutcome": {
+    "packet": "retained-import-5baa01fb-seven-pass-three-runtime-errors",
+    "manifestSHA256": "21a842af7bd829557428ae03e82b3e53dd891a7e75cdbf1fe2522da7358d1da6",
+    "verifiedMembers": 22,
+    "passed": 7,
+    "failed": 3,
+    "nativeExitCode": 1,
+    "stopReason": null,
+    "rawLogSHA256": "fe2d9436677aae3d88a4f7e68142d36e76a5d591b47189a25e52535e8969e9fb",
+    "rawLogBytes": 27376,
+    "classification": "Three shared-script users threw TypeError: Cannot convert primitive to NSDictionary. Original two retained oracles and five other controls passed."
+  },
+  "execution": {
+    "native": "NOT_RUN",
+    "Swift": "NOT_RUN",
+    "portableTests": "NOT_RUN",
+    "mechanicalSourceVerification": "PASS"
+  },
+  "limits": "Source-bound diagnosis and exact fixture correction only. Native behavior acceptance of the corrected three controls remains required.",
+  "sourceCommit": "1044876bd3b8b689c7882573fbff3be246f2a2cb",
+  "gitPatchSHA256": "e8502d7c2f18ecd7a82735c882f9838a5714feaac5e4f1884474d29925d68d21"
+}
