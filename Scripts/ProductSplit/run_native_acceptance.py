@@ -67,6 +67,13 @@ def command(argv, name, timeout=60, env=None):
         with (EVIDENCE / 'commands.jsonl').open('a', encoding='utf-8') as log:
             log.write(json.dumps({'argv': argv, 'exit': code, 'seconds': time.monotonic()-started,
                 'log': name, 'sha256': hashlib.sha256(output).hexdigest()})+'\n')
+        if code not in (None, 0) and name == 'build.log':
+            try:
+                from capture_swift_module_provenance import capture_failed_build
+                capture_failed_build(Path(os.environ['SPLIT_DERIVED_DATA']), EVIDENCE,
+                    name, code, hashlib.sha256(output).hexdigest(), started + timeout)
+            except Exception as capture:
+                print('Swift module provenance unavailable: ' + type(capture).__name__, file=sys.stderr)
     if code:
         raise RuntimeError(f'{argv[0]} exit {code}; see {name}')
     return output.decode()

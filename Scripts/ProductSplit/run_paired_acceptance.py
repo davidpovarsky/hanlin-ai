@@ -248,6 +248,17 @@ def command(argv, name, timeout=60, allow_failure=False):
     checkpoint("timed_out" if timed_out else "completed", completion_recorded=True,
         exit=code, observed_returncode=process.returncode)
     if code and not allow_failure:
+        if name == "mini-build.log":
+            try:
+                from capture_swift_module_provenance import capture_failed_build
+                capture_deadline = started + timeout
+                if EXTRA26_ORIGINAL54_DEADLINE is not None:
+                    capture_deadline = min(capture_deadline,
+                        time.monotonic() + EXTRA26_ORIGINAL54_DEADLINE.remaining())
+                capture_failed_build(Path(os.environ["SPLIT_DERIVED_DATA"]), EVIDENCE,
+                    name, code, hashlib.sha256(output).hexdigest(), capture_deadline)
+            except Exception as capture:
+                print("Swift module provenance unavailable: " + type(capture).__name__, file=sys.stderr)
         raise RuntimeError(f"{argv[0]} exit {code}; inspect {name}")
     return code, output.decode(errors="replace")
 
