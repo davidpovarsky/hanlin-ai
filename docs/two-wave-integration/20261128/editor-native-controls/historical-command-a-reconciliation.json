@@ -1,0 +1,53 @@
+{
+  "originalRunID": 46065857903,
+  "source": "39006ce6586c1be056f53de9483bfd907cea6cbd",
+  "rawLog": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-editor-recovery-39006-terminal-2328/range-details/46065857903/artifact-selected-members/paired-tests.log.gz",
+    "gzipSHA256": "a9d0d2ba3f0982dcdbcc5328e6f84adf78c4cd22fa734aecc65b3d0226461d7a",
+    "rawSHA256": "d7bfb2ae3de401517f39aefede453ca20779f7d59a41f1c003a2938f69030ebc",
+    "rawBytes": 120893
+  },
+  "caseFacts": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-nine-system-routes-39006ce6-watch/miniapp_studio_editor_os/terminal-proof/case-owned-evidence.json",
+    "sha256": "ac240b967cae24e27065ed86019eabdc611765e48a3bc142600d8f6f4e543fa1"
+  },
+  "cases": [
+    {
+      "method": "testStudioExpoCreatesMovesStylesAndReopensSource",
+      "pid": 4889,
+      "classification": "OBSERVED_UI_AUTOMATION_INTERRUPTION",
+      "finding": "Rename or move alert existed. After Command+A, typeText triggered the default XCTest interruption handler, which tapped Cancel; the later alert/field query failed.",
+      "AX": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-editor-recovery-39006-terminal-2328/range-cases/46065857903/artifact-selected-members/paired-attachments/83747AB7-490A-4B9F-B14D-84CCE4CDAC4A.txt",
+        "bytes": 30998,
+        "sha256": "a3b0238023f3aa2d094ab457049371d11c9cfe7f7d56a661bcdf25e02c21b92f"
+      },
+      "AXFieldLines": [],
+      "logRange": [
+        612,
+        674
+      ],
+      "rawLogContextEqual": true
+    },
+    {
+      "method": "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+      "pid": 35988,
+      "classification": "OBSERVED_TEXT_REPLACEMENT_FAILURE",
+      "finding": "The actual New source file alert remained open with the text field value beginning new.tsnotes/first-... after Command+A; exact typed-byte validation failed.",
+      "AX": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-editor-recovery-39006-terminal-2328/range-cases/46065857903/artifact-selected-members/paired-attachments/C59C05C9-1F6D-4492-B6A4-A95E2985DFA9.txt",
+        "bytes": 27300,
+        "sha256": "3a7e22b8f106b39c0b0e6e238bf33516a1fc96fe5556b04068fd1d3ea16b29de"
+      },
+      "AXFieldLines": [
+        "                                    TextField, 0x11263ebc0, {{449.0, 150.5}, {260.0, 35.0}}, placeholderValue: 'Relative path', value: new.tsnotes/first-..., Keyboard Focused"
+      ],
+      "logRange": [
+        961,
+        1032
+      ],
+      "rawLogContextEqual": true
+    }
+  ],
+  "conclusion": "R1 Command-A recommendation withdrawn before commit/native. New Delete/readback alone did not explain the actual earlier selection failure; R2 restores original backward deletion and uses only observed suffix forward deletion."
+}

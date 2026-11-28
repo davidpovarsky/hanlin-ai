@@ -1,0 +1,98 @@
+{
+  "recordedAt": "2026-11-28T08:13:33.436749+00:00",
+  "scope": "R2 source-only review; rejected R1 retained; no native/compile/commit",
+  "base": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "sourceSHA256": "373c60d406b7368879fe1855edffb514dcdc128e7024a61e90ee79a072133c64",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 3836,
+      "sha256": "0a757f2c01cd6c3e92402840588aad291c259d0501a2f7ad11f464cff7ac1879",
+      "mode": "0o644"
+    },
+    {
+      "path": "actual-root-projection.swift.gz",
+      "bytes": 51134,
+      "sha256": "6cbf2cb281ccbc7545ab4a0510f055da20a206d56ce30e03e9db41ab7f23b083",
+      "mode": "0o644"
+    },
+    {
+      "path": "candidate.swift",
+      "bytes": 265330,
+      "sha256": "373c60d406b7368879fe1855edffb514dcdc128e7024a61e90ee79a072133c64",
+      "mode": "0o644"
+    },
+    {
+      "path": "historical-command-a-reconciliation.json",
+      "bytes": 2927,
+      "sha256": "d57df55ffdf1695c560647f3ab01f1808e38e616814a3eac28a35005b46aecf0",
+      "mode": "0o644"
+    },
+    {
+      "path": "installed-forward-delete-header.json",
+      "bytes": 3449,
+      "sha256": "e3fa78b13aa48980bc985e7307e329d489f3e16381b4bbcdcfb8c630151d04bc",
+      "mode": "0o644"
+    },
+    {
+      "path": "prior-expo-rename-context.txt",
+      "bytes": 5242,
+      "sha256": "302daae81330af869896f6a86f640248b100e04c2d9043d5a98b8f207b585012",
+      "mode": "0o644"
+    },
+    {
+      "path": "prior-failure-assessment.json",
+      "bytes": 17326,
+      "sha256": "d008b434fc5b0c3638ae8d719daffc4bf4371d3e91641d9f82cb738daf8e4056",
+      "mode": "0o644"
+    },
+    {
+      "path": "prior-ns-path-context.txt",
+      "bytes": 5496,
+      "sha256": "bcf74e47dfd0721035c59003f854e1fe8805d8f648b856a82a920bf8003c845b",
+      "mode": "0o644"
+    },
+    {
+      "path": "prior-patch-inventory.json",
+      "bytes": 13371,
+      "sha256": "88db650e384cd026821b97ac9adba38856bc998d817c5ef551a7937d8d4f9394",
+      "mode": "0o644"
+    },
+    {
+      "path": "prior-source-and-review-references.json",
+      "bytes": 21913,
+      "sha256": "f5f33d76710216c1b0d938b0e859dc0bc4166cf979cab971a425520a1f102699",
+      "mode": "0o644"
+    },
+    {
+      "path": "prior-vs-current-production.json",
+      "bytes": 27299,
+      "sha256": "403a67e5dd7c90a7e922d8054ded1244f084d89cb9fd3030c00fe7efe3d870ff",
+      "mode": "0o644"
+    },
+    {
+      "path": "r1-to-r2.patch",
+      "bytes": 1421,
+      "sha256": "e07f2ad50698dd756845b9e45dc6ed65a526e7d9c9137158310947970c6c71c7",
+      "mode": "0o644"
+    },
+    {
+      "path": "r2-edit-operation.json",
+      "bytes": 282,
+      "sha256": "3053b2f18fd073b703d3a30779149ad6c9b7c2b02c9b4518a487553136b88ce1",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 4926,
+      "sha256": "cc52b8aad1d892ed3f89c9cffdfe700dc43db30ae508653c85e0138ca40d393c",
+      "mode": "0o644"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 3177,
+      "sha256": "ac4b72afa043facf6e5e6567300f87dd75c10c46053a8ae977561fa50b28ebe8",
+      "mode": "0o644"
+    }
+  ]
+}

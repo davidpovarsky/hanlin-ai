@@ -1,0 +1,48 @@
+{
+  "wholeArtifactDigestVerified": false,
+  "rangeOnly": true,
+  "rows": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/attachments-r1/editor/artifact-selected-members/paired-product/paired-attachments/834862B2-AEF6-437C-AFDD-9EFC44EF03B2.txt",
+      "bytes": 27965,
+      "sha256": "3a9c2b01f953589d7be918c0f121cd42a0a0b16ed949a0b22f1b21b3798654c2",
+      "centralCRC32": "6f2da4b7",
+      "match": true
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/attachments-r1/editor/artifact-selected-members/paired-product/paired-attachments/1C94E89C-E0F3-4C42-8B8E-50535DCCC79D.png",
+      "bytes": 559524,
+      "sha256": "43825e0a83721616a3bbcc393ab4ad5ae70c44447ca136b9fd455cfa399ab89e",
+      "centralCRC32": "69e791b7",
+      "match": true
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/attachments-r1/editor/artifact-selected-members/paired-product/paired-attachments/0E53AB17-1FF9-497B-9DE6-A3B48F1977BD.txt",
+      "bytes": 23789,
+      "sha256": "06f4faad45fd58ab915bad142bfdbf34a29ebbce51e8566ee4a7fce70cd47f16",
+      "centralCRC32": "5ccad039",
+      "match": true
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/attachments-r1/editor/artifact-selected-members/paired-product/paired-attachments/19C415CE-63AD-4A10-AA75-EE857B9D3816.png",
+      "bytes": 534823,
+      "sha256": "7f96eeb34b7ec4129ceff6a5ee259242415861b8f4fd9e7d7bd89c3878b3f8a0",
+      "centralCRC32": "231bd281",
+      "match": true
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/attachments-r1/editor/artifact-selected-members/paired-product/paired-attachments/7FFEEE11-062C-4106-879B-68D3C765BF65.txt",
+      "bytes": 35970,
+      "sha256": "2030e2d8bbfbb9a1cba18e948aedfe5469249c2673ac5a70ee121be1e49a15bb",
+      "centralCRC32": "35723d69",
+      "match": true
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/attachments-r1/editor/artifact-selected-members/paired-product/paired-attachments/1B281660-BB04-43B7-AC04-A9716DD55B86.png",
+      "bytes": 446690,
+      "sha256": "25ce1f4bc51ed81f36d5fb2103e3973cbd8856bc6bfe5bee122e0bacca99e09a",
+      "centralCRC32": "2149697d",
+      "match": true
+    }
+  ]
+}

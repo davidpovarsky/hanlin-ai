@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-28T08:22:56.760670+00:00",
+  "sourceCommit": "b829ac67f89da53fce894710e6bbb9d002b6a212",
+  "base": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "sourceSHA256": "373c60d406b7368879fe1855edffb514dcdc128e7024a61e90ee79a072133c64",
+  "rootReviewSHA256": "9f011a5155f1cb53d26339ad17420d3d8cf6b87319e1e870c3e4a82f632dbcd3",
+  "nativeCompile": "NOT_RUN",
+  "nativeUI": "NOT_RUN",
+  "newPortableTests": "NONE"
+}

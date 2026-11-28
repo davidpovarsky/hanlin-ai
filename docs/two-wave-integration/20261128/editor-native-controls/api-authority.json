@@ -1,0 +1,16 @@
+{
+  "installedXcode": "27.0 /27A266a",
+  "originalFailedHostedXcode": "27.2",
+  "keyboardHeader": {
+    "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Headers/XCUIKeyboardKeys.h",
+    "sha256": "7d8deb7bda6e705fe9a2e3afd7e8e03e36cbfe725fccad97b26c9188195a9a17",
+    "declaration": "XCUI_EXPORT XCUIKeyboardKey const XCUIKeyboardKeyForwardDelete;"
+  },
+  "elementHeaderSHA256": "2279cc5f76043ff8ccbdeefc6b0966f3c6c64330cc93904fa03b9fbbbaad01e3",
+  "arm64SimulatorOverlaySHA256": "6133f3fe81c4f7ac93d6b0c777a4b27c012b8886b6c3e4bfba065aa30a33b67a",
+  "officialURLs": [
+    "https://developer.apple.com/documentation/xcuiautomation/xcuikeyboardkey/forwarddelete.md",
+    "https://developer.apple.com/documentation/xcuiautomation/xcuielement/typekey(_:modifierflags:)-9ubn.md"
+  ],
+  "scope": "Installed declarations and readable official API only; no compilation or native action."
+}
