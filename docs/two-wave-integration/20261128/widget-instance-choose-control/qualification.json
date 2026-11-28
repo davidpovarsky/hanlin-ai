@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "status": "APPROVED_SOURCE_ONLY_SEALED",
+  "base": "430954cd1cab706a7abbbc7b58dfb1cdbf159cfb",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "candidateSHA256": "8136583d13b5f2ca65d7c2a57cb5655857f9b72857f576efca4ee3ab1dcd9bc9",
+  "patchSHA256": "dc5ad1c5c851ca0b6e70ea1909b06c7aeb83eb25417e552fdd02972fecb6272f",
+  "wholeFileInverseExact": true,
+  "originalTestBodiesExact": 42,
+  "originalAssertionLinesRetained": 451,
+  "originalWaitSeconds": 12,
+  "candidateWaitSeconds": 12,
+  "additionalWaits": 0,
+  "sourceImpact": {
+    "sdk396": 0,
+    "host99": 0
+  },
+  "originalFailureRetained": true,
+  "native": "NOT_RUN",
+  "testsRun": [],
+  "actualFailureBoundary": "Wrong StaticText selected in the configuration row; final actual Choose Button remains present, entity-picker UI not entered.",
+  "effectiveSourceQualification": "Git de plus actual complete tracked overlay; no independently retained compiled UI-file hash.",
+  "positiveAdmission": "Actual new button interaction and subsequent entity query/result/render/recovery remain native obligations.",
+  "sourceCommit": "72429f12aa8ceee9c2eefea23ca7846c067864eb",
+  "sourceTree": "0b78b40f510ffe4282c0c6cf4b6823cd736070ad",
+  "frozenSourcePacketManifestSHA256": "fc577b0009eb40eb07f039023089ce38ef9eef485476ae36ed403664fd8f7102",
+  "independentRootReviewSHA256": "cac812a945d305277d3d81edb5039c67ad5bc7a1da3ce3f62a04a92e70c5eaa2",
+  "proofScope": "Source/evidence preservation and independent review only; original failed acceptance is retained."
+}

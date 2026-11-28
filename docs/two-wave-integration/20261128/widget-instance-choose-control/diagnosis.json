@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "status": "OBSERVED_WRONG_CONFIGURATION_CONTROL_SOURCE_REPAIR_PROPOSED",
+  "runID": 46109371966,
+  "sourceAttributedByOriginalRunner": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "sourceRepairBase": "430954cd1cab706a7abbbc7b58dfb1cdbf159cfb",
+  "nativeResult": {
+    "started": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "originalMethodSeconds": 195.65887200832367,
+    "originalXcodebuildExit": 65
+  },
+  "originalFailure": "Choose the exact fresh instance created by the MiniApps UI.",
+  "observations": {
+    "createdInstancePID": 49783,
+    "finalSpringBoardPID": 91935,
+    "freshName": "Recovery-c43c625a-c764-423f-95d9-f93270b3d450",
+    "freshVariantID": "a156a2a6-e70d-4d3b-99dd-07e67ce74123",
+    "readOnlyObserverStatus": "READY",
+    "realHomeEditAndWidgetConfigurationReached": true,
+    "lastConfigurationTap": {
+      "timeFromMethodStart": 176.71,
+      "elementType": "StaticText",
+      "label": "Widget instance"
+    },
+    "finalConfigurationRow": {
+      "elementType": "Cell",
+      "frame": [
+        101.5,
+        357.0,
+        273.5,
+        53.0
+      ],
+      "text": {
+        "elementType": "StaticText",
+        "label": "Widget instance",
+        "frame": [
+          120.5,
+          372.8,
+          123.5,
+          20.5
+        ]
+      },
+      "control": {
+        "elementType": "Button",
+        "label": "Choose",
+        "frame": [
+          298.0,
+          373.0,
+          58.5,
+          20.5
+        ]
+      }
+    },
+    "finalScreenshotVisuallyInspected": true,
+    "finalScreenshotShowsConfigurationCardWithChooseButton": true,
+    "freshEntityNameInFinalSystemAX": false,
+    "remoteElementWarningPID": 54261,
+    "warningCauseNotEstablished": true
+  },
+  "diagnosis": "The original test resolved a broad label query to the parameter's StaticText and tapped it. The final own-case AX and screenshot still show the configuration card with a separate Choose Button, so the expected entity-picker UI was not entered. The candidate targets that real row-owned button. This does not establish a product/entity-query failure or whether AppIntents prefetched entities in the background.",
+  "repair": {
+    "scope": "Only the placeMatrixWidget configuration-opening helper path; no product, test-body or fixture edit.",
+    "candidateSHA256": "8136583d13b5f2ca65d7c2a57cb5655857f9b72857f576efca4ee3ab1dcd9bc9",
+    "patchSHA256": "dc5ad1c5c851ca0b6e70ea1909b06c7aeb83eb25417e552fdd02972fecb6272f",
+    "admission": "Exactly one on-screen Cell containing the actual Widget instance StaticText, with exactly one enabled/hittable Choose Button contained within that Cell and screen. Missing/ambiguous candidates return false inside the one original12-second wait.",
+    "originalTests": 42,
+    "originalAssertionLines": 451,
+    "wholeFileInverse": true,
+    "existingHomeHelperExact": true,
+    "native": "NOT_RUN"
+  },
+  "evidence": {
+    "attachmentVerification": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/recovery-widget-configuration-de7758a9/own-attachment-verification-r1.json",
+    "attachmentVerificationSHA256": "80a2c354b335f2ed6a8c6884c0513a550ce7a46bdf3eaf9d66e6681457f85436",
+    "finalAX": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/61404A3B-E762-4DE5-9CB6-82ED0DA83A99.txt",
+      "bytes": 23005,
+      "sha256": "9182a8c39409cfe4cb5fb900a6cb1221c2078dc11d81fed81ef29b3cf0ec2975",
+      "crc32": "3437aa33"
+    },
+    "finalPNG": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/08BBE6F8-EDA7-4B7C-B2E9-553FDDF946D8.png",
+      "sha256": "6d08d4008e6add69ea543e0e6c3b346434efdb6123b5dff7c4162ffd0ca25a53",
+      "crc32": "1a2319f1"
+    },
+    "createdAX": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/45F6E6A3-102B-40E0-9BD7-B2548422B76C.txt",
+      "sha256": "c2922802aa5ea94835adb8af0a588597396d8bd1882b5acff7469c53323db88d",
+      "crc32": "ef53bc59"
+    },
+    "nativeLog": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/selected-r1/recovery/artifact-selected-members/paired-product/paired-tests.log.gz",
+      "rawBytes": 71779,
+      "rawSHA256": "7bd138d084b24a71c969d7d67a0a6de6394ef46106db7e14c7c1b4c6262c9965"
+    }
+  },
+  "limits": [
+    "Final AX/PNG is a post-failure observation, not a frame-by-frame replay.",
+    "The actual Choose Button was not tapped in this run; successful picker presentation, selection, widget rendering and recovery remain native obligations.",
+    "No inference of a product entity-query error, instance omission, App Library failure, or remote-placeholder warning cause.",
+    "Family/Layout broad-query sites remain unchanged source risks, requiring their own actual outcome assessment.",
+    "Actual de Git plus the twenty-path preparation overlay bind source attribution; no retained compiled UI-file hash is available."
+  ],
+  "activity": {
+    "newDownloads": 0,
+    "testsRun": [],
+    "nativeCommands": []
+  },
+  "effectiveSourceQualification": {
+    "file": "effective-source-qualification.json",
+    "sha256": "e66a4089041546f7eca0e7c7c0bc59a7269ba4f51c979fc9c88fead235c7d6f8"
+  }
+}

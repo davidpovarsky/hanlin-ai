@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "rangeIndex": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-range-index.json",
+  "rangeIndexSHA256": "669e51587f0fe946077376be2700945fe4cc2315dcc1529de2d021b6c2eae08d",
+  "artifactID": 15253348868,
+  "runID": 46109371966,
+  "wholeArtifactDigestVerified": false,
+  "selectedOriginalMembersVerified": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/08BBE6F8-EDA7-4B7C-B2E9-553FDDF946D8.png",
+      "member": "app-split-evidence/paired-product/paired-attachments/08BBE6F8-EDA7-4B7C-B2E9-553FDDF946D8.png",
+      "bytes": 2354297,
+      "sha256": "6d08d4008e6add69ea543e0e6c3b346434efdb6123b5dff7c4162ffd0ca25a53",
+      "crc32": "1a2319f1"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/61404A3B-E762-4DE5-9CB6-82ED0DA83A99.txt",
+      "member": "app-split-evidence/paired-product/paired-attachments/61404A3B-E762-4DE5-9CB6-82ED0DA83A99.txt",
+      "bytes": 23005,
+      "sha256": "9182a8c39409cfe4cb5fb900a6cb1221c2078dc11d81fed81ef29b3cf0ec2975",
+      "crc32": "3437aa33"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/762CFB66-DB67-4BE8-81EB-5D4F1085753A.png",
+      "member": "app-split-evidence/paired-product/paired-attachments/762CFB66-DB67-4BE8-81EB-5D4F1085753A.png",
+      "bytes": 2354297,
+      "sha256": "6d08d4008e6add69ea543e0e6c3b346434efdb6123b5dff7c4162ffd0ca25a53",
+      "crc32": "1a2319f1"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/DD84F955-7BB3-46A9-BDF2-643186115214.txt",
+      "member": "app-split-evidence/paired-product/paired-attachments/DD84F955-7BB3-46A9-BDF2-643186115214.txt",
+      "bytes": 29,
+      "sha256": "becbe10368404fe76627ba08e07e3f50a99dd3eedf5c9d098f88f8a443af8d26",
+      "crc32": "cdca5cca"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/FAB86DAE-2B5F-40E7-86D9-41BCF8B623A6.png",
+      "member": "app-split-evidence/paired-product/paired-attachments/FAB86DAE-2B5F-40E7-86D9-41BCF8B623A6.png",
+      "bytes": 1237267,
+      "sha256": "94ae80b48d9f2e931d8bf8938dd9fe4c73ded698b07d708c4b60ba7db7ce784b",
+      "crc32": "f07dc277"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/AF733198-4243-4800-90CB-BD3A71F3BFA0.txt",
+      "member": "app-split-evidence/paired-product/paired-attachments/AF733198-4243-4800-90CB-BD3A71F3BFA0.txt",
+      "bytes": 26781,
+      "sha256": "e558da3913e59afe919b4aa627237306d82f4488eee9428c796c00ae29b343a8",
+      "crc32": "4093d205"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/AE134C4B-DC49-499A-8C91-07BF63841EDB.png",
+      "member": "app-split-evidence/paired-product/paired-attachments/AE134C4B-DC49-499A-8C91-07BF63841EDB.png",
+      "bytes": 1238844,
+      "sha256": "6cf5c73ace030c95e35dc8d2de6e75fc3e4eb99f1e2a39fb4498db6646d9a650",
+      "crc32": "e55b299d"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/3EE985C7-4056-4631-A6A3-5608D6670FC9.txt",
+      "member": "app-split-evidence/paired-product/paired-attachments/3EE985C7-4056-4631-A6A3-5608D6670FC9.txt",
+      "bytes": 21021,
+      "sha256": "9d76578f355fc8801cb10bf5354f5acf47f15273d2e9b0e4909c3a7388469b45",
+      "crc32": "d76c83c7"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/C39EE265-4BB0-4D19-AFB9-D7C6E0D73576.png",
+      "member": "app-split-evidence/paired-product/paired-attachments/C39EE265-4BB0-4D19-AFB9-D7C6E0D73576.png",
+      "bytes": 574497,
+      "sha256": "a227383f2289eab07b42bfed02c86559de03eca1b6e462bd399c9841c85f7346",
+      "crc32": "83a3d661"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/45F6E6A3-102B-40E0-9BD7-B2548422B76C.txt",
+      "member": "app-split-evidence/paired-product/paired-attachments/45F6E6A3-102B-40E0-9BD7-B2548422B76C.txt",
+      "bytes": 35530,
+      "sha256": "c2922802aa5ea94835adb8af0a588597396d8bd1882b5acff7469c53323db88d",
+      "crc32": "ef53bc59"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/6F01EBB3-0B0A-414E-B028-2597B48C1050.png",
+      "member": "app-split-evidence/paired-product/paired-attachments/6F01EBB3-0B0A-414E-B028-2597B48C1050.png",
+      "bytes": 524910,
+      "sha256": "4dfb8dc61beb77b9d700d68f8cac2266fabfeb7fc7f0c936099a68173c39ef7f",
+      "crc32": "28d2d293"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/attachments-r1/recovery/artifact-selected-members/paired-product/paired-attachments/B01D583D-D8FE-41F6-BF80-7E7EAE415B4F.txt",
+      "member": "app-split-evidence/paired-product/paired-attachments/B01D583D-D8FE-41F6-BF80-7E7EAE415B4F.txt",
+      "bytes": 18379,
+      "sha256": "76b2dd236fcaf844d7fe708275d0bbb6347472a81082e70db831c489bfc25454",
+      "crc32": "bb2a42cf"
+    }
+  ],
+  "qualification": "All twelve retained unmodified member bytes were SHA/size/CRC checked against the original selected and central-directory records. HTTP acquisition remains W1's original retained evidence; no new download."
+}

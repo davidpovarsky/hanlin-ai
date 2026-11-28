@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "status": "RUN_SOURCE_AND_TRACKED_PREPARATION_BOUND_WITH_COMPILED_BYTE_LIMIT",
+  "runID": 46109371966,
+  "artifactID": 15253348868,
+  "source": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "sourceAcquisitionReceipt": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/source-acquisition-receipt.json",
+    "sha256": "2613882ed3a5fd0a526c248efcdcbfcf424fcc6b947415a8aef713ff9afa6b82"
+  },
+  "sourceRangeIndex": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/source-r1/recovery/artifact-range-index.json",
+    "sha256": "6dda0e76ebabf3c7f630c50b0ca1365cf12379b82193e21bd1ef20a1f6d91a28",
+    "wholeArtifactDigestVerified": false
+  },
+  "actualPreparedMembers": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/source-r1/recovery/artifact-selected-members/prepared-native/native-artifacts.json",
+      "member": "app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 29917,
+      "sha256": "77d8d0b34c306100dac45da1d4d285a6dbaf0bdac93adbc442d7434c82c59d6b",
+      "crc32": "77bcc694"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/source-r1/recovery/artifact-selected-members/prepared-native/upstream-inputs.patch",
+      "member": "app-split-evidence/prepared-native/upstream-inputs.patch",
+      "bytes": 248091,
+      "sha256": "6deb83d10e54540552c500da85b2d937c5dc20c3fe75ca357d5e1a391065f1d3",
+      "crc32": "4c31b247"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/source-r1/recovery/artifact-selected-members/prepared-native/upstream-resolution.json",
+      "member": "app-split-evidence/prepared-native/upstream-resolution.json",
+      "bytes": 15772,
+      "sha256": "06d15f0f1d7eb7d6eaeb3539b3f62e6bb75c2e100ff155313e94f0c62bf48356",
+      "crc32": "f248c1fa"
+    }
+  ],
+  "trackedOverlayPaths": [
+    "Fixtures/ExpoNativeAPIProbe/package.json",
+    "Fixtures/ExpoSwiftUIProbe/package.json",
+    "Fixtures/ExpoWidgetsProbe/package.json",
+    "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+    "Generated/SwiftUIBridge/bridge-manifest.ts",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+    "Packages/HanlinExpoUI/package.json",
+    "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+    "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+    "Scripts/Expo/dependency-lock.json",
+    "Scripts/Expo/package-lock.json",
+    "Scripts/Expo/package.json",
+    "Scripts/ExpoNativeAPI/dependency-lock.json",
+    "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+    "Scripts/MiniApps/upstream-resolution.json",
+    "Scripts/NativeScript/package-lock.json",
+    "Tools/SwiftUIBridge/configuration.json",
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  ],
+  "trackedOverlayPathCount": 20,
+  "relevantPathsAbsentFromTrackedOverlay": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift"
+  ],
+  "nativePreparationSourceFieldNames": [
+    "sourceCommit"
+  ],
+  "gitSourceComparison": {
+    "candidateBase": "430954cd1cab706a7abbbc7b58dfb1cdbf159cfb",
+    "oldUI_SHA256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4",
+    "baseUI_SHA256": "e2c11d2f6c0d64eea19e3360aff034ba376cc8d5fa17014046ce4df5e6750443",
+    "configurationTailSHA256": "d1344b3318919699f2a6e673bbf904bdf0654a3c2062fe9bced5844300b66659",
+    "configurationTailExact": true,
+    "widgetConfigurationFileSHA256": "facb857818b43586c678573f296c2770725f4efcbf4f6f663a11817dd70eecdc",
+    "widgetConfigurationFileExact": true
+  },
+  "originalJobLog": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-recovery-editor-sdk-readback-r1/recovery/original-job.log.gz",
+    "gzipSHA256": "760d606686a192ce1de94b2b547ad1a424fbf595f69a98a03896c29bd911bc35",
+    "rawBytes": 5226219,
+    "rawSHA256": "c37fec4d29821d7829a911700a336a55fc01d5bd292de433883aede787a9699e"
+  },
+  "qualification": "The runner/native-preparation source is de; the actual complete tracked preparation patch has twenty paths and changes neither the UI helper nor Widget configuration intent file. Exact de Git configuration-tail and intent bytes match base430. This is Git plus actual tracked-overlay source attribution, not a retained compiled UI-file hash.",
+  "limits": [
+    "The artifact does not contain the standalone UI source-file inventory present in other routes.",
+    "Sixteen native-preparation input hashes do not constitute a hash of the compiled UI file.",
+    "Whole parent artifact digest was not independently verified by this range readback.",
+    "The own-case AX/gesture diagnosis is independently observed and does not rely on an assumed product entity-query result."
+  ],
+  "activity": {
+    "downloads": 0,
+    "producerRuns": 0,
+    "nativeCommands": 0,
+    "testsRun": []
+  }
+}
