@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-28T06:36:01.518817+00:00",
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "status": "ACTUAL_PORTABLE_RED_ORIGINAL_READER_ROOT",
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "/mnt/development/projects/worktrees/hanlin-observer-expo-storage-3634078f/Scripts/CI/Tests/test_installed_expo_observer_storage.py",
+    "InstalledExpoStorageTests.test_current_installed_expo_preparation_uses_the_original_package_scope",
+    "-v"
+  ],
+  "exit": 1,
+  "selected": 1,
+  "errors": 1,
+  "testSource": {
+    "bytes": 7945,
+    "sha256": "2d42fe2f30a2fecb1ec663b5b01fec8cceecdec339b35eb2e152620e0b05bde7"
+  },
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 1586,
+    "sha256": "cb583beda52c00b4d0465fbdce180e4043653c8265e89905aaf96e7d704b0c34"
+  },
+  "productionUnchanged": true,
+  "actualNative": false,
+  "qualification": "Controlled canonical package-directory input; not a reconstruction of the absent native private file. Green control will add the explicit installed-ID argument required by the new reader contract."
+}

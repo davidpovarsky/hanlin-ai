@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "SOURCE_CONTRACT_ESTABLISHED_FOR_ORIGINAL_HOST_ACTION_SURFACES_ONLY",
+  "recordedAt": "2026-11-28T07:16:53.186843+00:00",
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidateRevision": "R2 unchanged",
+  "candidatePatchSHA256": "e743b474517fb840501548b2c98fc31ea40be19312fbf4c4a0e16fb35b4da693",
+  "sourceExcerptsSHA256": "4b826aeacdc475f770cdc55f4cba38a425633d2f4e0404eb40ea2a5f3283c7d7",
+  "packageIdentity": {
+    "authoredAppIDs": [
+      "hanlin.surface.expo",
+      "hanlin.surface.nativescript"
+    ],
+    "chain": [
+      "Both original authored manifests explicitly define hanlinAppID.",
+      "The exact original import uses stablePackageID(for: preview.manifest ?? stagedPackage.manifest).",
+      "stablePackageID returns the explicit hanlinAppID when present.",
+      "The plan uses that package ID; the original atomic store persists plan.packageID.",
+      "The producer separately requires request.appID to equal the exact original fixture ID."
+    ],
+    "scopeLimit": "This establishes the two original fixture import routes only. Other installed records may legitimately have distinct app and package IDs; no universal equivalence is claimed."
+  },
+  "variantIdentity": {
+    "chain": [
+      "The original shareActionTargets selects the explicit share entry and constructs HanlinScriptExtensionIdentity with installed ID, package ID, generation and entrypoint; it omits variantID.",
+      "The original identity initializer defaults variantID to default.",
+      "The unchanged original observer surface_facts independently binds surface-share/default from the validated action/catalog facts."
+    ],
+    "scopeLimit": "This is the original Share target constructor default, not a claim that every system-surface identity must use default."
+  },
+  "changes": "None; all nine frozen candidate R2 files remain unchanged.",
+  "testsExecuted": 0,
+  "nativeExecution": false,
+  "actualRejectedNativeRowAvailable": false
+}

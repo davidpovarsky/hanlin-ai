@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "77356ec2e300f688e36d3bf4badfb0432f08ab53",
+  "changedPaths": [
+    "Scripts/CI/Tests/test_installed_expo_observer_storage.py",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py",
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+    "Scripts/ProductSplit/observe_shortcut_long_running.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py"
+  ],
+  "retainedSDKInventory": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-sdk-700664fd-pass/admission/current-sdk-fingerprint.json",
+    "sha256": "d576ef3b78fa276dd87579bca9b05dca2fae221bbfc9d63644630883e39768ff",
+    "count": 396,
+    "fingerprint": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307"
+  },
+  "directPathIntersection": [],
+  "qualification": "Direct path-set comparison only. No new SDK production, native acceptance, or whole payload equivalence is claimed."
+}

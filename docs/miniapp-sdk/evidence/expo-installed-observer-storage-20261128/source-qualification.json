@@ -1,0 +1,254 @@
+{
+  "actualPortable": {
+    "currentCoverage": "R1 actual102 PASS retained; R2 actual8 affected bodies PASS with import restoration;94 other source/test bodies unchanged and not repeated.",
+    "green": {
+      "actualTests": 102,
+      "existingMethods": 91,
+      "newMethods": 11,
+      "pass": 102,
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/observer-expo-storage-3634078f/portable-green-r1/receipt.json",
+      "sha256": "4ad2344755b94a279fb27225de4f570a4909e27b566c052e8b25628be07f6cbd"
+    },
+    "r2AffectedImport": {
+      "actualTests": 8,
+      "noUnchanged91Rerun": true,
+      "pass": 8,
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/observer-expo-storage-3634078f/portable-import-r2/receipt.json",
+      "sha256": "e9915a92677111c6d193f2fe112fab563cade5cccf6d61392e987b1d138e6823",
+      "sysPathAndModulesRestored": true
+    },
+    "red": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/observer-expo-storage-3634078f/portable-red-r1/receipt.json",
+      "scope": "One faithful canonical package-root preparation against original reader, actual1ERROR; original fixture kept",
+      "sha256": "c7b7564e798d89d1302acb7797e45b32a9ea4a71385073502525c0e3dcdf419c"
+    },
+    "redGreenNewControlQualification": "The first new control adds only the explicit validated installed-package keyword for the candidate; no byte-identical baseline/candidate-call claim"
+  },
+  "affectedTestSourceBindings": [
+    {
+      "afterSHA256": "3588c25bd791b2b9c41ea3ba051b86f58a95a182592b3e5a4a1fe1b1336fdf19",
+      "beforeSHA256": null,
+      "methodCount": 8,
+      "path": "Scripts/CI/Tests/test_installed_expo_observer_storage.py"
+    },
+    {
+      "afterSHA256": "483fc33d56e33614e5f73dfca297922be61192489a97424869144295d84a9c18",
+      "beforeSHA256": "d559f1f201d600a4b415f2bd2b5163113c8b9471286cc2053e036c3506db534e",
+      "methodCount": 11,
+      "path": "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py"
+    },
+    {
+      "afterSHA256": "bfe2d444901c3caeb4f7fe40859358252340b505fcdc8c16f24bda74eed25207",
+      "beforeSHA256": "d74749a52261d4ae45ea62ccc01f6becb255aa397a2a853f52f5b7ba1874a245",
+      "methodCount": 15,
+      "path": "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py"
+    },
+    {
+      "afterSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+      "beforeSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+      "methodCount": 22,
+      "path": "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py"
+    },
+    {
+      "afterSHA256": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+      "beforeSHA256": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+      "methodCount": 17,
+      "path": "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py"
+    },
+    {
+      "afterSHA256": "c0c94d90457294a5e5461d88ad850c46faf75f6b2c3c342dd9c2f1d2cf6d2667",
+      "beforeSHA256": "c0c94d90457294a5e5461d88ad850c46faf75f6b2c3c342dd9c2f1d2cf6d2667",
+      "methodCount": 18,
+      "path": "Scripts/CI/Tests/test_shortcut_long_running_observer.py"
+    },
+    {
+      "afterSHA256": "e740b14315777d527665223e8619b2061c545a7e600e3a6ca7789f870d3024b7",
+      "beforeSHA256": "e740b14315777d527665223e8619b2061c545a7e600e3a6ca7789f870d3024b7",
+      "methodCount": 11,
+      "path": "Scripts/ProductSplit/Tests/test_widget_action_surface_observer.py"
+    }
+  ],
+  "approvedMetadataDelta": "Exactly two inline controlled Share identities and one atomic field-count9to10; ordinary producer helper now supplies current canonical record/generation and Expo package-root proof.",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "controlPreservation": [
+    {
+      "byteExactOldMethods": 13,
+      "changedHelpers": [],
+      "metadataSetupChangedMethods": [
+        "ShareTranslationObserverTests.test_share_input_response_cannot_forge_matching_but_wrong_challenge_bytes",
+        "ShareTranslationObserverTests.test_polled_share_request_is_published_only_after_complete_atomic_write"
+      ],
+      "newMethods": [],
+      "originalTestMethods": 15,
+      "path": "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py"
+    },
+    {
+      "byteExactOldMethods": 8,
+      "changedHelpers": [
+        "OriginalSystemInputProducerTests.request"
+      ],
+      "metadataSetupChangedMethods": [],
+      "newMethods": [
+        "OriginalSystemInputProducerTests.test_catalog_identity_is_revalidated_before_and_after_input_writes",
+        "OriginalSystemInputProducerTests.test_enabled_sibling_package_proof_cannot_replace_the_bound_installation",
+        "OriginalSystemInputProducerTests.test_request_installation_identity_and_generation_cannot_be_rebound"
+      ],
+      "originalTestMethods": 8,
+      "path": "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py"
+    }
+  ],
+  "createdAt": "2026-11-28T06:55:09.764319+00:00",
+  "defaultNativeScriptAppAndWindowsBodiesByteExact": true,
+  "diffCheck": true,
+  "files": [
+    {
+      "afterBytes": 8209,
+      "afterSHA256": "3588c25bd791b2b9c41ea3ba051b86f58a95a182592b3e5a4a1fe1b1336fdf19",
+      "beforeSHA256": null,
+      "path": "Scripts/CI/Tests/test_installed_expo_observer_storage.py"
+    },
+    {
+      "afterBytes": 26856,
+      "afterSHA256": "bfe2d444901c3caeb4f7fe40859358252340b505fcdc8c16f24bda74eed25207",
+      "beforeSHA256": "d74749a52261d4ae45ea62ccc01f6becb255aa397a2a853f52f5b7ba1874a245",
+      "path": "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py"
+    },
+    {
+      "afterBytes": 17762,
+      "afterSHA256": "483fc33d56e33614e5f73dfca297922be61192489a97424869144295d84a9c18",
+      "beforeSHA256": "d559f1f201d600a4b415f2bd2b5163113c8b9471286cc2053e036c3506db534e",
+      "path": "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py"
+    },
+    {
+      "afterBytes": 38874,
+      "afterSHA256": "f59353b1906429e323d9315edaa472c2f10582650f6244844d31a2f042ef4901",
+      "beforeSHA256": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+      "path": "Scripts/ProductSplit/observe_share_translation_surfaces.py"
+    },
+    {
+      "afterBytes": 38117,
+      "afterSHA256": "794e514726d39b836f65c9c2bce3fea74c17b09076137480b61212a6bb5c3f8a",
+      "beforeSHA256": "d32fc2b40cd6649cf01fe1a774b29579e8f898dddd8bda4da1fb166a537bf183",
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py"
+    },
+    {
+      "afterBytes": 44208,
+      "afterSHA256": "8d4296b354401a2fd79544792066886cab7a05a3c42b441483475c54994424de",
+      "beforeSHA256": "03a7561fec390039544e1540e1401daf1cad27c430eb35e84536e91f928f3cba",
+      "path": "Scripts/ProductSplit/observe_shortcut_long_running.py"
+    },
+    {
+      "afterBytes": 67114,
+      "afterSHA256": "107fc49607d5700d6b6519c6abc71d6cfce03a374eb574a8e0ef1c3f3e84ae23",
+      "beforeSHA256": "f3ef025d4f8de4012b409ff343f2c28d319bb7607585d7e534ec61c1d66f36cd",
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py"
+    },
+    {
+      "afterBytes": 28425,
+      "afterSHA256": "3cb0d827bd1d29518f01c6e3ccf96aaf8ac077e01bf19c4ef6a60b53e20ba4a9",
+      "beforeSHA256": "535d08e24e918779bb4ff90d2a2ec4c95710486ef99a4913d62191c35a9f3f4a",
+      "path": "Scripts/ProductSplit/observe_widget_action_surfaces.py"
+    },
+    {
+      "afterBytes": 101444,
+      "afterSHA256": "2e9a6f74e10fa08320c282ecf2f43384c9e74d0d62ef67b26e5ded4279eccea6",
+      "beforeSHA256": "b7908f40c21edf1f82489b700254b16cd25991469918518bbdfe53b83035a335",
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py"
+    }
+  ],
+  "originalChangedControlMethodBodies": [
+    "ShareTranslationObserverTests.test_share_input_response_cannot_forge_matching_but_wrong_challenge_bytes",
+    "ShareTranslationObserverTests.test_polled_share_request_is_published_only_after_complete_atomic_write"
+  ],
+  "patchSHA256": "e743b474517fb840501548b2c98fc31ea40be19312fbf4c4a0e16fb35b4da693",
+  "privateEvidence": {
+    "actualLRDiagnosis": "H/long-running-expo-private-state-9a76309c-diagnosis",
+    "actualRejectedPrivateRowRetained": false,
+    "soleNativeCauseClaim": false
+  },
+  "productionFunctionPreservation": [
+    {
+      "additiveFunctions": [],
+      "changedFunctionASTInverse": true,
+      "changedOriginalFunctions": [
+        "share_producer_request",
+        "observe_case"
+      ],
+      "path": "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+      "unchangedWholeFunctionBodies": 17
+    },
+    {
+      "additiveFunctions": [],
+      "changedFunctionASTInverse": true,
+      "changedOriginalFunctions": [
+        "journal_documents"
+      ],
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "unchangedWholeFunctionBodies": 19
+    },
+    {
+      "additiveFunctions": [],
+      "changedFunctionASTInverse": true,
+      "changedOriginalFunctions": [
+        "observe"
+      ],
+      "path": "Scripts/ProductSplit/observe_shortcut_long_running.py",
+      "unchangedWholeFunctionBodies": 23
+    },
+    {
+      "additiveFunctions": [
+        "expo_state_directory"
+      ],
+      "changedFunctionASTInverse": true,
+      "changedOriginalFunctions": [
+        "proof_documents",
+        "observe"
+      ],
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "unchangedWholeFunctionBodies": 37
+    },
+    {
+      "additiveFunctions": [],
+      "changedFunctionASTInverse": true,
+      "changedOriginalFunctions": [
+        "observe_case"
+      ],
+      "path": "Scripts/ProductSplit/observe_widget_action_surfaces.py",
+      "unchangedWholeFunctionBodies": 13
+    },
+    {
+      "additiveFunctions": [
+        "system_surface_share_installed_record"
+      ],
+      "changedFunctionASTInverse": true,
+      "changedOriginalFunctions": [
+        "stage_system_surface_share_input"
+      ],
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "unchangedWholeFunctionBodies": 18
+    }
+  ],
+  "r1RetainedManifestSHA256": "e25109cea8efcf7dcd41e356ab34e9c5b0b79db5cda8fa83c140525710a54ebb",
+  "r2Delta": {
+    "allTestAndHelperASTsUnchanged": true,
+    "newFunctions": 0,
+    "path": "Scripts/CI/Tests/test_installed_expo_observer_storage.py",
+    "patternAuthority": {
+      "path": "Scripts/CI/Tests/test_notification_os_scope.py",
+      "sha256": "2aa9904662dc96b13026ab605863130e562e4316f9da19474d317d7437654d2d"
+    },
+    "r1ToR2PatchSHA256": "c929a026c5a60449b45bfc4634c1cb79b05cd01854a100ad9e72a34e424b7714",
+    "sha256": "3588c25bd791b2b9c41ea3ba051b86f58a95a182592b3e5a4a1fe1b1336fdf19",
+    "sourceReadersAndOther8FilesByteExact": true
+  },
+  "schema": 1,
+  "scope": {
+    "newNativeRun": false,
+    "productionRuntimeOrStoreChanges": false,
+    "sharedFileCoordination": "Mac Native Lists dispatch/argparse insertion is separate; no old caller is removed",
+    "uiOrSelectorsOrBudgetsChanged": false,
+    "workflowChanged": false
+  },
+  "status": "R2_FROZEN_IMPORT_ISOLATION_ONLY",
+  "wholePatchReverseCheck": true
+}

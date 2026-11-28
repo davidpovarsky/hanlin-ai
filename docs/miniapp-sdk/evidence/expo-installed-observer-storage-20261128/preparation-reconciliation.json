@@ -1,0 +1,42 @@
+{
+  "euid": 0,
+  "failedBeforeFirstSourceWrite": true,
+  "failedJob": "job_431d999123d0",
+  "readOnlyAdmission": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/mnt/development/projects/worktrees/hanlin-observer-expo-storage-3634078f",
+        "show",
+        "HEAD:Scripts/ProductSplit/run_paired_acceptance.py"
+      ],
+      "exit": 128,
+      "stderr": "fatal: detected dubious ownership in repository at '/mnt/development/projects/worktrees/hanlin-observer-expo-storage-3634078f'\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory /mnt/development/projects/worktrees/hanlin-observer-expo-storage-3634078f\n",
+      "stdoutBytes": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "runuser",
+        "-u",
+        "chatgpt-agent",
+        "--",
+        "git",
+        "-c",
+        "gc.auto=0",
+        "-c",
+        "maintenance.auto=false",
+        "-C",
+        "/mnt/development/projects/worktrees/hanlin-observer-expo-storage-3634078f",
+        "show",
+        "HEAD:Scripts/ProductSplit/run_paired_acceptance.py"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutBytes": 98768,
+      "stdoutSHA256": "b7908f40c21edf1f82489b700254b16cd25991469918518bbdfe53b83035a335"
+    }
+  ],
+  "retainedError": "Git show exited128 while saving original bytes; no Share source writes occurred"
+}
