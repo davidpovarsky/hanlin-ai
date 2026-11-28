@@ -1,0 +1,66 @@
+{
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "sourceCommit": "8ff809a7b8ac4d1b9a0c72a44c97fd446009520d",
+  "sourcePaths": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "sha256": "2abf678e162ae445d9e55802786843872251760d328756cfcc569ec137f04b4e",
+      "bytes": 263607
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json": {
+      "sha256": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9",
+      "bytes": 126
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts": {
+      "sha256": "eac6a0cf6be0d3a956438a3d856784537b98df4ec5f4a89006bc313a5d743e85",
+      "bytes": 1616
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/package.json": {
+      "sha256": "daade868d8345954dd06b629b6ab9912e7241adce7f46669e6ecbf1f8d676041",
+      "bytes": 288
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts": {
+      "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210",
+      "bytes": 737
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/script.json": {
+      "sha256": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+      "bytes": 877
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json": {
+      "sha256": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75",
+      "bytes": 54
+    },
+    "Scripts/CI/Tests/fixtures/native_lists_actionsdata.json": {
+      "sha256": "0de9d507de2f706ae25d2d899e0db0ffcbabaed73d5f008a3702a97926af613f",
+      "bytes": 14837
+    },
+    "Scripts/CI/Tests/test_shortcut_native_lists.py": {
+      "sha256": "3739ae95737748100e4b7f3a288083bceec21ef7a20a32f5a546de6bc1b15bc1",
+      "bytes": 17623
+    },
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py": {
+      "sha256": "cc39813694dd7c81c43ced14d3bac50db27a646847dc4625e3c7ef223abbf229",
+      "bytes": 26058
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "sha256": "389761d091c7247832799d5238aca56c8a98607b4b71309048985810668254fe",
+      "bytes": 66368
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "sha256": "79f9e09d7d26eb9303eefad0a189c6ca2b16dc3b80d494d5fed63b5500063f74",
+      "bytes": 104545
+    }
+  },
+  "sourcePathCount": 12,
+  "separateWorkflow": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/candidate-r2/workflow.patch",
+    "sha256": "0f2ee5d432b910615e5c78f5c261acc919b6a61ec6eaba8168763bf4f54c4c25",
+    "committedWithSource": false
+  },
+  "approvedR2Manifest": "5151a6efeb1b88b4db0e77a411232793c4821f46858dfc29d4ee8f21bb4ea014",
+  "approvedR3Manifest": "f30e39727ba53815f9673f922f5ec3cfff9a343f72668529bb2c11177e6e6ed3",
+  "nativeStatus": "NOT_RUN",
+  "scope": "Four NativeScript cases, eight actual actions required; each original shared 360-second allowance. Expo four-case follow-up and genuine pre-change saved-action migration remain open.",
+  "sdkScope": "Actual 363 collector input equality; no qualification of a later combined Share product change.",
+  "commitIdentity": "Existing project ChatGPT <noreply@openai.com> applied per command only; no global configuration change."
+}

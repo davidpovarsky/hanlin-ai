@@ -1,0 +1,60 @@
+{
+  "startedAt": "2026-11-28T06:39:56.508859+00:00",
+  "sourceBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "fixture": {
+    "tsconfig.json": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75",
+    "package.json": "daade868d8345954dd06b629b6ab9912e7241adce7f46669e6ecbf1f8d676041",
+    "script.json": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+    "hanlin.authoring.json": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9",
+    "index.ts": "eac6a0cf6be0d3a956438a3d856784537b98df4ec5f4a89006bc313a5d743e85",
+    "proof.ts": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-native-list-shortcuts-20261128/Fixtures/ShortcutNativeLists/nativescript",
+        "--report",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/portable-cli-r1/validate-report.json"
+      ],
+      "timeoutSeconds": 300,
+      "startedAt": 1795847996.5097249,
+      "pid": 3879362,
+      "exit": 0,
+      "finishedAt": 1795848005.3562937
+    },
+    {
+      "argv": [
+        "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-native-list-shortcuts-20261128/Fixtures/ShortcutNativeLists/nativescript",
+        "--report",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/portable-cli-r1/build-report.json",
+        "--archive",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/portable-cli-r1/NativeListsNativeScript.hanlinNativeScript"
+      ],
+      "timeoutSeconds": 600,
+      "startedAt": 1795848005.356874,
+      "pid": 3879774,
+      "exit": 0,
+      "finishedAt": 1795848021.985056
+    }
+  ],
+  "scope": "Original portable authoring with historical immutable SDK; exact current NS/tooling/engine equivalence, no new whole SDK qualification",
+  "nativeCommands": 0,
+  "status": "PASS_ORIGINAL_PORTABLE_VALIDATE_BUILD",
+  "sourceFilesUnchanged": true,
+  "sdkCompleteBytesModesUnchanged": true,
+  "generatedRetainedFiles": 15,
+  "failure": null,
+  "finishedAt": "2026-11-28T06:40:47.211489+00:00"
+}

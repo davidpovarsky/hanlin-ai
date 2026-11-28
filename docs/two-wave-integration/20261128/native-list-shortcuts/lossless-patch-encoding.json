@@ -1,0 +1,13 @@
+{
+  "reason": "Git diff --check rejects literal space-only context lines in a retained unified diff. The original bytes remain in immutable R3 private evidence; this public gzip restores every byte. No source or test changes.",
+  "rawSHA256": "c380f8b013190dac0f90da9c702d90af2f7a50ef8ca689b49ad29b72fc992d2d",
+  "rawBytes": 687,
+  "gzipSHA256": "6459387e6ef63e88e8fe955434a7273b878fbc5b76e9082dc7c84370f5736732",
+  "gzipBytes": 368,
+  "roundTripExact": true,
+  "initialDiffCheckExit": 2,
+  "initialDiagnostics": [
+    "import-isolation-r3.patch:8 trailing whitespace: literal unified-diff context line",
+    "import-isolation-r3.patch:15 trailing whitespace: literal unified-diff context line"
+  ]
+}

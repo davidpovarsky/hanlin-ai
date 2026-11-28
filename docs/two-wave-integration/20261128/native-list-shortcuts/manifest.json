@@ -1,0 +1,134 @@
+{
+  "members": [
+    {
+      "path": "NativeListsNativeScript.hanlinNativeScript",
+      "bytes": 9029,
+      "sha256": "a4105454bcc1ce51e7f33bf4318fafb26dc5246c1b9a796a75bf16687a6ac1a8"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5443,
+      "sha256": "3ada20ef2b6213d4a359996b30e6ff8ee7c14282e7937859d96fd82012138d28"
+    },
+    {
+      "path": "actual-collector.json",
+      "bytes": 67312,
+      "sha256": "cef96e9d80ac37696df42cc89d2333d580aa2e66aa0dae3b19b1f339ec1cfa22"
+    },
+    {
+      "path": "archive-reconciliation.json",
+      "bytes": 2915,
+      "sha256": "7c8744c9e18970a04953fe5c96631de4cf83561269f431f4e885173cbf3963bd"
+    },
+    {
+      "path": "build-report.json",
+      "bytes": 1397,
+      "sha256": "1e455d6ac9c10f1551d2dfa13ec358f06da96c116b41d6e6f146eae2d2a568b9"
+    },
+    {
+      "path": "cli-admission.json",
+      "bytes": 3904,
+      "sha256": "53566872b3b7580bbd925346a7a4cf82a611e38f56da8e6faac0e88a77b7cf7e"
+    },
+    {
+      "path": "cli-receipt.json",
+      "bytes": 2884,
+      "sha256": "c2b299853307e9d528f28e509510750b1db8e4b7da5499097f9ed804a6363652"
+    },
+    {
+      "path": "collector-impact.json",
+      "bytes": 1198,
+      "sha256": "947d7f0f24f64283be43d50804c3566f00c6f10bb879f3e47c44186eb5ac11f3"
+    },
+    {
+      "path": "contract-authorities.json",
+      "bytes": 1239,
+      "sha256": "e25d763c2654aea33609f358906a61595c519532a2608f952507575422c797a5"
+    },
+    {
+      "path": "future-native-admission-template.json",
+      "bytes": 1610,
+      "sha256": "0dcf73a8ee09bf568daab3813050eda11be2679e20886dbf672d81555e30bed1"
+    },
+    {
+      "path": "generated-files.json",
+      "bytes": 3165,
+      "sha256": "03292a90a38915941fde3761f8cb4d89443b5cd6b49f4354f08d3d97b1d5afdf"
+    },
+    {
+      "path": "import-isolation-r3.json",
+      "bytes": 949,
+      "sha256": "aaacadba24038c808ab5a917bb935e89e852ceee429c9622e8080c9d1266587f"
+    },
+    {
+      "path": "import-isolation-r3.patch.gz",
+      "bytes": 368,
+      "sha256": "6459387e6ef63e88e8fe955434a7273b878fbc5b76e9082dc7c84370f5736732"
+    },
+    {
+      "path": "independent-root-review.json",
+      "bytes": 851,
+      "sha256": "b40add5d3f5ff6d56c351755752d331088c6bddfa509ce55270d1535d3850a02"
+    },
+    {
+      "path": "independent-w1-ui-review.json",
+      "bytes": 4006,
+      "sha256": "d8b1fe352a76a63f943caab3c77e5dc3d2e1d7468000f78759d331411a6d09cf"
+    },
+    {
+      "path": "initial-cli-launch.json",
+      "bytes": 360,
+      "sha256": "279d56be825a5937211cb31ef256e84ca72b35e9d6e78693e840b345a07469c2"
+    },
+    {
+      "path": "initial-cli-permission-error.log",
+      "bytes": 533,
+      "sha256": "cdef8fcaff9d51bab5ce2676ac2b92be00ec6349c0188b2eeeb3e1bb42a40370"
+    },
+    {
+      "path": "initial-commit-preparation-failure.json",
+      "bytes": 383,
+      "sha256": "108584ee0590d02168282031ab02a6c252a7c021f5e749db86e98e6024b3b246"
+    },
+    {
+      "path": "initial-metadata-reader-error.json",
+      "bytes": 1176,
+      "sha256": "b44a53aad080d4465d3595d5d2c656d26e86d319424c4f5df711c3467e16bbaf"
+    },
+    {
+      "path": "initial-source-plan-extractor-error.json",
+      "bytes": 1737,
+      "sha256": "1669cc86cfb38070d58aba8514ecd1cf043ee69f74decb9a911bb2a00034926f"
+    },
+    {
+      "path": "lossless-patch-encoding.json",
+      "bytes": 701,
+      "sha256": "a84c65bad2bb1a537c88f917d8d1c0690c7f8f72cc2b31dbe138b80df48663d3"
+    },
+    {
+      "path": "metadata-control-provenance.json",
+      "bytes": 636,
+      "sha256": "d36af7691b0a3862bba32ebaa8204e2d0769924a5db71512327254a502e4e08a"
+    },
+    {
+      "path": "portable24-r3.log",
+      "bytes": 3913,
+      "sha256": "1d4ab43ca10cd9da00ab69ad09293809edd32e239f082ef20424ecb746ae0b9f"
+    },
+    {
+      "path": "source-seal-r3.json",
+      "bytes": 3194,
+      "sha256": "972a82233c3367308ce5abb538ce9db17cb10aa5152c758a1ed624713c9bce15"
+    },
+    {
+      "path": "source-validation-r2.json",
+      "bytes": 19770,
+      "sha256": "300c25cfe19ec17fb442b706583568f411d4f36888e4a1594c606a0a5684de7b"
+    },
+    {
+      "path": "validate-report.json",
+      "bytes": 1011,
+      "sha256": "a88c6a605c7e9c88f1880f00869917cf4fafee18e17808850475bf088782fdf5"
+    }
+  ]
+}

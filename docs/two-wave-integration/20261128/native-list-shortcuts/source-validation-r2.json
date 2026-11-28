@@ -1,0 +1,256 @@
+{
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "sourcePaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+    "Scripts/CI/Tests/test_shortcut_native_lists.py",
+    "Scripts/CI/Tests/fixtures/native_lists_actionsdata.json",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json",
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json",
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts"
+  ],
+  "workflowPath": ".github/workflows/validate-app-split.yml",
+  "hashes": {
+    ".github/workflows/validate-app-split.yml": "ff6889c789f697f68bf511897989ef225045aa354ccdf41b363913440a1f8825",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "2abf678e162ae445d9e55802786843872251760d328756cfcc569ec137f04b4e",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "389761d091c7247832799d5238aca56c8a98607b4b71309048985810668254fe",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "79f9e09d7d26eb9303eefad0a189c6ca2b16dc3b80d494d5fed63b5500063f74",
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py": "cc39813694dd7c81c43ced14d3bac50db27a646847dc4625e3c7ef223abbf229",
+    "Scripts/CI/Tests/test_shortcut_native_lists.py": "b10ef294be5d9699997af1d16be372d0fbe7b6c3ac832b79da8f33029d201bfe",
+    "Scripts/CI/Tests/fixtures/native_lists_actionsdata.json": "0de9d507de2f706ae25d2d899e0db0ffcbabaed73d5f008a3702a97926af613f",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json": "daade868d8345954dd06b629b6ab9912e7241adce7f46669e6ecbf1f8d676041",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75",
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts": "eac6a0cf6be0d3a956438a3d856784537b98df4ec5f4a89006bc313a5d743e85",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+  },
+  "uiWholeFileInverse": true,
+  "originalMethods": [
+    "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+    "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+    "testExpoLiveActivityInvokesAllFiveRuntimes",
+    "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+    "testExpoShortcutInvokesAllFiveRuntimes",
+    "testNativeScriptShortcutInvokesAllFiveRuntimes",
+    "testExpoSystemShareInvokesAllFiveRuntimes",
+    "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+    "testExpoSystemTranslationInvokesAllFiveRuntimes",
+    "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+    "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+    "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+    "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+    "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+    "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+    "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+    "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+    "testStudioExpoCreatesMovesStylesAndReopensSource",
+    "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+    "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+    "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+    "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy",
+    "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+    "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+    "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+    "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds"
+  ],
+  "newMethods": [
+    "testNativeScriptSavedBooleanListReopensThenClearsToEmpty",
+    "testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+    "testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+    "testNativeScriptSavedTextListReopensThenClearsToEmpty"
+  ],
+  "originalMethodCount": 38,
+  "newTotalMethodCount": 42,
+  "helperASTs": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "unchangedFunctions": [
+        "select_paired_runtime",
+        "command",
+        "command_phase_status",
+        "record_build_phases",
+        "capture_app_intents_metadata",
+        "fixture_archive",
+        "authoring_fixtures",
+        "verify_native_result",
+        "start_native_adapter_assets",
+        "widget_recovery_fixture",
+        "shortcut_surface_fixtures",
+        "long_running_shortcut_fixtures",
+        "system_surface_inputs",
+        "stage_system_surface_share_input",
+        "start_system_surface_input_producer",
+        "finish_system_surface_input_producer",
+        "finish_shortcut_observer"
+      ],
+      "changedOnly": [
+        "main",
+        "start_shortcut_observer"
+      ],
+      "newFunctions": [
+        "native_list_shortcut_fixture"
+      ]
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "unchangedFunctions": [
+        "require",
+        "_members",
+        "parse_json",
+        "digest",
+        "read_document",
+        "decode_value",
+        "equal_typed_json",
+        "validate_request",
+        "snapshot_document",
+        "action_identity",
+        "installed_catalog",
+        "queue_documents",
+        "proof_documents",
+        "prepared_proof",
+        "_epoch_milliseconds",
+        "_validate_five_receipts",
+        "completion",
+        "command",
+        "os_container",
+        "product_roots",
+        "system_app_observation",
+        "load_widget_fixture",
+        "validate_widget_request",
+        "widget_identity_digest",
+        "widget_artifact",
+        "widget_facts",
+        "widget_node_contains",
+        "require_widget_cache",
+        "require_widget_transition",
+        "widget_extension_executable",
+        "matching_widget_fallback",
+        "widget_log_events",
+        "observe_widget_case",
+        "close_widget_logs",
+        "write_response",
+        "original_system_fixture",
+        "load_system_inputs"
+      ],
+      "changedOnly": [
+        "main",
+        "observe"
+      ],
+      "newFunctions": []
+    }
+  },
+  "all16OriginalFixtureFilesUnchanged": [
+    {
+      "path": "Fixtures/HostActionSurfaces/README.md",
+      "sha256": "32a0dbb938e3bb8ea40b18f791c3536640c3d7b8d4e34510e916241165eacb23"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/App.tsx",
+      "sha256": "7d09e80c5f24291e6375d76def7b7d0208de2607db62a04225cc08f89881dfae"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/hanlin.authoring.json",
+      "sha256": "304ece316823d98d40004b6935d3d86e2b5460ffcbea8d844015f9750735ccfa"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/index.ts",
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/package.json",
+      "sha256": "b531306bfc0a72ea51a5b6d4a06da2e4cb11b3fb37ff221fbc9b4f309f6d032f"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/proof.ts",
+      "sha256": "8500ec2ddd4d6b102f8bf40b2039eafe24f66f4e816c44a6b13480374b4db486"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/script.json",
+      "sha256": "68a345460b4af4cec4e2fecaa5a602b665ef5561f28d1edbb5ab9176f31a8fe7"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/tsconfig.json",
+      "sha256": "88b2b6ccb56ebcf0a718686fda327921cf7475c707e6c6c63fb270a5abd822af"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/widget.json",
+      "sha256": "8aaeb330827651453d60466993ed7252130cadc49873e840bf33a112bd8c4925"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/hanlin.authoring.json",
+      "sha256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/index.ts",
+      "sha256": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/package.json",
+      "sha256": "048e5efb91e28f9d198c885297cfdf7c7a0081b6e4c3c7b945398797dc283e4a"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/proof.ts",
+      "sha256": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/script.json",
+      "sha256": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/tsconfig.json",
+      "sha256": "445e657d8cb59b84146fa8b52b768b67fa9c4ec58e0e601e9e14deb0e922c5e5"
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/widget.jsx",
+      "sha256": "e2f6676b1de3b9130aeb93176c5c8463b03b75d9a3b8fa7cb863ad32409eabb5"
+    }
+  ],
+  "oldJSONCaseSelectorsUnchanged": true,
+  "budgets": {
+    "perCaseSharedSeconds": 360,
+    "nativeCommandSeconds": 2100,
+    "jobMinutes": 210,
+    "validateSeconds": 300,
+    "buildSeconds": 600
+  },
+  "SDKActualFingerprint": "36b1fa73d649f52580ca83458f668d1184665480eb3d5ad9f83a4ee4b5cce254",
+  "SDKIntersection": [],
+  "portableControls": 24,
+  "portableCLI": "PASS_VALIDATE_BUILD",
+  "actualOS": "NOT_RUN",
+  "ExpoCases": "FOLLOW_UP_REQUIRED",
+  "migration": "NOT_CLAIMED",
+  "r1Preserved": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/candidate-r1",
+  "allOriginalPlanExpressionsExact": {
+    "__original_dictionary__": "Dict(keys=[Constant(value='miniapp_authoring'), Constant(value='miniapp_sdk04'), Constant(value='cross_product'), Constant(value='shared_ingress'), Constant(value='product_and_share')], values=[Tuple(elts=[List(elts=[Constant(value='AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()'), Constant(value='AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()'), Constant(value='AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()'), Constant(value='AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()'), Constant(value='AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()'), Constant(value='AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()'), Constant(value='AI_HLYTests/HanlinOriginalScriptWidgetAPITests'), Constant(value='AI_HLYTests/HanlinNativePresentationTests'), Constant(value='AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests'), Constant(value='AI_HLYTests/HanlinOriginalScriptWidgetControlTests'), Constant(value='AI_HLYTests/HanlinMiniAppStorageCapacityTests'), Constant(value='AI_HLYTests/HanlinOriginalExpoWidgetTests'), Constant(value='AI_HLYUITests/MiniAppAuthoringUITests')], ctx=Load()), Constant(value=27)], ctx=Load()), Tuple(elts=[List(elts=[Constant(value='AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure'), Constant(value='AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer')], ctx=Load()), Constant(value=2)], ctx=Load()), Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinPairedProductUITests')], ctx=Load()), Constant(value=3)], ctx=Load()), Tuple(elts=[List(elts=[Constant(value='AI_HLYTests/ShareInboxHostIntegrationTests'), Constant(value='AI_HLYUITests/HanlinShareInboxUITests')], ctx=Load()), Constant(value=5)], ctx=Load()), Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinPairedProductUITests'), Constant(value='AI_HLYTests/ShareInboxHostIntegrationTests'), Constant(value='AI_HLYUITests/HanlinShareInboxUITests')], ctx=Load()), Constant(value=8)], ctx=Load())])",
+    "miniapp_complete": "Tuple(elts=[BinOp(left=Subscript(value=Subscript(value=Name(id='TEST_PLANS', ctx=Load()), slice=Constant(value='miniapp_authoring'), ctx=Load()), slice=Constant(value=0), ctx=Load()), op=Add(), right=Subscript(value=Subscript(value=Name(id='TEST_PLANS', ctx=Load()), slice=Constant(value='miniapp_sdk04'), ctx=Load()), slice=Constant(value=0), ctx=Load())), Constant(value=29)], ctx=Load())",
+    "miniapp_shortcuts_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult')], ctx=Load()), Constant(value=4)], ctx=Load())",
+    "miniapp_widget_recovery_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers')], ctx=Load()), Constant(value=1)], ctx=Load())",
+    "miniapp_widget_state_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState')], ctx=Load()), Constant(value=1)], ctx=Load())",
+    "miniapp_widget_voiceover_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues')], ctx=Load()), Constant(value=1)], ctx=Load())",
+    "miniapp_widget_families_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation')], ctx=Load()), Constant(value=4)], ctx=Load())",
+    "miniapp_widget_layout_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation')], ctx=Load()), Constant(value=1)], ctx=Load())",
+    "miniapp_shortcut_concurrency_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts')], ctx=Load()), Constant(value=2)], ctx=Load())",
+    "miniapp_system_surfaces_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoPlacedWidgetInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptPlacedWidgetInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoLiveActivityInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptLiveActivityInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoShortcutInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptShortcutInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemShareInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemShareInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemTranslationInvokesAllFiveRuntimes'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemTranslationInvokesAllFiveRuntimes')], ctx=Load()), Constant(value=10)], ctx=Load())",
+    "miniapp_studio_gallery_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns')], ctx=Load()), Constant(value=5)], ctx=Load())",
+    "miniapp_studio_editor_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoCreatesMovesStylesAndReopensSource'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptCreatesMovesStylesAndReopensSource'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioImportsActualFilesSourceAndReopensIndependentEdit'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy')], ctx=Load()), Constant(value=5)], ctx=Load())",
+    "miniapp_shortcut_long_running_os": "Tuple(elts=[List(elts=[Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds'), Constant(value='AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds')], ctx=Load()), Constant(value=4)], ctx=Load())"
+  },
+  "originalMainCommandExpressionsPreserved": 36
+}

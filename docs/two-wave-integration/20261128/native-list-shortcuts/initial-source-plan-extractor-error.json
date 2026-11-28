@@ -1,0 +1,15 @@
+{
+  "ok": false,
+  "interpreter": "python3",
+  "sudo": false,
+  "cwd": null,
+  "cleanup": true,
+  "command": [
+    "python3",
+    "/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_536c4b25c11d42c08788634a7723c8b7/script.py"
+  ],
+  "output": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_536c4b25c11d42c08788634a7723c8b7/script.py\", line 34, in <module>\n    oldPlans,newPlans=plans(before),plans(after)\n                      ^^^^^^^^^^^^^\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_536c4b25c11d42c08788634a7723c8b7/script.py\", line 32, in plans\n    result[ast.literal_eval(t.slice)]=ast.literal_eval(node.value)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ast.py\", line 112, in literal_eval\n    return _convert(node_or_string)\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ast.py\", line 90, in _convert\n    return tuple(map(_convert, node.elts))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ast.py\", line 104, in _convert\n    left = _convert_signed_num(node.left)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ast.py\", line 85, in _convert_signed_num\n    return _convert_num(node)\n           ^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ast.py\", line 76, in _convert_num\n    _raise_malformed_node(node)\n  File \"/usr/lib/python3.12/ast.py\", line 73, in _raise_malformed_node\n    raise ValueError(msg + f': {node!r}')\nValueError: malformed node or string on line 60: <ast.Subscript object at 0xf14ff5ab0b10>",
+  "duration": 0.55,
+  "returncode": 1,
+  "hub_request_id": "hreq_7f5c9700454f4ffa"
+}

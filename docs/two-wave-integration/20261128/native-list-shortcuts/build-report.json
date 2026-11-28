@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "engine": "nativescript",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/mnt/development/projects/worktrees/hanlin-native-list-shortcuts-20261128/Fixtures/ShortcutNativeLists/nativescript",
+  "sdk": {
+    "packageVersions": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24",
+      "typescript": "5.9.3",
+      "vite": "8.0.0",
+      "@hanlin/notification-events": "1.0.0",
+      "@hanlin/system-surfaces": "1.0.0",
+      "@hanlin/host-services": "1.0.0",
+      "@hanlin/window-factory": "1.0.0",
+      "@hanlin/assistant-tools": "1.0.0"
+    },
+    "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+    "compilerVersion": "5.9.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "dependencyDeclarationsChecked": false
+  },
+  "preparedPackagePath": "/mnt/development/projects/worktrees/hanlin-native-list-shortcuts-20261128/Fixtures/ShortcutNativeLists/nativescript/.hanlin-build/a184080e-3887-4463-a6d9-e60c2132c1cc/package",
+  "archivePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/portable-cli-r1/NativeListsNativeScript.hanlinNativeScript"
+}

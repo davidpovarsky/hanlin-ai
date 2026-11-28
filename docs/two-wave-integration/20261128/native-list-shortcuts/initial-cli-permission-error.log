@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/run-portable-cli-r1.py", line 4, in <module>
+    OUT=H/'portable-cli-r1';OUT.mkdir()
+                            ^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1313, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [Errno 13] Permission denied: '/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/portable-cli-r1'

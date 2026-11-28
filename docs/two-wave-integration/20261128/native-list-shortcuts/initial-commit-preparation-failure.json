@@ -1,0 +1,11 @@
+{
+  "command": [
+    "git",
+    "commit",
+    "-m",
+    "test: add native list saved Shortcuts pilot for NativeScript"
+  ],
+  "exit": 128,
+  "reason": "Author identity unknown in the ubuntu invocation; no source commit created. Existing 12 staged source paths remain unchanged; workflow returned to original after its separate exact patch was retained.",
+  "nativeExecuted": false
+}
