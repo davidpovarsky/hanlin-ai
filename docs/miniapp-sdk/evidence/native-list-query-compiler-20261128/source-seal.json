@@ -1,0 +1,12 @@
+{
+  "source": "6bec7f7091c47df1e4fbddf52c43e492de13c19a",
+  "parent": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "tree": "a9af633afe532c58b387aa6c39e5802b66daef25",
+  "file": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "sha256": "503a8d58e2b59fd83a4296954f63222c6668a913c46b8dce2f36a05cbf9556b8",
+  "candidateManifestSHA256": "96cc8d3e52c4b116c33133ebc0ce1967b7e27f54b20cdab674d0a9344b0e816b",
+  "clean": true,
+  "native": "NOT_RUN",
+  "noPortableTests": true,
+  "recordedAt": "2026-11-28T09:49:07.598968+00:00"
+}

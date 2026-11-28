@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "sourceCommit": "6bec7f7091c47df1e4fbddf52c43e492de13c19a",
+  "parent": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidateSHA256": "503a8d58e2b59fd83a4296954f63222c6668a913c46b8dce2f36a05cbf9556b8",
+  "sourcePatchSHA256": "dbb0ca40def52c6354d36e0225ba9dc5c74da5fc90fc5a79101f981390fe0182",
+  "actualNativeFailure": {
+    "runID": 46128058948,
+    "jobID": 140926955985,
+    "source": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+    "MiniAppsPlainBuild": "PASS",
+    "AIHLYBuildForTesting": "FAIL_EXIT65",
+    "UICasesStarted": 0,
+    "UICasesFailed": 0,
+    "UI": "NOT_RUN",
+    "error": "Two attempts to enumerate allElementsBoundByIndex on XCUIElement rather than XCUIElementQuery."
+  },
+  "correction": {
+    "sourcePaths": 1,
+    "expressionChanges": 2,
+    "originalMethodBodies": 42,
+    "allOriginalAssertionTimingLinesUnchanged": true,
+    "allOriginalNativeRequestsSelectorsBudgetsUnchanged": true
+  },
+  "sourceReviewLimitation": "Earlier source-only UI review missed this compile API defect. This correction is source-qualified only; no new native compilation or UI acceptance was executed.",
+  "nativeAfterCorrection": "NOT_RUN",
+  "newPortableTests": 0,
+  "sourceOrEngineOrSDKProductBehaviorChange": false,
+  "sourceQualification": "Actual5fac compiler printed both expressions; both remained at current04. Original tracked upstream patch has no shared UI path. A separately retained compiled UI input hash is absent.",
+  "publicAPI": "XCUIElementQuery.matching(identifier:) returns a query whose allElementsBoundByIndex enumerates the exact original button match, then unchanged visibility and uniqueness assertions apply.",
+  "recordedAt": "2026-11-28T09:51:14.520916+00:00",
+  "independentRootSourceReview": {
+    "path": "independent-root-source-review.json",
+    "sha256": "79905a1e7b5ffd930c682b14787d427282d5aacb2266e5e061796b69b339ff02",
+    "verdict": "SOURCE_APPROVED_NATIVE_COMPILE_PENDING"
+  },
+  "proofPackaging": {
+    "path": "proof-packaging-reconciliation.json",
+    "retainedVerbatimCompilerExcerpt": "actual-compiler-errors.txt.gz",
+    "lossless": true
+  }
+}

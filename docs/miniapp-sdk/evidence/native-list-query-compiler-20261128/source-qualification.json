@@ -1,0 +1,31 @@
+{
+  "source": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "parent": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "file": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "beforeSHA256": "107fd8e6fe3b5568124586e55d9ae0ccaceeab46867f27a327e02a72e38b6e9a",
+  "afterSHA256": "503a8d58e2b59fd83a4296954f63222c6668a913c46b8dce2f36a05cbf9556b8",
+  "patchSHA256": "dbb0ca40def52c6354d36e0225ba9dc5c74da5fc90fc5a79101f981390fe0182",
+  "wholeFileInverse": true,
+  "exactTwoSubstitutions": [
+    {
+      "before": "shortcuts.buttons[kind.title].allElementsBoundByIndex",
+      "after": "shortcuts.buttons.matching(identifier: kind.title).allElementsBoundByIndex"
+    },
+    {
+      "before": "editor.buttons[\"Done\"].allElementsBoundByIndex",
+      "after": "editor.buttons.matching(identifier: \"Done\").allElementsBoundByIndex"
+    }
+  ],
+  "all42OriginalMethodBodiesByteExact": true,
+  "allOriginalAssertionAndTimingLinesByteExact": true,
+  "originalAssertionsAndTimingLineCount": 558,
+  "noPortableTestsOrNativeRun": true,
+  "inputImpact": {
+    "SDK396DirectIntersection": [],
+    "Host99DirectIntersection": [],
+    "productOrRuntimeSourceChanged": false,
+    "affectedCompiledTarget": "AI_HLYUITests",
+    "allOriginalPairedRoutesCompileThisWholeSharedFile": true
+  },
+  "reviewBoundary": "Source-only correction. Actual native compile required on successor; missed compile API defect in earlier source review retained honestly."
+}

@@ -1,0 +1,90 @@
+{
+  "runID": 46128058948,
+  "artifactID": 15258380333,
+  "source": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "artifactDigestFromAuthenticatedAPI": "sha256:a57333c26a8b8e36ca258846a45a810133716c652168e3b8b89ba070495600d9",
+  "wholeArtifactDigestVerified": false,
+  "rangeOnly": true,
+  "members": [
+    {
+      "member": "app-split-evidence/paired-product/ai-build.log",
+      "rawBytes": 6552032,
+      "rawSHA256": "53ccf58e0365ef3195e51de40ff1c6f8f09cbd33969eb986e03a3de32c0acfd0",
+      "crc32": "fdbdb3bb",
+      "crcVerified": true,
+      "compressedSHA256": "85abd53e2b4fb43d3a43fcb2f09f3857ebaae95007262b1969d3b4f1d773cbe4",
+      "retainedPath": "artifact-selected-members/paired-product/ai-build.log.gz",
+      "retainedBytes": 208684,
+      "retainedSHA256": "fdbb8eeccd523ad340d6ec91a79b6204fc245021f8ff2b19e77d15e84f715b5a",
+      "encoding": "lossless gzip of complete CRC-verified original artifact member"
+    },
+    {
+      "member": "app-split-evidence/paired-product/mini-build.log",
+      "rawBytes": 3966952,
+      "rawSHA256": "0b4cf1cdd8023a44b7ae8f486495b48f8d3ed2950a5f1e4064b7be038097aba2",
+      "crc32": "ae7bd524",
+      "crcVerified": true,
+      "compressedSHA256": "ed3f1ec17a4ad7ebe6a2474efb756a00f58aa006043ff691b34a04153417afe9",
+      "retainedPath": "artifact-selected-members/paired-product/mini-build.log.gz",
+      "retainedBytes": 148650,
+      "retainedSHA256": "0bec038d9c8965b0690669349f8b46f4c2030ace4c9787bfe0d2ea858546b21a",
+      "encoding": "lossless gzip of complete CRC-verified original artifact member"
+    },
+    {
+      "member": "app-split-evidence/paired-product/acceptance.json",
+      "rawBytes": 8661,
+      "rawSHA256": "87d8d462d6cb4a8c02525b241460b4e73db26e7ed53fc98e372475969f5cca29",
+      "crc32": "9e0038ec",
+      "crcVerified": true,
+      "compressedSHA256": "aa55fd29c019b32ed2f3f688551f96c690a988726ef21ca8f50d6e3fec1c3130",
+      "retainedPath": "artifact-selected-members/paired-product/acceptance.json",
+      "retainedBytes": 8661,
+      "retainedSHA256": "87d8d462d6cb4a8c02525b241460b4e73db26e7ed53fc98e372475969f5cca29",
+      "encoding": "original unmodified member bytes"
+    },
+    {
+      "member": "app-split-evidence/paired-product/commands.jsonl",
+      "rawBytes": 6145,
+      "rawSHA256": "65860f6fc38f61ce2bf1f96dca2f9dce549442ab4b0d8917c812a15eabe61c63",
+      "crc32": "da974678",
+      "crcVerified": true,
+      "compressedSHA256": "bf9166dc5e647470344792f6d0595fa34b61d6b44a5e5592a398b17284c5cd9b",
+      "retainedPath": "artifact-selected-members/paired-product/commands.jsonl",
+      "retainedBytes": 6145,
+      "retainedSHA256": "65860f6fc38f61ce2bf1f96dca2f9dce549442ab4b0d8917c812a15eabe61c63",
+      "encoding": "original unmodified member bytes"
+    },
+    {
+      "member": "app-split-evidence/prepared-native/upstream-inputs.patch",
+      "rawBytes": 248091,
+      "rawSHA256": "6deb83d10e54540552c500da85b2d937c5dc20c3fe75ca357d5e1a391065f1d3",
+      "crc32": "4c31b247",
+      "crcVerified": true,
+      "compressedSHA256": "085ac41c59dd36258df1b3a4bb03b66ba9471220e85c00169aba1f06e7a00c4b",
+      "retainedPath": "artifact-selected-members/prepared-native/upstream-inputs.patch",
+      "retainedBytes": 248091,
+      "retainedSHA256": "6deb83d10e54540552c500da85b2d937c5dc20c3fe75ca357d5e1a391065f1d3",
+      "encoding": "original unmodified member bytes"
+    }
+  ],
+  "cachedCentralDirectoryEvidence": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-notification-recovery-5facdb20-terminal-r1/range-readback/recovery/app-split-artifact/artifact-eocd-tail.bin",
+      "bytes": 65557,
+      "sha256": "c3d0bdde23341f945a372c1ec5ac5620f51cb32b68c4fcbb5c9aa3c1037e3bb8",
+      "range": [
+        336615770,
+        336681326
+      ]
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-notification-recovery-5facdb20-terminal-r1/range-readback/recovery/app-split-artifact/artifact-central-directory.bin",
+      "bytes": 15746,
+      "sha256": "19603a7e5f133529265d3fd2bdaa5670f7eaa13e7bf808a58a293c2bea1904ed",
+      "range": [
+        336665559,
+        336681304
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "classification": "PROOF_PACKAGING_ONLY",
+  "initialDiffCheckExit": 2,
+  "initialStdoutSHA256": "d61b2411801663915107586e2de5de4e0bccaeece5292219863485f6acde517e",
+  "correction": "Retain original compiler excerpt losslessly compressed so verbatim native whitespace remains unchanged without adding trailing spaces to source-text diff.",
+  "rawCompilerExcerptSHA256": "8dbfe9ca1af491e9a457315c7a33f05c9da80bf74e9bb35d68d10159d4faf87e",
+  "retainedCompilerExcerptSHA256": "7dc60654ec11f5691648389da2f9987682f9eb62c4293c4c74eca8ff4d0f4281",
+  "rawRoundtripVerified": true,
+  "sourceUnchanged": true,
+  "newTestsOrNative": false,
+  "recordedAt": "2026-11-28T09:51:39.679276+00:00"
+}
