@@ -1159,9 +1159,12 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         var seen = Set<String>()
         for index in 0..<12 {
             try require(Date() < end && Date() < deadline, "The bounded actual gallery traversal did not offer this named family.")
-            let rows = springboard.descendants(matching: .any).allElementsBoundByIndex.filter {
-                ($0.elementType == .staticText || $0.elementType == .button || $0.elementType == .pageIndicator)
-                    && $0.exists && $0.isHittable && springboard.frame.contains($0.frame)
+            let rowTypes: [XCUIElement.ElementType] = [.staticText, .button, .pageIndicator]
+            let candidates = rowTypes.flatMap {
+                springboard.descendants(matching: $0).allElementsBoundByIndex
+            }
+            let rows = candidates.filter {
+                $0.exists && $0.isHittable && springboard.frame.contains($0.frame)
             }.map { ["label": $0.label, "value": $0.value as? String ?? "", "frame": widgetStateFrame($0.frame)] as [String: Any] }
             try require(rows.count <= 128 && rows.allSatisfy { ($0["label"] as? String ?? "").count <= 1024 },
                         "The actual gallery page evidence exceeded its finite observation bound.")
