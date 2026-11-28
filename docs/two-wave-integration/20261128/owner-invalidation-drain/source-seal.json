@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-28T04:19:19.095410+00:00",
+  "commit": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+  "parent": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "paths": [
+    "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift"
+  ],
+  "sourceValidationSHA256": "d0388e45b618bce2a30c4b468d1067c0d24e025a489fd8197d64da9f3d44b422",
+  "rootReviewSHA256": "f5114b94c2ca9da1c8ea740d71ddb2cf04bf6b798bb6c5db2a59940fee456397",
+  "nativeTestsRun": 0,
+  "worktreeClean": true
+}

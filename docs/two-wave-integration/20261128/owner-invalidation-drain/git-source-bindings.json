@@ -1,0 +1,83 @@
+{
+  "bindings": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "before": {
+        "commit": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+        "sha256": "fa07c1f4cf515ea717cc174893168685f24ee190d0ef09d41d006b955efbe59a"
+      },
+      "after": {
+        "commit": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+        "sha256": "85bedf129a20d6f911056127a1d2680447be7bc22cc67c7c2c877c0feaf4a882"
+      }
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "before": {
+        "commit": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+        "sha256": "adad494a872a28a53b4143dcc7686fe77d8d23611a691f144b4ebe459ccd1593"
+      },
+      "after": {
+        "commit": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+        "sha256": "f98842ff23b4b2c9f7180cb3b30d21702838deebf549840b822ef508999c81a8"
+      }
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "before": {
+        "commit": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+        "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a"
+      },
+      "after": {
+        "commit": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+        "sha256": "cab45c3fe1e7733cc772e6e08cc0cc3fddef2c8254a0d98e219f392e1f17408f"
+      }
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "before": {
+        "commit": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+        "sha256": "58b60391c81eaefcfacabd5519eaa3ef32cac46d22a239e07b0c81292eaf09e8"
+      },
+      "after": {
+        "commit": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+        "sha256": "45e9de16a08e4eb2c72bcbab12fea95b8166a8404dfae398c8864de25e1511d6"
+      }
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "before": {
+        "commit": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+        "sha256": "bc17417831248d82b532a9c445dc78a263d03ac4dfc839f2737c6b0d8f7abdbb"
+      },
+      "after": {
+        "commit": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+        "sha256": "043ae321551f2a6678ff1b2e83c05595e1c0188ef2b71876de827f0a2686f5e4"
+      }
+    }
+  ],
+  "compressedEvidence": [
+    {
+      "path": "rejected-r1.patch.gz",
+      "decompressedBytes": 29576,
+      "decompressedSHA256": "255ada1dd2c853be31ca534fd248940e597c1f156bb3c0110c97516c3e3ef885"
+    },
+    {
+      "path": "source-r2.patch.gz",
+      "decompressedBytes": 44833,
+      "decompressedSHA256": "d90bdcb50c25b2b3b0d70b2017b3850f7328e714c13b54832bb8d4d70ba286e9"
+    },
+    {
+      "path": "sdk396-and-host99.json.gz",
+      "decompressedBytes": 158013,
+      "decompressedSHA256": "5c4c214efd364840242d7dfb2988a8117817e3fdc188a7ad60cfcd7aa399e514"
+    }
+  ],
+  "reviewedPrivatePacket": {
+    "manifestSHA256": "62c6604f266698830682f4dc63f33cf684e2f98473fd2d16241dc1dd6360716d",
+    "members": 17,
+    "bytes": 917509
+  },
+  "scope": "Numeric snapshot filenames in reviewed-source-validation refer to the complete immutable reviewed packet; exact original/candidate source is also recoverable by the Git commits and paths here.",
+  "nativeStatus": "NOT_RUN"
+}
