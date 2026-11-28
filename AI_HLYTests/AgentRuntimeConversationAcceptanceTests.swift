@@ -45,7 +45,7 @@ final class OriginalConversationRequestFixture {
 }
 
 @MainActor
-private final class OriginalConversationConsentParticipant {
+final class OriginalConversationConsentParticipant {
     private struct ScriptedCall {
         let alias: String
         let arguments: Data

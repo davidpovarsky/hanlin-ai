@@ -239,7 +239,8 @@ struct ProductionProviderConformanceTests {
         modelName: String? = nil,
         profile: ProductionProviderProfile = .openAICompatible,
         ifThink: Bool? = nil,
-        preResponseHook: (@Sendable (Int) async -> Void)? = nil
+        preResponseHook: (@Sendable (Int) async -> Void)? = nil,
+        answerScriptedConsent: Bool = false
     ) async throws -> (result: ConversationResult, manager: APIManager) {
         ProductionConformanceURLProtocol.configure(
             responses: responses,
@@ -284,6 +285,17 @@ struct ProductionProviderConformanceTests {
         let requestGroupID1 = UUID()
         let requestRunID1 = UUID()
         let originalRequest1 = try originalConversation.request(groupID: requestGroupID1, runID: requestRunID1)
+        let consentParticipant: OriginalConversationConsentParticipant?
+        if answerScriptedConsent {
+            let scriptedResponses = try responses.map { data in
+                try #require(String(data: data, encoding: .utf8))
+            }
+            consentParticipant = try OriginalConversationConsentParticipant(
+                owner: manager.agentSessionOwner, originalRequest: originalRequest1, responses: scriptedResponses)
+        } else {
+            consentParticipant = nil
+        }
+        defer { consentParticipant?.finish() }
         let stream = try await manager.sendStreamRequest(
             messages: [RequestMessage(
                 role: "user",
@@ -421,7 +433,8 @@ struct ProductionProviderConformanceTests {
             }
         ]
 
-        let (res, _) = try await runProductionConversation(responses: responses, validators: validators)
+        let (res, _) = try await runProductionConversation(
+            responses: responses, validators: validators, answerScriptedConsent: true)
         #expect(res.answer.contains("42"))
         #expect(res.answer.contains("LOCAL_PYTHON_COMPLETE"))
         #expect(res.diagnostics.status == "completed")
