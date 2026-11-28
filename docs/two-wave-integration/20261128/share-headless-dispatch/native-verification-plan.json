@@ -1,0 +1,23 @@
+{
+  "status": "SOURCE_CANDIDATE_ONLY_NATIVE_NOT_RUN",
+  "primaryOriginalSelector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions()",
+  "selectorSourceSHA256": "50f7cfb15e8c7fde04b26840ca0aa6687c6bc34b53ff6a9565f53718db463519",
+  "originalCaseObligations": [
+    "Existing foreground VM keeps first Share queued at attempt0 until actual dismissal.",
+    "Both original iterations produce actual successful attempt1 receipts and complete original ordered payload.",
+    "Node, TypeScript, local Python, JavaScriptCore and Shell all return exitCode0 without cancellation.",
+    "Same batch replay retains the original receipt; disabled target rejects new ingress."
+  ],
+  "originalCaps": {
+    "terminalWaitSecondsPerIteration": 120,
+    "pollMilliseconds": 25,
+    "initialQueueObservationMilliseconds": 100
+  },
+  "otherExistingSemantics": {
+    "headlessNativeScriptProviderCannotPresentAShareSheet": "Existing source authority remains unchanged; no extra execution claimed.",
+    "HanlinShareInvocationTests": "All three original package test methods/source remain unchanged; no new run or blanket current pass claimed."
+  },
+  "executionOwner": "/root/mac_build_resume via root-integrated source",
+  "newMethods": 0,
+  "testsOrSDKRunByW2": false
+}

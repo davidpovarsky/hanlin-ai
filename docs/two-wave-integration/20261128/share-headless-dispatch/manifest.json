@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "sourceCommit": "f633fcdc6e7de46a3a3d7263ed9a934014f10d77",
+  "proofScope": "SOURCE_AND_REVIEW_ONLY",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2801,
+      "sha256": "8e83cd853418aa509d08a73d2d0557e5eaeb35251ce5a08eaebb3ff2254b1f14"
+    },
+    {
+      "path": "independent-root-source-review.json",
+      "bytes": 1951,
+      "sha256": "8cb62d1ecd6691bdd001fa74d6bb9a0033555872137ce0cb1708bad435530439"
+    },
+    {
+      "path": "input-impact.json",
+      "bytes": 1794,
+      "sha256": "e94f03a9a82ede120594e138d060c1e990c9a92dc5c9082dd7ff62cee55d55a2"
+    },
+    {
+      "path": "native-verification-plan.json",
+      "bytes": 1325,
+      "sha256": "e492876a2fede609d92f65834a6326e19c91d8513e8128ee9c222544ddeb6de0"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 2020,
+      "sha256": "4c68ec7f190cf4e518fccdf29776db5e0fd94dfd0c5826c38b9c1bd996ac250d"
+    },
+    {
+      "path": "retained-failure.json",
+      "bytes": 1039,
+      "sha256": "ff04f1dcb8ca49aa2e43836a6979b8d5c8304069de0a0b6ad3ddd92aab2b17c7"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 1480,
+      "sha256": "06dc7bf133b49af4839eb24cb0aa7590cbc0df1d667d8b91cd0bd7810583a76e"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 375,
+      "sha256": "8640b7fe4986d6acd1fc938cf5d114c72515be47b61d7a929e4831e7d52c3f59"
+    }
+  ],
+  "count": 8,
+  "totalPayloadBytes": 12785
+}

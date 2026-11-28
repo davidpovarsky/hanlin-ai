@@ -1,0 +1,41 @@
+{
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "changedPaths": [
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"
+  ],
+  "production": {
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "originalSHA256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+    "candidateSHA256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950",
+    "originalBytes": 187644,
+    "candidateBytes": 187710
+  },
+  "sourcePatch": {
+    "sha256": "8cdd8654ae2c2727bc46bb108de7bd4ab6dfe5021614bd1a632f4ec974fcc5b7",
+    "bytes": 850
+  },
+  "wholeFileInverse": {
+    "rule": "Remove only the single added Share-source exclusion from the generic foreground-launch condition.",
+    "originalRecoveredExactly": true
+  },
+  "allOriginalAwaitGuardThrowDeferTaskLinesExact": true,
+  "originalTest": {
+    "path": "AI_HLYTests/NativeScriptShareDeliveryTests.swift",
+    "sha256": "50f7cfb15e8c7fde04b26840ca0aa6687c6bc34b53ff6a9565f53718db463519",
+    "bytes": 12246,
+    "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions()",
+    "sourceUnchanged": true,
+    "iterations": 2,
+    "runtimeCallsPerIteration": 5,
+    "terminalWaitSeconds": 120,
+    "pollMilliseconds": 25
+  },
+  "diffCheck": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "testsExecuted": [],
+  "native": "NOT_RUN",
+  "sdkProducer": "NOT_RUN"
+}
