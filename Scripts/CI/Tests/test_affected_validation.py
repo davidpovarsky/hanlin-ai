@@ -17,6 +17,22 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_original_source_amendment_routes_to_the_native_preservation_guard(self) -> None:
+        for path in (
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
+        ):
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "hanlin_organizer_dock_parity_unit_tests": ["directly modified: " + path],
+                })
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertIn("AI_HLYTests/OriginalSourceNonRegressionTests",
+                              plan.step_outputs["simulator_unit_filter"].split(","))
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+
     def test_original_source_fixture_helper_selects_its_existing_consumers(self) -> None:
         path = "AI_HLYTests/OriginalSourceFixtures.swift"
         plan = self.plan_files([path])

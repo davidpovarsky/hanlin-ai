@@ -37,11 +37,12 @@ class OriginalSourceFixtureTests(unittest.TestCase):
         contract = json.loads(data)
         expected = set(contract["files"]) | {
             contract_path,
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
             "docs/hanlin-dock-v33-source-parity/SOURCE_REFERENCE_AND_SHA.md",
             "capability-invariants.json",
             "docs/hanlin-platform/personal-runtime-completion/tool-inventory.json",
         }
-        self.assertEqual(len(expected), 23)
+        self.assertEqual(len(expected), 24)
         self.assertEqual(set(fixtures.input_paths()), expected)
 
     def test_snapshot_copies_current_bytes_and_records_the_exact_inputs(self):
@@ -69,6 +70,8 @@ class OriginalSourceFixtureTests(unittest.TestCase):
         self.assertEqual(row["sha256"], hashlib.sha256(changed).hexdigest())
         contract = "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json"
         self.assertEqual((self.output / contract).read_bytes(), self.source_bytes[contract])
+        amendment = "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json"
+        self.assertEqual((self.output / amendment).read_bytes(), self.source_bytes[amendment])
 
     def test_missing_current_source_cannot_replace_an_existing_valid_snapshot(self):
         fixtures.prepare(self.root, self.output)
@@ -157,7 +160,7 @@ class OriginalSourceFixtureTests(unittest.TestCase):
         declared = phase["outputPaths"]
         self.assertEqual(len(declared), len(set(declared)))
         self.assertEqual(set(declared), actual)
-        self.assertEqual(len([path for path in self.output.rglob("*") if path.is_file()]), 24)
+        self.assertEqual(len([path for path in self.output.rglob("*") if path.is_file()]), 25)
         self.assertIn(output_root + "/AI_HLY", declared)
         self.assertIn(output_root + "/manifest.json", declared)
 

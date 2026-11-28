@@ -1711,6 +1711,67 @@ struct OriginalSourceNonRegressionTests {
         let appDelegations: [String]
     }
 
+    private struct SourcePreservationAmendment: Decodable {
+        struct Transition: Decodable {
+            let path: String
+            let from: SourcePreservationContract.File
+            let to: SourcePreservationContract.File
+        }
+        let schemaVersion: Int
+        let baseContractPath: String
+        let baseContractSHA256: String
+        let acceptedSourceCommit: String
+        let approvedSourcePatchSHA256: String
+        let transitions: [Transition]
+    }
+
+    private enum SourcePreservationAmendmentError: Error, Equatable {
+        case invalidAuthority, invalidTransitionCount, invalidPath
+        case invalidPreimage, invalidApprovedSource, digestMismatch
+    }
+
+    private func applyingApprovedAmendment(
+        _ data: Data, to contract: SourcePreservationContract
+    ) throws -> SourcePreservationContract {
+        let amendment = try JSONDecoder().decode(SourcePreservationAmendment.self, from: data)
+        guard amendment.schemaVersion == 1,
+              amendment.baseContractPath == "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+              amendment.baseContractSHA256 == "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3",
+              amendment.acceptedSourceCommit == "467cfcab9764334a44584f04dd9f0376cab8e6ed",
+              amendment.approvedSourcePatchSHA256 == "6ce4f9667959c86a8f4bcde2d2556aa3e9713163295650feb53e03e41c0d8b68" else {
+            throw SourcePreservationAmendmentError.invalidAuthority
+        }
+        guard amendment.transitions.count == 1, let transition = amendment.transitions.first else {
+            throw SourcePreservationAmendmentError.invalidTransitionCount
+        }
+        guard transition.path == "AI_HLY/Services/ChatServices/APIManager.swift",
+              let original = contract.files[transition.path] else {
+            throw SourcePreservationAmendmentError.invalidPath
+        }
+        guard transition.from.normalizedBytes == original.normalizedBytes,
+              transition.from.normalizedSHA256 == original.normalizedSHA256 else {
+            throw SourcePreservationAmendmentError.invalidPreimage
+        }
+        guard transition.to.normalizedBytes == 226115,
+              transition.to.normalizedSHA256 == "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25" else {
+            throw SourcePreservationAmendmentError.invalidApprovedSource
+        }
+        // Hash the entire amendment as delivered, including its approval metadata.
+        // No source bytes under test can generate or amend an expected value.
+        let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        guard digest == "75c2332849daa13718451e8bdf6695901fe9e0af8176fbb70669d07523da2e8b" else {
+            throw SourcePreservationAmendmentError.digestMismatch
+        }
+        var files = contract.files
+        files[transition.path] = transition.to
+        return SourcePreservationContract(
+            schemaVersion: contract.schemaVersion,
+            files: files,
+            identifierOwners: contract.identifierOwners,
+            appDelegations: contract.appDelegations
+        )
+    }
+
     private func preservationContract(repoRoot: URL) throws -> SourcePreservationContract {
         let raw = try Data(contentsOf: repoRoot.appendingPathComponent(
             "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json"
@@ -1725,7 +1786,10 @@ struct OriginalSourceNonRegressionTests {
         try #require(contract.files.count == 19)
         try #require(contract.identifierOwners.count == 7)
         try #require(contract.appDelegations.count == 3)
-        return contract
+        let amendmentData = try Data(contentsOf: repoRoot.appendingPathComponent(
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json"
+        ))
+        return try applyingApprovedAmendment(amendmentData, to: contract)
     }
 
     @Test("9.1 Original bubble identifiers retain canonical app and shared SDK ownership")
@@ -1789,6 +1853,51 @@ struct OriginalSourceNonRegressionTests {
         #expect(sourceRefText.contains("8611c6f7f537296f6ddc365b349f4bf773c2de70728183a94c75ea5731705723"))
         #expect(sourceRefText.contains("9d9ebe09a5f2ec6c590b7ad52cc15db6c967951acca6be42e9044623c642a716"))
         #expect(sourceRefText.contains("1,810") || sourceRefText.contains("1810"))
+    }
+
+
+    @Test("9.3 Approved source amendment rejects wrong preimages, paths, extra entries and byte changes")
+    func approvedSourceAmendmentRejectsUnreviewedTransitions() throws {
+        let repoRoot = try OriginalSourceFixtures.root()
+        _ = try preservationContract(repoRoot: repoRoot)
+        let originalData = try Data(contentsOf: repoRoot.appendingPathComponent(
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json"
+        ))
+        let original = try JSONDecoder().decode(SourcePreservationContract.self, from: originalData)
+        let data = try Data(contentsOf: repoRoot.appendingPathComponent(
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json"
+        ))
+        let text = String(decoding: data, as: UTF8.self)
+
+        let wrongPreimage = Data(text.replacingOccurrences(
+            of: "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12",
+            with: String(repeating: "0", count: 64)
+        ).utf8)
+        #expect(throws: SourcePreservationAmendmentError.invalidPreimage) {
+            _ = try applyingApprovedAmendment(wrongPreimage, to: original)
+        }
+
+        let wrongPath = Data(text.replacingOccurrences(
+            of: "AI_HLY/Services/ChatServices/APIManager.swift",
+            with: "AI_HLY/Views/Components/ChatandFile.swift"
+        ).utf8)
+        #expect(throws: SourcePreservationAmendmentError.invalidPath) {
+            _ = try applyingApprovedAmendment(wrongPath, to: original)
+        }
+
+        var document = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        let transitions = try #require(document["transitions"] as? [[String: Any]])
+        document["transitions"] = transitions + transitions
+        let extraEntry = try JSONSerialization.data(withJSONObject: document, options: [.sortedKeys])
+        #expect(throws: SourcePreservationAmendmentError.invalidTransitionCount) {
+            _ = try applyingApprovedAmendment(extraEntry, to: original)
+        }
+
+        var mutatedBytes = data
+        mutatedBytes.append(0x0A)
+        #expect(throws: SourcePreservationAmendmentError.digestMismatch) {
+            _ = try applyingApprovedAmendment(mutatedBytes, to: original)
+        }
     }
 }
 
