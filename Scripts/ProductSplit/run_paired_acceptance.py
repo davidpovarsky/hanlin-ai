@@ -187,6 +187,18 @@ TEST_PLANS['miniapp_shortcut_long_running_os'] = ([
 ], 4)
 
 
+ACTIVITY_LIFECYCLE_SCOPES = {
+    "miniapp_liveactivity_lifecycle_expo_os": "expo",
+    "miniapp_liveactivity_lifecycle_nativescript_os": "nativescript",
+}
+TEST_PLANS["miniapp_liveactivity_lifecycle_expo_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent",
+], 1)
+TEST_PLANS["miniapp_liveactivity_lifecycle_nativescript_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent",
+], 1)
+
+
 def select_paired_runtime(runtimes, sdk, requested=None):
     identifier = requested or "com.apple.CoreSimulator.SimRuntime.iOS-" + sdk.replace(".", "-")
     if not identifier.startswith("com.apple.CoreSimulator.SimRuntime.iOS-"):
@@ -1057,6 +1069,77 @@ def finish_system_surface_input_producer(producer, state):
     return report["allSelectedInputsStaged"]
 
 
+def liveactivity_lifecycle_fixture(documents, engine):
+    """One independently selected fixture through the original shipping SDK/strict CLI."""
+    from observe_liveactivity_lifecycle import fixture_contract
+    contract = fixture_contract(engine)
+    FIXTURE, FIXTURE_FILES, ARCHIVE = contract["fixture"], contract["files"], contract["archive"]
+    work = EVIDENCE / "liveactivity-lifecycle-fixture"
+    work.mkdir()
+    extracted = work / "original-shipping-sdk"
+    extracted.mkdir()
+    archive = ROOT / "AI_HLY/RuntimeHostResources.zip"
+    archive_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+    project = ROOT / FIXTURE
+    generated = project / ".hanlin-build"
+    if generated.exists() or generated.is_symlink():
+        raise RuntimeError("The new fixture must have no pre-existing generated output")
+    inputs = {FIXTURE + "/" + name: hashlib.sha256((project / name).read_bytes()).hexdigest()
+              for name in FIXTURE_FILES}
+    try:
+        with zipfile.ZipFile(archive) as packed:
+            members = [name for name in packed.namelist() if name.startswith("MiniAppSDK/")]
+            if not members or any(".." in Path(name).parts or Path(name).is_absolute() for name in members):
+                raise RuntimeError("The actual shipping archive has no valid authoring SDK")
+            packed.extractall(extracted, members=members)
+        sdk = extracted / "MiniAppSDK"
+        validate_report, build_report = work / "validate.json", work / "build.json"
+        prepared = work / ARCHIVE
+        base = ["node", "Scripts/MiniApps/miniapp.mjs", "--sdk", str(sdk), "--project", str(project)]
+        command(base[:2] + ["validate"] + base[2:] + ["--report", str(validate_report)],
+                "liveactivity-lifecycle-validate.log", timeout=300)
+        command(base[:2] + ["build"] + base[2:] + ["--archive", str(prepared), "--report", str(build_report)],
+                "liveactivity-lifecycle-build.log", timeout=600)
+        for report in (validate_report, build_report):
+            if json.loads(report.read_text()).get("succeeded") is not True:
+                raise RuntimeError("The original liveactivity-lifecycle authoring operation did not succeed")
+        if any(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected for name, expected in inputs.items()):
+            raise RuntimeError("Original authoring changed a liveactivity-lifecycle input")
+        if generated.is_symlink() or any(path.is_symlink() for path in generated.rglob("*")):
+            raise RuntimeError("Generated liveactivity-lifecycle output contains a link")
+        inventory = {path.relative_to(generated).as_posix(): {
+            "bytes": path.stat().st_size, "mode": path.stat().st_mode & 0o7777,
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+            for path in sorted(generated.rglob("*")) if path.is_file()}
+        retained = work / "generated-hanlin-build"
+        generated.rename(retained)
+        after = {path.relative_to(retained).as_posix(): {
+            "bytes": path.stat().st_size, "mode": path.stat().st_mode & 0o7777,
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+            for path in sorted(retained.rglob("*")) if path.is_file()}
+        if not inventory or after != inventory:
+            raise RuntimeError("Actual generated output did not retain its exact identity")
+        destination = documents / ARCHIVE
+        if destination.exists() or destination.is_symlink():
+            raise RuntimeError("The owned simulator already has a liveactivity-lifecycle archive")
+        shutil.copy2(prepared, destination)
+        digest = hashlib.sha256(prepared.read_bytes()).hexdigest()
+        if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+            raise RuntimeError("Actual liveactivity-lifecycle archive changed during staging")
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != archive_sha:
+            raise RuntimeError("The actual shipping SDK archive changed during the original lifecycle recipe")
+        value = {"status": "BUILT_AND_STAGED_INPUTS_ONLY", "shippingArchiveSHA256": archive_sha,
+            "sourceFiles": inputs, "generatedFiles": inventory,
+            "archives": [{"engine": engine, "archive": ARCHIVE, "archiveSHA256": digest,
+                          "validateReportSHA256": hashlib.sha256(validate_report.read_bytes()).hexdigest(),
+                          "buildReportSHA256": hashlib.sha256(build_report.read_bytes()).hexdigest()}],
+            "scope": "Original strict authored input only; actual ActivityKit lifecycle and system-view evidence remain required"}
+        (work / "provenance.json").write_text(json.dumps(value, indent=2) + "\n")
+        return value
+    finally:
+        shutil.rmtree(extracted)
+
+
 def start_shortcut_observer(derived, simulator, state):
     candidates = []
     for runner in (derived / "Build/Products/Debug-iphonesimulator").glob("*-Runner.app"):
@@ -1124,6 +1207,11 @@ def start_shortcut_observer(derived, simulator, state):
         from observe_widget_components import create_inputs
         state["widget_components_inputs"] = create_inputs(ROOT, derived, EVIDENCE, runner, test, state, simulator)
         argv += ["--widget-components-inputs", state["widget_components_inputs"]["path"]]
+    if TEST_SCOPE in ACTIVITY_LIFECYCLE_SCOPES:
+        from observe_liveactivity_lifecycle import create_inputs
+        state["liveactivity_lifecycle_inputs"] = create_inputs(
+            ROOT, derived, EVIDENCE, runner, test, state, simulator, ACTIVITY_LIFECYCLE_SCOPES[TEST_SCOPE])
+        argv += ["--liveactivity-lifecycle-inputs", state["liveactivity_lifecycle_inputs"]["path"]]
     output = (EVIDENCE / (observer_name + ".log")).open("w")
     process = subprocess.Popen(argv, cwd=ROOT, stdout=output, stderr=subprocess.STDOUT)
     state["shortcut_observer"] = {"argv": argv, "runnerBundleIdentifier": bundle,
@@ -1224,6 +1312,10 @@ def main():
             state["model_boundary"] = "Separate exact authored fixture, original Widget ZIP/package exports and importer, named physical configuration, actual AX/type/value/frame/PNG and native nonce/revision zero-to-one"
             state["acceptance_boundary"] = "Large portrait component pilot only; no other family, appearance, RTL, VoiceOver, preview, asset image, Link navigation, Live Activity or physical-device claim"
 
+        if TEST_SCOPE in ACTIVITY_LIFECYCLE_SCOPES:
+            state["scope"] = "One fresh iPhone Simulator engine: two real ActivityKit IDs, actual List/update/end isolation and separately observed compact/expanded Island plus banners"
+            state["model_boundary"] = "Separate original authored fixture/SDK/importer; only actual UI controls mutate activities, with private journal/current native ownership and real system AX/PNG"
+            state["acceptance_boundary"] = "No forced minimal presentation, physical lock/APNs, restoration, stale/relevance/deep-link/button, cross-engine or full appearance/accessibility claim"
         if TEST_SCOPE == "miniapp_shortcut_concurrency_os":
             state["scope"] = "Two additional genuine Shortcuts cases: one live NativeScript owner plus three background NS actions, actual handler/lease overlap and separate windows, reverse completion or selected system Stop, followed by the original owner callback"
             state["model_boundary"] = "Original authoring/importer, actual OS URLs/Stop UI, real native commands and per-window journals; no production queue, receipt or state seeding"
@@ -1261,6 +1353,12 @@ def main():
             raise RuntimeError("Acceptance requires the installed stable iOS 27 SDK")
         _, raw = command(["xcrun", "simctl", "list", "runtimes", "-j"], "runtimes.json")
         requested_runtime = os.environ.get("PAIRED_SIM_RUNTIME")
+        if TEST_SCOPE in ACTIVITY_LIFECYCLE_SCOPES:
+            from observe_liveactivity_lifecycle import RUNTIME
+            if requested_runtime not in (None, RUNTIME):
+                raise RuntimeError("The lifecycle pilot requires its exact admitted iOS 27.2 runtime")
+            state["liveactivity_runtime_request"] = {"originalEnvironment": requested_runtime, "requiredRuntime": RUNTIME}
+            requested_runtime = RUNTIME
         runtime = select_paired_runtime(json.loads(raw)["runtimes"], sdk, requested_runtime)
         state["simulator_runtime_selection"] = {
             "build_sdk_version": sdk,
@@ -1273,6 +1371,11 @@ def main():
         device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} or TEST_SCOPE in MIGRATION_SCOPES else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
+        if TEST_SCOPE in ACTIVITY_LIFECYCLE_SCOPES:
+            from observe_liveactivity_lifecycle import admit_device
+            _, actual_xcode = command(["xcodebuild", "-version"], "liveactivity-xcode-version.txt")
+            device, state["liveactivity_device_admission"] = admit_device(
+                sdk, runtime, json.loads(raw)["devicetypes"], actual_xcode)
         _, raw = command(["xcrun", "simctl", "create",
             "HanlinPaired-" + os.environ.get("GITHUB_RUN_ID", "local"),
             device["identifier"], runtime["identifier"]], "created-simulator.txt")
@@ -1422,6 +1525,13 @@ def main():
             documents = Path(raw.strip()) / "Documents"
             documents.mkdir(exist_ok=True)
             state["migration_staged_archive"] = stage_fixture(state["migration_inputs"], documents)
+        if TEST_SCOPE in ACTIVITY_LIFECYCLE_SCOPES:
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.hanlinminiapps", "data"], "liveactivity-lifecycle-mini-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            state["liveactivity_lifecycle_fixture"] = liveactivity_lifecycle_fixture(
+                documents, ACTIVITY_LIFECYCLE_SCOPES[TEST_SCOPE])
         if TEST_SCOPE in {"miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "native-list-mini-data-container.txt")
@@ -1545,7 +1655,7 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
-        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os", "miniapp_liveactivity_lifecycle_expo_os", "miniapp_liveactivity_lifecycle_nativescript_os"}:
             if TEST_SCOPE == "miniapp_system_surfaces_os":
                 adapter_assets = start_native_adapter_assets(
                     state, system_resources, state["system_surface_inputs"]["value"]["transportLog"])
@@ -1607,7 +1717,7 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
-        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os", "miniapp_liveactivity_lifecycle_expo_os", "miniapp_liveactivity_lifecycle_nativescript_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The real system-surface observer did not retain every correlated terminal result")
         if TEST_SCOPE == "miniapp_system_surfaces_os" and not state["system_surface_share_inputs"].get("allSelectedInputsStaged"):
@@ -1673,7 +1783,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_shortcut_migration_nativescript_os", "miniapp_shortcut_migration_expo_os", "miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os", "miniapp_liveactivity_lifecycle_expo_os", "miniapp_liveactivity_lifecycle_nativescript_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")

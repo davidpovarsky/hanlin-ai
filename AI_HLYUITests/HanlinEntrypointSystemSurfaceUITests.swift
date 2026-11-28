@@ -4809,4 +4809,365 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                 "modeElement": migrationElementObservation(try XCTUnwrap(mode)),
                 "inputElement": migrationElementObservation(actualInput.element)]
     }
+    // Separate original ActivityKit lifecycle pilots; the original System10 stays unchanged.
+    func testExpoLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent() throws {
+        try observeLiveActivityLifecycle(.expo,
+            method: "testExpoLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent")
+    }
+
+    func testNativeScriptLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent() throws {
+        try observeLiveActivityLifecycle(.nativescript,
+            method: "testNativeScriptLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent")
+    }
+
+    private func observeLiveActivityLifecycle(_ engine: Engine, method: String) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        let runID = UUID().uuidString.lowercased()
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root; runDirectory = directory
+        let title = "Live Activity Lifecycle " + (engine == .expo ? "Expo" : "NativeScript")
+        record = ["schema": 1, "runID": runID, "engine": engine.rawValue,
+                  "surface": "liveActivityLifecycle", "fixtureAppID": "hanlin.activity.lifecycle." + engine.rawValue,
+                  "fixtureTitle": title, "testMethod": method, "startedAt": widgetStateTimestamp(),
+                  "status": "RUNNING", "phase": "preparing"]
+        try checkpoint("preparing")
+        var originalOrientation: UIDeviceOrientation?
+        var ownedIDs: [String: String] = [:]
+        var endRequested = Set<String>()
+        var restored = false
+        defer {
+            if record["status"] as? String != "EXECUTED_PASS" {
+                var cleanup: [[String: Any]] = []
+                for slot in ["A", "B"] where ownedIDs[slot] != nil && !endRequested.contains(slot) {
+                    guard Date() < deadline else {
+                        cleanup.append(["slot": slot, "status": "NOT_ATTEMPTED_ORIGINAL_CASE_DEADLINE"])
+                        continue
+                    }
+                    do {
+                        mini.activate()
+                        let status = mini.descendants(matching: .any).matching(identifier: "activity-lifecycle-status")
+                        try require(status.count == 1 &&
+                                    (status.element.label == "Run: " + runID || status.element.value as? String == "Run: " + runID),
+                                    "Cleanup must still belong to this exact foreground challenge.")
+                        let button = mini.buttons.matching(identifier: "activity-lifecycle-end-" + slot.lowercased())
+                        try require(button.count == 1, "Cleanup must have one actual own-slot End control.")
+                        try reveal(button.element, in: mini, message: "The actual own-slot cleanup control is not visible.")
+                        endRequested.insert(slot) // Never retry an uncertain actual end.
+                        try tap(button.element, "End only this case's observed actual activity.")
+                        cleanup.append(["slot": slot, "activityID": ownedIDs[slot]!,
+                                        "status": "REAL_END_TAP_ONLY_NO_DISMISSAL_CLAIM",
+                                        "at": widgetStateTimestamp()])
+                    } catch {
+                        cleanup.append(["slot": slot, "status": "FAILED", "error": String(describing: error)])
+                    }
+                }
+                record["failureCleanup"] = cleanup
+            }
+            if !restored, let initial = originalOrientation, Date() < deadline {
+                XCUIDevice.shared.press(.home)
+                XCUIDevice.shared.orientation = initial
+                let observed = wait(12) { XCUIDevice.shared.orientation == initial }
+                record["failureOrientationRestoration"] = ["requestedRaw": initial.rawValue,
+                    "observedRaw": XCUIDevice.shared.orientation.rawValue, "observed": observed]
+            }
+            capture(mini, "activity-lifecycle-final-mini")
+            capture(springboard, "activity-lifecycle-final-system")
+            record["finishedAt"] = widgetStateTimestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            if let prepared = try prepareWidgetFamilyInitialOrientation() {
+                record["initialOrientationPreparation"] = prepared
+            }
+            originalOrientation = XCUIDevice.shared.orientation
+            try require(originalOrientation != .unknown, "The owned iPhone starting orientation must be observed.")
+            XCUIDevice.shared.press(.home)
+            XCUIDevice.shared.orientation = .portrait
+            try require(wait(12) { self.widgetFamilyOrientationName() == "portrait"
+                        && self.widgetFamilyScreenMatches("portrait") },
+                        "The new lifecycle pilot requires actual portrait device and Home geometry.")
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try openLiveActivityLifecycleFixture(engine)
+            record["ownerProcessID"] = try observedConcurrencyPID("activity-lifecycle-own-process")
+            let fields = mini.textFields.matching(identifier: "activity-lifecycle-challenge")
+            try require(fields.count == 1, "The fresh lifecycle UUID needs its one actual native text field.")
+            try reveal(fields.element, in: mini, message: "The fresh lifecycle field is not visible.")
+            try tap(fields.element, "Enter this case's fresh UUID.")
+            fields.element.typeText(runID)
+            let first = try activityLifecycleOperation("prepare", ordinal: 1, phase: "activity-lifecycle-prepared")
+            record["attemptID"] = try string(first, "attemptID")
+            record["sourceSHA"] = try string(first, "sourceSHA")
+            record["installedIdentity"] = first
+            var ordinal = 1
+            var presentations: [[String: Any]] = []
+
+            let startedA = try activityLifecycleOperation("start-a", ordinal: ordinal + 1)
+            ordinal += 1
+            ownedIDs["A"] = try activityLifecycleID(startedA, slot: "A")
+            try activityLifecycleListUntilSettled(ordinal: &ordinal)
+            presentations.append(try activityLifecycleSystemCapture(
+                name: "compact-a", index: 0, context: "compact-home",
+                expected: [("A", "compact-leading", 0), ("A", "compact-trailing", 0)],
+                forbidden: [], ordinal: ordinal))
+            presentations.append(try activityLifecycleSystemCapture(
+                name: "expanded-a", index: 1, context: "expanded-island",
+                expected: [("A", "expanded-leading", 0), ("A", "expanded-trailing", 0),
+                           ("A", "expanded-center", 0), ("A", "expanded-bottom", 0)],
+                forbidden: [], ordinal: ordinal))
+
+            let startedB = try activityLifecycleOperation("start-b", ordinal: ordinal + 1)
+            ordinal += 1
+            ownedIDs["B"] = try activityLifecycleID(startedB, slot: "B")
+            try require(ownedIDs["A"] != ownedIDs["B"], "The two actual starts must return distinct IDs.")
+            try activityLifecycleListUntilSettled(ordinal: &ordinal)
+            presentations.append(try activityLifecycleSystemCapture(
+                name: "banner-both", index: 2, context: "notification-centre-pull-down",
+                expected: [("A", "banner", 0), ("B", "banner", 0)], forbidden: [], ordinal: ordinal))
+
+            let updated = try activityLifecycleOperation("update-a", ordinal: ordinal + 1)
+            ordinal += 1
+            let updatedA = try activityLifecycleID(updated, slot: "A")
+            let unchangedB = try activityLifecycleID(updated, slot: "B")
+            try require(updatedA == ownedIDs["A"] && unchangedB == ownedIDs["B"],
+                        "Update A must preserve both actual activity IDs.")
+            try activityLifecycleListUntilSettled(ordinal: &ordinal)
+            presentations.append(try activityLifecycleSystemCapture(
+                name: "banner-updated-a", index: 3, context: "notification-centre-pull-down",
+                expected: [("A", "banner", 1), ("B", "banner", 0)], forbidden: [], ordinal: ordinal))
+
+            endRequested.insert("A")
+            _ = try activityLifecycleOperation("end-a", ordinal: ordinal + 1)
+            ordinal += 1
+            try activityLifecycleListUntilSettled(ordinal: &ordinal)
+            presentations.append(try activityLifecycleSystemCapture(
+                name: "banner-only-b", index: 4, context: "notification-centre-pull-down",
+                expected: [("B", "banner", 0)], forbidden: ["A"], ordinal: ordinal))
+
+            endRequested.insert("B")
+            _ = try activityLifecycleOperation("end-b", ordinal: ordinal + 1)
+            ordinal += 1
+            try activityLifecycleListUntilSettled(ordinal: &ordinal)
+            presentations.append(try activityLifecycleSystemCapture(
+                name: "home-empty", index: 5, context: "home",
+                expected: [], forbidden: ["A", "B"], ordinal: ordinal))
+            presentations.append(try activityLifecycleSystemCapture(
+                name: "banner-empty", index: 6, context: "notification-centre-pull-down",
+                expected: [], forbidden: ["A", "B"], ordinal: ordinal))
+            record["presentations"] = presentations
+            let initial = try XCTUnwrap(originalOrientation)
+            XCUIDevice.shared.press(.home)
+            XCUIDevice.shared.orientation = initial
+            restored = wait(12) { XCUIDevice.shared.orientation == initial }
+            record["orientationRestoration"] = ["requestedRaw": initial.rawValue,
+                "observedRaw": XCUIDevice.shared.orientation.rawValue, "observed": restored]
+            try require(restored, "The actual initial owned-device orientation must be restored.")
+            try checkpoint("activity-lifecycle-complete")
+            let completion = try response("completion.json", timeout: 20)
+            try require(completion["status"] as? String == "EXECUTED_PASS",
+                        "Actual native ownership, distinct IDs, lifecycle and all system observations must agree.")
+            record["observerCompletion"] = completion
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func openLiveActivityLifecycleFixture(_ engine: Engine) throws {
+        let title = "Live Activity Lifecycle " + (engine == .expo ? "Expo" : "NativeScript")
+        let close = mini.buttons["hanlin-script-app-close"].firstMatch
+        if close.exists && close.isHittable { close.tap() }
+        let manage = mini.buttons["hanlin-apps-add"].firstMatch
+        try require(manage.waitForExistence(timeout: bounded(25)), "The original MiniApps catalog is unavailable.")
+        let card = mini.buttons["hanlin-package-card-" + title].firstMatch
+        try require(!card.exists, "This new lifecycle scope requires a fresh installation, not an existing activity owner.")
+        try tap(manage, "Open the original package importer.")
+        try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Import the actual authored lifecycle package.")
+        let list = mini.collectionViews["hanlin-package-import-list"].firstMatch
+        try require(list.waitForExistence(timeout: bounded(15)), "The original import list is unavailable.")
+        let archiveName = "LiveActivityLifecycle" + (engine == .expo ? "Expo" : "NativeScript")
+        let archive = list.buttons[archiveName].firstMatch
+        try reveal(archive, in: list, message: "The actual original-produced lifecycle archive is absent.")
+        try tap(archive, "Read the exact independent lifecycle archive.")
+        let install = mini.buttons["hanlin-package-install"].firstMatch
+        let failure = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+        let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+        try require(wait(120) { install.exists || failure.exists || diagnostics.exists },
+                    "The original strict importer did not finish.")
+        capture(mini, "activity-lifecycle-import-preview")
+        try require(install.exists && !failure.exists && !diagnostics.exists,
+                    "The original compiler/importer rejected the lifecycle fixture.")
+        try tap(install, "Install using the real production preview.")
+        try require(wait(45) { !install.exists || failure.exists }, "The actual installation did not finish.")
+        try require(!failure.exists, "The original installation failed.")
+        try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Dismiss the original importer.")
+        try tap(mini.buttons["hanlin-apps-add-done"].firstMatch, "Return to the real catalog.")
+        try reveal(card, in: mini, message: "The installed lifecycle package is missing.")
+        try tap(card, "Open this actual installed lifecycle foreground.")
+        let challenge = mini.textFields.matching(identifier: "activity-lifecycle-challenge")
+        try require(wait(30) { challenge.count == 1 }, "The actual independent lifecycle foreground is unavailable.")
+        capture(mini, "activity-lifecycle-installed")
+    }
+
+    private func activityLifecycleOperation(_ operation: String, ordinal: Int,
+        phase: String = "activity-lifecycle-operation") throws -> [String: Any] {
+        mini.activate()
+        let query = mini.buttons.matching(identifier: "activity-lifecycle-" + operation)
+        try require(wait(12) { query.count == 1 }, "The exact original lifecycle control is absent or ambiguous.")
+        try reveal(query.element, in: mini, message: "The actual lifecycle control is not visible.")
+        let began = widgetStateTimestamp()
+        let beganUptime = ProcessInfo.processInfo.systemUptime
+        try tap(query.element, "Invoke only the original authored " + operation + " control.")
+        record["operation"] = ["name": operation, "ordinal": ordinal,
+            "beganAt": began, "returnedAt": widgetStateTimestamp(),
+            "beganUptime": beganUptime, "returnedUptime": ProcessInfo.processInfo.systemUptime]
+        capture(mini, operation == "prepare" ? "activity-lifecycle-prepared" : "activity-lifecycle-operation-" + String(ordinal))
+        try checkpoint(phase)
+        let value = try response(operation == "prepare" ? "identity.json" : "operation-" + String(ordinal) + ".json", timeout: 25)
+        try require(value["status"] as? String == "READY" && value["ordinal"] as? Int == ordinal,
+                    "The observer must admit this exact real tap and returned original native calls.")
+        return value
+    }
+
+    private func activityLifecycleID(_ response: [String: Any], slot: String) throws -> String {
+        let document = try XCTUnwrap(response["journal"] as? [String: Any])
+        let value = try XCTUnwrap(document["value"] as? [String: Any])
+        let slots = try XCTUnwrap(value["slots"] as? [String: Any])
+        let row = try XCTUnwrap(slots[slot] as? [String: Any])
+        let id = try string(row, "activityID")
+        try require(!id.isEmpty && id.utf8.count <= 512, "The original native activity ID must be bounded and nonempty.")
+        return id
+    }
+
+    private func activityLifecycleListUntilSettled(ordinal: inout Int) throws {
+        // Each observation is another real List control tap, never a synthetic API result.
+        for _ in 0..<8 {
+            let result = try activityLifecycleOperation("list", ordinal: ordinal + 1)
+            ordinal += 1
+            let actual = try XCTUnwrap(result["listedIDs"] as? [String])
+            let desired = try XCTUnwrap(result["desiredIDs"] as? [String])
+            if actual.sorted() == desired.sorted() { return }
+        }
+        try require(false, "The actual original owner-filtered List did not reach the required current ID set.")
+    }
+
+    private func activityLifecycleMarker(_ slot: String, _ region: String, _ revision: Int) throws -> String {
+        "LA|" + (try string(record, "runID")) + "|" + slot + "|" + region + "|R" + String(revision)
+    }
+
+    private func activityLifecycleVisible(_ query: XCUIElementQuery) -> [XCUIElement] {
+        query.allElementsBoundByIndex.filter {
+            $0.exists && $0.frame.width > 0 && $0.frame.height > 0 && springboard.frame.contains($0.frame)
+        }
+    }
+
+    private func activityLifecycleRegion(_ marker: String) throws -> XCUIElement {
+        let query = springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label == %@ OR value == %@", marker, marker))
+        let rows = activityLifecycleVisible(query)
+        try require(rows.count == 1, "The real native activity region is absent or ambiguous: " + marker)
+        return try XCTUnwrap(rows.first)
+    }
+
+    private func activityLifecycleSystemCapture(name: String, index: Int, context: String,
+        expected: [(String, String, Int)], forbidden: [String], ordinal: Int) throws -> [String: Any] {
+        let began = widgetStateTimestamp()
+        let beganUptime = ProcessInfo.processInfo.systemUptime
+        var gesture: [String: Any] = [:]
+        if context == "expanded-island" {
+            let compact = try activityLifecycleRegion(activityLifecycleMarker("A", "compact-leading", 0))
+            try require(compact.isHittable, "The actual compact Island marker must receive the real long press.")
+            gesture = ["kind": "actual-compact-marker-long-press", "marker": widgetComponentAttributes(compact),
+                       "durationSeconds": 1]
+            compact.press(forDuration: 1)
+        } else {
+            XCUIDevice.shared.press(.home)
+            try require(wait(12) { self.springboard.state == .runningForeground && self.mini.state != .runningForeground },
+                        "The public Home action must expose the actual system application.")
+            gesture = ["kind": "public-home"]
+            if context == "notification-centre-pull-down" {
+                let start = springboard.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.01))
+                let end = springboard.coordinate(withNormalizedOffset: CGVector(dx: 0.2, dy: 0.80))
+                gesture = ["kind": "public-home-then-pull-down",
+                           "startNormalized": [0.2, 0.01], "endNormalized": [0.2, 0.80]]
+                start.press(forDuration: 0.1, thenDragTo: end)
+            }
+        }
+        gesture["returnedAt"] = widgetStateTimestamp()
+        gesture["returnedUptime"] = ProcessInfo.processInfo.systemUptime
+        let markers = try expected.map { try activityLifecycleMarker($0.0, $0.1, $0.2) }
+        try require(wait(25) {
+            markers.allSatisfy { marker in
+                let query = self.springboard.descendants(matching: .any).matching(
+                    NSPredicate(format: "label == %@ OR value == %@", marker, marker))
+                return self.activityLifecycleVisible(query).count == 1
+            }
+        }, "The requested real ActivityKit regions did not appear.")
+        var elements: [String: Any] = [:]
+        for marker in markers {
+            let element = try activityLifecycleRegion(marker)
+            let windows = springboard.windows.containing(
+                NSPredicate(format: "label == %@ OR value == %@", marker, marker))
+                .allElementsBoundByIndex.filter { $0.exists && $0.frame.contains(element.frame)
+                    && self.springboard.frame.contains($0.frame) }
+            try require(windows.count == 1, "Each activity region must belong to one actual system window.")
+            let window = try XCTUnwrap(windows.first)
+            var attributes = widgetComponentAttributes(element)
+            attributes["matchingCount"] = 1
+            attributes["window"] = ["owner": "com.apple.springboard", "exists": window.exists,
+                "matchingWindowCount": windows.count, "identifier": window.identifier,
+                "frame": widgetStateFrame(window.frame)]
+            elements[marker] = attributes
+        }
+        let prefix = "LA|" + (try string(record, "runID")) + "|"
+        let ownQuery = springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH %@ OR value BEGINSWITH %@", prefix, prefix))
+        let ownRows = activityLifecycleVisible(ownQuery)
+        try require(ownRows.count <= 64, "The exact case-marker query exceeded its finite bound.")
+        let visible = ownRows.flatMap { element -> [String] in
+            [element.label, element.value as? String].compactMap { $0 }.filter { $0.hasPrefix(prefix) }
+        }
+        for slot in forbidden {
+            try require(!visible.contains { $0.hasPrefix(prefix + slot + "|") },
+                        "The ended activity still has a real visible system marker.")
+        }
+        var contextWitnesses: [[String: Any]] = []
+        if context == "notification-centre-pull-down" && markers.isEmpty {
+            let witness = springboard.descendants(matching: .any).matching(
+                NSPredicate(format: "label IN %@", ["Notification Center", "No Older Notifications", "No Notifications"]))
+            let rows = activityLifecycleVisible(witness)
+            try require(!rows.isEmpty && rows.count <= 8,
+                        "The empty pulled-down system surface needs an actual native Notification Center witness.")
+            contextWitnesses = rows.map { widgetComponentAttributes($0) }
+        }
+        try require(springboard.state == .runningForeground && mini.state != .runningForeground
+                    && widgetFamilyOrientationName() == "portrait" && widgetFamilyScreenMatches("portrait"),
+                    "The system capture requires actual foreground ownership and portrait geometry.")
+        let label = "activity-lifecycle-" + name
+        capture(springboard, label)
+        let row: [String: Any] = ["index": index, "name": name, "context": context,
+            "attachmentLabel": label, "systemOwner": "com.apple.springboard",
+            "systemForeground": springboard.state == .runningForeground, "miniAppsForeground": mini.state == .runningForeground,
+            "requestedAt": began, "capturedAt": widgetStateTimestamp(), "requestedUptime": beganUptime,
+            "capturedUptime": ProcessInfo.processInfo.systemUptime, "gesture": gesture,
+            "screenFrame": widgetStateFrame(springboard.frame), "elements": elements,
+            "visibleOwnedMarkers": visible, "forbiddenSlots": forbidden, "operationOrdinal": ordinal,
+            "noVisibleOwnedMarkersAtCapture": visible.isEmpty, "emptyBannerContextWitnesses": contextWitnesses]
+        record["presentation"] = row
+        try checkpoint("activity-lifecycle-system")
+        let acknowledged = try response("presentation-" + String(index) + ".json", timeout: 20)
+        try require(acknowledged["status"] as? String == "READY" && acknowledged["index"] as? Int == index,
+                    "The observer must bind the actual native region, window, timing and AX/PNG bytes.")
+        return row
+    }
+
 }
