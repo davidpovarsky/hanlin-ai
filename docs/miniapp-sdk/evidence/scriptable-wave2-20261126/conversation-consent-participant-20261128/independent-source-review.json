@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "kind": "independent-source-review",
+  "reviewer": "mac_build_resume",
+  "status": "APPROVED_SOURCE_ONLY",
+  "base": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "candidateSHA256": "3de65cab37c1bcc98f2f922e26428b7af393038fdcbbd6e34ef55d18d133950b",
+  "patchSHA256": "5a6f3badd141a1b583b61ff6e03c7301421d39bf9a256ef9cb66df12295b8fce",
+  "checks": [
+    "All three frozen candidate members independently read and SHA256 verified.",
+    "Removing only the new 121-line participant and exact hook/defer recovers the entire original 7648a6ed source byte-for-byte, preserving every original test, assertion, fixture response, schema and argument.",
+    "Uses the actual APIManager owner and existing real consent.answer path; leaves production approval/schema/route/context/deadline/dispatch checks intact.",
+    "Original owner onChange callback is composed for pending and terminal events, restored on exit, and the participant schedules a MainActor response to avoid reentrant answer before deadline-task installation.",
+    "Response parser retains exact UTF-8 function.arguments bytes from the original SSE string, keyed by nonempty unique original call ID and alias; it does not rebuild arguments from a portable projection.",
+    "Pending ID, Host-only approval mode, original bytes, alias, current row, actual conversation/scene/session/canonical binding and namespace scope must all match before an allowed answer.",
+    "Unknown/mismatched requests fail with a recorded issue and an actual denied answer, without granting permission or altering production validation.",
+    "The no-supersession predicate matches the store's actual replacement key and rejects differing existing manifest fingerprints; only newly generated grant IDs with exact answered scope are recorded after the synchronous answer.",
+    "finish disables future scheduled answers, denies only an observed still-pending request, restores the original callback, and revokes only its recorded new IDs. The existing store generates those IDs and exposes no update-in-place API for unrelated scope reuse.",
+    "All current shared-helper call sites were read, including malformed/unclosed-SSE, metadata-only steps and diagnostics cases; no deliberate duplicate scripted call ID in a single current response sequence was found."
+  ],
+  "limits": [
+    "No Swift/native compile, application launch, test, dispatch, consent-state write or runtime permission mutation was performed by this review.",
+    "The actual runtime still must produce the original canonical binding before the asynchronous participant answers. Missing binding intentionally fails closed; this source review does not manufacture or prove that native ordering.",
+    "No claim of repaired original90 success, all six cases passing, or resolution of the separate supersession unresolvedWrite.",
+    "Existing grants may legitimately allow a matching scope before a callback. Such a pass is not credited as a newly answered request, and those pre-existing IDs are not owned or revoked."
+  ],
+  "earlierDesignReviewSHA256": "09185ae8a9244322beb61be299d17f56c4069a791543e3b748312a6dde17fa81",
+  "preparationFailure": "First inverse script completed the exact inverse assertion, then its optional annotation-count regex failed to parse. Corrected read-only extraction retained below; no source change or test execution.",
+  "at": "2026-11-28T03:41:47.219383+00:00"
+}

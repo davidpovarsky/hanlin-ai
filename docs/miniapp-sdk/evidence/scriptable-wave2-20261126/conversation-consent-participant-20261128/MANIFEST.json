@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "4848d1969fa912b12a6dbb8a7b0a6d7172b16bf1",
+  "native": "NOT_RUN",
+  "payloads": [
+    {
+      "path": "README.md",
+      "bytes": 1459,
+      "sha256": "64cbd7b2190a3499d7a213858a1cc6f89cbe3857de79ff8465bfc80248a586f8"
+    },
+    {
+      "path": "candidate-receipt.json",
+      "bytes": 1413,
+      "sha256": "25cd6106dc15bbe68ee6463662318a236882c6d17ec3686890847f87baef67e9"
+    },
+    {
+      "path": "failure-source-review.json",
+      "bytes": 6211,
+      "sha256": "09185ae8a9244322beb61be299d17f56c4069a791543e3b748312a6dde17fa81"
+    },
+    {
+      "path": "independent-source-review.json",
+      "bytes": 3420,
+      "sha256": "113632a7c61576e3952d796a3c14cc5af8390fd09b840d5f8f5930146d1fdcb3"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 1611,
+      "sha256": "88c0a1a56487c7043afe9ef0cd06cae13607050e5f58f653bcff3f148eaf0fe3"
+    },
+    {
+      "path": "source-change.diff.gz",
+      "bytes": 2174,
+      "sha256": "fe1d0246a0290e971047070eee53c2f5f9cbc6af4695fa4e7e2bcfb8e8c77132",
+      "losslessRawSHA256": "5a6f3badd141a1b583b61ff6e03c7301421d39bf9a256ef9cb66df12295b8fce"
+    }
+  ]
+}

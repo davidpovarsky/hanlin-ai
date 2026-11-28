@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-28T03:55:13.283713+00:00",
+  "base": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "sourceCommit": "4848d1969fa912b12a6dbb8a7b0a6d7172b16bf1",
+  "sourcePath": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+  "sourceSHA256": "3de65cab37c1bcc98f2f922e26428b7af393038fdcbbd6e34ef55d18d133950b",
+  "sourceOnlyApprovalSHA256": "113632a7c61576e3952d796a3c14cc5af8390fd09b840d5f8f5930146d1fdcb3",
+  "originalSourceSHA256": "7648a6edb1406258290f98e69f4cf5dabace62c63f049254c6844831567b35ee",
+  "wholeOriginalFileInverse": true,
+  "originalTestsAssertionsSSESchemasAndTimeouts": "UNCHANGED",
+  "newTestMethods": 0,
+  "productionSourceChanges": 0,
+  "newNativeExecution": "NOT_RUN",
+  "pendingAcceptance": "Run the unchanged original conversation/app acceptance after integration, with the existing original selectors and deadlines. Binding timing is intentionally fail-closed and must be established by the real native execution.",
+  "actualFailureEvidence": "Two retained Python provider continuation bodies explicitly report operation not approved/expired and no dispatch. Four other scripted cases have source/timing evidence only. The separate supersession unresolvedWrite is not explained by consent.",
+  "behavior": "Compose the shipping callback and answer only original scripted call bytes and actual owner/session/canonical binding through shipping consent.answer; no production authorization bypass. Reject grant supersession, revoke only newly created grant IDs, restore callbacks on exit.",
+  "sdkInputChange": "None: only the existing app acceptance test source changes."
+}
