@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-28T14:05:48.702723+00:00",
+  "status": "ROOT_SOURCE_REVIEW_PASS_CONTROLS_AND_NATIVE_PENDING",
+  "base": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+  "manifestSHA256": "be67a68cf9a645b4d80818e82516836921227f04cd6edb3ae44fd3be0764dceb",
+  "payloadsVerified": 20,
+  "payloadBytesVerified": 268515,
+  "externalManifestsVerified": {
+    "historicalDiagnosisManifest": {
+      "files": 15,
+      "bytes": 493794
+    },
+    "actualFailureManifest": {
+      "files": 62,
+      "bytes": 7483169
+    }
+  },
+  "externalAuthorityFiles": 6,
+  "producerGitBindingsVerified": 11,
+  "unchangedSharedReadersFromFailure": [
+    "read_document",
+    "snapshot_document",
+    "installed_catalog"
+  ],
+  "beforeAfterFiles": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+      "beforeSHA256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c",
+      "afterSHA256": "97e261005e8f31caa1e555ebcb5235093e872d135f4ce6694d453ee639ee89fe"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_shortcut_native_lists.py",
+      "beforeSHA256": "492b158fd693e06d452b8579a03b96acb9f62f1d351b83696db45a76716e606e",
+      "afterSHA256": "556abb909e7292429eb4b22f5dace4cca264bcdc0f974ae15154d038d51ec940"
+    }
+  ],
+  "wholeOriginalFilesRecovered": true,
+  "originalIdentityGuardASTRecoveredByRemovingOnlySourcePrefixAndFailureDiagnostic": true,
+  "ENGINE_CONTRACTSByteAndASTUnchanged": true,
+  "originalObserverFunctionsUnchanged": 16,
+  "originalTestMethodsUnchanged": 33,
+  "originalTestAndHelperMethodsUnchanged": 37,
+  "newControlMethods": [
+    "test_original_installed_handler_namespace_is_required_for_each_engine",
+    "test_archive_relative_handler_is_rejected_for_each_engine",
+    "test_foreign_or_escaping_installed_handler_is_rejected",
+    "test_identity_shape_generation_and_display_contract_remains_required",
+    "test_current_enabled_catalog_contract_remains_required",
+    "test_committed_snapshot_and_unique_row_remain_required",
+    "test_identity_rejection_diagnostic_is_bounded_and_omits_unrelated_data"
+  ],
+  "privateIndexForwardAndReverseVerified": true,
+  "baseTree": "23ac4daa7d972a58bf7a1cd4b5df636505a60ffa",
+  "candidateTree": "0ee0a39c7a236ad6c4a3754adc2098658ea331b9",
+  "inputPathProofs": {
+    "sdk": {
+      "authoritySHA256": "89e5ca3fd3302ba8322c747cf30467c6a9e87c3d21755483f52bc9872f87430e",
+      "pathRecordsCount": 397,
+      "changedPathIntersection": []
+    },
+    "host": {
+      "authoritySHA256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+      "pathRecordsCount": 99,
+      "changedPathIntersection": []
+    }
+  },
+  "historicalArchiveMembersCRCVerified": 15,
+  "historicalRejectedRow": "NOT_RETAINED",
+  "causalQualification": "Original installer/store/publication code requires canonical source/ handlers. The old comparison rejects those. Source-derived correction; historical rejected row contents were not observed.",
+  "manualReview": {
+    "identity": "Only exact canonical installed source/ handler passes; original schema/generation/display and installed catalog guards unchanged. Archive relative engine values intact.",
+    "diagnostics": "Only existing ObservationError rejection adds bounded six64-codepoint identity fields/types, snapshot SHA and constant expected IDs. Unknown values/display text excluded. Existing error destination retained.",
+    "portableControls": "Seven additive methods use actual committed snapshot hash and installed-catalog readers for two engines and invalid/duplicate/disabled/foreign/path/privacy cases. All original33 tests/37methods byte-exact.",
+    "sourceScope": "Two Python observer/control files only. No Swift/product/workflow/fixture/deadline modification."
+  },
+  "testsRun": 0,
+  "nativeRuns": 0,
+  "newPassClaim": null,
+  "nextGate": "One required original full CI after integration; native Lists/migration retain original admission and scope budgets."
+}

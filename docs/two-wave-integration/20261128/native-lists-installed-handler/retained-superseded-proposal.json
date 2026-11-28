@@ -1,0 +1,32 @@
+{
+  "scope": "Acceptance-reader-only correction; no production/fixture/UI/budget change",
+  "changes": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+      "field": "ENGINE_CONTRACTS.nativescript.handler",
+      "before": "nativescript/app/bundle.mjs",
+      "after": "source/nativescript/app/bundle.mjs"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+      "field": "ENGINE_CONTRACTS.expo.handler",
+      "before": "bundle.js",
+      "after": "source/bundle.js"
+    }
+  ],
+  "preserved": [
+    "exact current_identity shape, nonempty IDs, positive integer generation, unique action row",
+    "exact shared.installed_catalog package/generation/runtime/policy/sourcePath correlation",
+    "actual installed archive and source/product/test/metadata guards",
+    "all eight Lists test cases, original assertions and deadlines",
+    "all six NS and seven Expo authored inputs and original CLI output bytes"
+  ],
+  "requiredControls": [
+    "exercise current_identity itself with a canonical installed NS snapshot and matching original installed_catalog",
+    "same canonical installed Expo identity",
+    "reject archive-relative unprefixed handler in each engine",
+    "retain rejection for wrong-engine/wrong-handler/missing/duplicate/stale-generation records through original catalog checks"
+  ],
+  "nativeRequirement": "After reviewed integration and original CI, the original NS4/Expo4 routes remain necessary. No previous failure is converted to PASS.",
+  "testsOrNativeExecutedByDiagnosis": 0
+}

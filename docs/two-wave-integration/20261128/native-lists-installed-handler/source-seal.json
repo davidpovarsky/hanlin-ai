@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "actualSourceCommit": "e2f8c1e9d0f9d72c9b91e53016d19394e70e60ce",
+  "sourceBase": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+  "twoSourceSHA256": {
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py": "97e261005e8f31caa1e555ebcb5235093e872d135f4ce6694d453ee639ee89fe",
+    "Scripts/CI/Tests/test_shortcut_native_lists.py": "556abb909e7292429eb4b22f5dace4cca264bcdc0f974ae15154d038d51ec940"
+  },
+  "rootSourceApprovalSHA256": "505ff7526fb01dc860073604090ec65abfca5cb418db5d3a834e3e9d41fed8b4",
+  "privateCandidateManifestSHA256": "be67a68cf9a645b4d80818e82516836921227f04cd6edb3ae44fd3be0764dceb",
+  "sourcePatch": {
+    "rawBytes": 15356,
+    "rawSHA256": "89ebb9ef8f5f29c4f84bd3dc5de30bb49a2806daa6c947606783e4505c281977",
+    "gzipSHA256": "50c7e38a75b7b7742c9beddfdcf4140c46cb3335b8786c6630870784633ef336",
+    "losslessReadback": true
+  },
+  "status": "SOURCE_REVIEWED_NOT_EXECUTED",
+  "originalPortableTests": 33,
+  "additivePortableControls": 7,
+  "portableControls": "NOT_RUN",
+  "native": "NOT_RUN",
+  "scope": "Canonical installed source/ expectation and bounded rejection observation only; historical rejected NSLists row not retained.",
+  "authorRecovery": {
+    "priorOwnedSource": "8ff809a7",
+    "identity": [
+      "ChatGPT",
+      "noreply@openai.com",
+      "ChatGPT",
+      "noreply@openai.com"
+    ],
+    "scope": "Per-command Git options only",
+    "priorCommitAttemptExit": 128,
+    "globalOrLocalConfigChanged": false
+  }
+}
