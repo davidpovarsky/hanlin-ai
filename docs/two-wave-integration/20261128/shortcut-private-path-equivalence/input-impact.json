@@ -1,0 +1,27 @@
+{
+  "changedPaths": [
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py"
+  ],
+  "inputMembership": [
+    {
+      "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/current396-live-inputs.json",
+      "sha256": "26596817f3023ea07901862d3782a99e60cbd8b2c1630210915a9103598ab074",
+      "expectedInputCount": 396,
+      "detectedPathCount": 396,
+      "changedIntersections": []
+    },
+    {
+      "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/host99-live-inputs.json",
+      "sha256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+      "expectedInputCount": 99,
+      "detectedPathCount": 99,
+      "changedIntersections": []
+    }
+  ],
+  "currentSharedReaderSHA256": "422c418689c6194268dccb54e8232711da44068925ca0a66fb27f1800610941a",
+  "existingExpoJournalBranchUnchanged": true,
+  "fixturesProductsUIWorkflowsPackagesUnchanged": true,
+  "nativeGate": "The two original three-action NativeScript concurrency cases with original limits, identities and source admission. Previous source363 is2FAIL; no new native result.",
+  "portableGate": "The existing original ProductSplit/Tests module, now19methods. No workflow/discovery change; not a fullCI claim."
+}

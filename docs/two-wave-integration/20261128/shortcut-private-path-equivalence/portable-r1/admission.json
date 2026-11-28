@@ -1,0 +1,71 @@
+{
+  "schema": "hanlin.shortcut-path.focused-portable-admission.v1",
+  "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "sourceFiles": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "preimageSHA256": "794e514726d39b836f65c9c2bce3fea74c17b09076137480b61212a6bb5c3f8a",
+      "candidateSHA256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd"
+    },
+    {
+      "path": "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py",
+      "preimageSHA256": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+      "candidateSHA256": "654730b33fc81195984d35dd3456eb7a8df669a55e91a7714fa5d56bc41bed7e"
+    }
+  ],
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_shortcut_concurrency_observer.py",
+    "-v"
+  ],
+  "expectedMethods": [
+    "test_repeated_separators_preserve_actual_owner_and_headless_paths",
+    "test_path_equivalence_rejects_escapes_and_foreign_owner_or_handler",
+    "test_exact_request_and_unique_actual_system_launch_contract",
+    "test_canonical_input_cannot_be_consistently_coerced_or_omitted",
+    "test_foreign_identity_mode_and_system_delivery_cannot_pass",
+    "test_duplicate_native_delivery_and_handler_journal_are_rejected",
+    "test_windows_paths_nonces_and_headless_presentation_are_independent",
+    "test_two_actual_handler_progress_observations_prove_overlap",
+    "test_queued_leases_missing_handlers_and_serial_execution_are_not_overlap",
+    "test_stale_shared_or_replaced_native_leases_reject_overlap",
+    "test_terminal_success_requires_prior_overlap_and_actual_reverse_order",
+    "test_native_value_private_result_and_five_runtime_outputs_must_match",
+    "test_cancel_requires_actual_stop_selected_token_and_native_cancelled_receipt",
+    "test_cancel_waits_for_stop_and_late_hold_boundary",
+    "test_original_owner_callback_pid_state_window_and_receipts_are_required",
+    "test_terminal_cancellation_cannot_be_overwritten_after_owner_callback",
+    "test_final_native_rows_private_owners_and_callback_chronology_cannot_disappear",
+    "test_root_state_path_cannot_hide_replacement_foreground_window",
+    "test_native_cancel_receipt_cannot_hide_late_successful_handler"
+  ],
+  "scope": "Original focused concurrency observer module:17 unchanged controls plus2 meaningful new controls. Synthetic portable evidence only; not OS acceptance.",
+  "reason": "Four ownership path comparisons are affected; original module checks independent identity/challenge/receipt/window/cancellation guards.",
+  "timeoutSeconds": 60,
+  "host": "Oracle Linux",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "native": "NOT_RUN",
+  "fullCI": "NOT_RUN; root owns original full CI. No workflow or discovery changes.",
+  "inputMembership": [
+    {
+      "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/current396-live-inputs.json",
+      "sha256": "26596817f3023ea07901862d3782a99e60cbd8b2c1630210915a9103598ab074",
+      "expectedInputCount": 396,
+      "detectedPathCount": 396,
+      "changedIntersections": []
+    },
+    {
+      "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/host99-live-inputs.json",
+      "sha256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+      "expectedInputCount": 99,
+      "detectedPathCount": 99,
+      "changedIntersections": []
+    }
+  ]
+}

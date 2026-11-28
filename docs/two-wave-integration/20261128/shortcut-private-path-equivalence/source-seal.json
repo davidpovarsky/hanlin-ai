@@ -1,0 +1,27 @@
+{
+  "schema": "hanlin.shortcut-private-path.source-seal.v1",
+  "at": "2026-11-28T09:19:11.932007+00:00",
+  "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "sourceCommit": "32e08c0a4356f8f5e079ddb4bec33f1d6c9d47db",
+  "sourceTree": "6961e04ea5bba5566a09463d9fd243ec2201bcfe",
+  "sourceFiles": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "sha256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd",
+      "bytes": 38746,
+      "blob": "51673768bab0659b74a8c7b693b3ba1bb81cd6fa"
+    },
+    {
+      "path": "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py",
+      "sha256": "654730b33fc81195984d35dd3456eb7a8df669a55e91a7714fa5d56bc41bed7e",
+      "bytes": 27956,
+      "blob": "3b41ddc590c031d15b63a42f275593cc77f74743"
+    }
+  ],
+  "patchSHA256": "31a1eb8dff8dd16c75c97a77c988bb7ac124b54a9885b067d257d46dfa822ca0",
+  "status": "clean",
+  "diffCheck": "PASS",
+  "portableReruns": 0,
+  "nativeRuns": 0,
+  "sourceOnly": true
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "path": "old-native-tests.log.gz",
+    "source": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w2-layout-concurrency-3634078f-terminal-r1/selected-r1/concurrency/artifact-selected-members/paired-product/paired-tests.log.gz",
+    "sourceRawSHA256": "337bca1cb9841156bbec988b25cd41ff14735e25703b36404cd25ee61e8182e7",
+    "rawBytes": 33861,
+    "retainedSHA256": "88af9fb3b3610fc909d60f8beeaf57656c4edd83b1256548ca53d462175bbfc2",
+    "encoding": "complete original bytes, lossless gzip"
+  },
+  {
+    "path": "old-observer-events.jsonl.gz",
+    "source": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w2-layout-concurrency-3634078f-terminal-r1/selected-r1/concurrency/artifact-selected-members/paired-product/shortcut-concurrency-observer/observations.jsonl",
+    "sourceRawSHA256": "9217c8bd7ec5687c6e5234530c9fa91d58171af2c1c055cd5559bbe77221efbe",
+    "rawBytes": 887,
+    "retainedSHA256": "5f956a815ee987cc3cacd425e656ef788234064dac95db054077590126f26a47",
+    "encoding": "complete original bytes, lossless gzip"
+  },
+  {
+    "path": "FDC3BFD5-4304-495C-8DFC-CBB6C3A331FD-94-101.txt.gz",
+    "source": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w2-layout-concurrency-3634078f-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/FDC3BFD5-4304-495C-8DFC-CBB6C3A331FD.txt",
+    "sourceRawSHA256": "b677ea31cb33d402f1dca42ac00eb741c008b35ddf6bc1d387e2472f880c3ec4",
+    "startLine": 94,
+    "endLine": 101,
+    "rawBytes": 1642,
+    "rawSHA256": "16de1bbedf18c3dbda26b73a8f76ac1fb90562faadd2ca2c884071132a474892",
+    "retainedSHA256": "f5368327b713543e7f69606438a73b1ea0a8030182dc2c809090c7556103bfd1",
+    "encoding": "exact contiguous original bytes, lossless gzip"
+  },
+  {
+    "path": "AA010CDF-CFD6-4A65-ADC7-2FD0643CEAB5-94-101.txt.gz",
+    "source": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w2-layout-concurrency-3634078f-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/AA010CDF-CFD6-4A65-ADC7-2FD0643CEAB5.txt",
+    "sourceRawSHA256": "79dc24498856e342c211bbdcf67ffab7f21244a37930d1eec2fa88babb21753f",
+    "startLine": 94,
+    "endLine": 101,
+    "rawBytes": 1646,
+    "rawSHA256": "a8ca9b60c119e0b2f3c68da7900ba82ef583137671677887faf25121c8967944",
+    "retainedSHA256": "69753eedbac4c8e053b386985747679f4dadfe1214e95fcd0c78f59fb8a6d15c",
+    "encoding": "exact contiguous original bytes, lossless gzip"
+  }
+]
