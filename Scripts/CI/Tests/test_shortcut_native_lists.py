@@ -488,5 +488,178 @@ class NativeListEngineAndStorageTests(unittest.TestCase):
                 reader.result_document({"data": data}, IDENTITY, payload, "nativescript")
 
 
+class NativeListInstalledIdentityTests(unittest.TestCase):
+    @staticmethod
+    def write_snapshot(roots, rows):
+        import hashlib
+        payload = json.dumps({"snapshot": {"intentEntities": rows}}, ensure_ascii=False).encode()
+        digest = hashlib.sha256(payload).hexdigest()
+        revisions = roots["extensions"] / "Revisions"
+        revisions.mkdir(parents=True, exist_ok=True)
+        (revisions / (digest + ".json")).write_bytes(payload)
+        (roots["extensions"] / "commit.json").write_text(json.dumps({"version": 1, "snapshotHash": digest}))
+        return digest
+
+    @staticmethod
+    def write_catalog(roots, catalog):
+        path = roots["data"] / "Library/Application Support/Hanlin/ScriptingPlatform/Installed/registry/catalog.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(catalog))
+
+    def installed_files(self, directory, engine):
+        contract = reader.engine_contract(engine)
+        roots = {"extensions": Path(directory) / "extensions", "data": Path(directory) / "data"}
+        row = {"appID": contract["appID"], "id": reader.ACTION, "displayName": "Native list fixture",
+               "identity": copy.deepcopy(IDENTITY["identity"]),
+               "hostActionHandler": "source/" + contract["handler"]}
+        catalog = {"schemaVersion": 1, "revision": 1, "packages": {
+            "owned-package": {"enabled": True,
+                "record": {"schemaVersion": 1, "installedPackageID": "owned-package",
+                           "packageID": "source-package", "activeGeneration": 1},
+                "entrypoints": [{"id": reader.ENTRYPOINT, "kind": "appIntent",
+                    "compatibility": "partial", "supportedContexts": ["appIntent"],
+                    "runtimeProfile": "hanlin-" + engine, "runtimePolicyID": "prepared-foreground-action-v1",
+                    "exportedSymbol": reader.ACTION, "sourcePath": row["hostActionHandler"]}]}}}
+        self.write_snapshot(roots, [row])
+        self.write_catalog(roots, catalog)
+        return roots, row, catalog
+
+    def test_original_installed_handler_namespace_is_required_for_each_engine(self):
+        from tempfile import TemporaryDirectory
+        for engine in ("nativescript", "expo"):
+            with self.subTest(engine=engine), TemporaryDirectory() as directory:
+                roots, row, catalog = self.installed_files(directory, engine)
+                identity, installed = reader.current_identity(roots, engine)
+                self.assertEqual(identity["hostActionHandler"], "source/" + reader.engine_contract(engine)["handler"])
+                self.assertEqual(identity["identity"], row["identity"])
+                self.assertEqual(installed["value"], catalog)
+
+    def test_archive_relative_handler_is_rejected_for_each_engine(self):
+        from tempfile import TemporaryDirectory
+        for engine in ("nativescript", "expo"):
+            with self.subTest(engine=engine), TemporaryDirectory() as directory:
+                roots, row, catalog = self.installed_files(directory, engine)
+                row["hostActionHandler"] = reader.engine_contract(engine)["handler"]
+                self.write_snapshot(roots, [row])
+                with self.assertRaisesRegex(ValueError, "^Invalid action identity; "):
+                    reader.current_identity(roots, engine)
+
+    def test_foreign_or_escaping_installed_handler_is_rejected(self):
+        from tempfile import TemporaryDirectory
+        for engine in ("nativescript", "expo"):
+            other = "expo" if engine == "nativescript" else "nativescript"
+            handlers = ("source/" + reader.engine_contract(other)["handler"],
+                        "source/source/" + reader.engine_contract(engine)["handler"],
+                        "source/../" + reader.engine_contract(engine)["handler"], "", None)
+            for handler in handlers:
+                with self.subTest(engine=engine, handler=handler), TemporaryDirectory() as directory:
+                    roots, row, catalog = self.installed_files(directory, engine)
+                    row["hostActionHandler"] = handler
+                    self.write_snapshot(roots, [row])
+                    with self.assertRaisesRegex(ValueError, "^Invalid action identity; "):
+                        reader.current_identity(roots, engine)
+
+    def test_identity_shape_generation_and_display_contract_remains_required(self):
+        from tempfile import TemporaryDirectory
+        for damage in ("missing", "extra", "zero", "boolean", "empty-package", "empty-variant", "empty-display", "wrong-display"):
+            with self.subTest(damage=damage), TemporaryDirectory() as directory:
+                roots, row, catalog = self.installed_files(directory, "nativescript")
+                if damage == "missing":
+                    del row["identity"]["packageID"]
+                elif damage == "extra":
+                    row["identity"]["unexpected"] = "extra"
+                elif damage == "zero":
+                    row["identity"]["generation"] = 0
+                elif damage == "boolean":
+                    row["identity"]["generation"] = True
+                elif damage == "empty-package":
+                    row["identity"]["installedPackageID"] = ""
+                elif damage == "empty-variant":
+                    row["identity"]["variantID"] = ""
+                elif damage == "empty-display":
+                    row["displayName"] = ""
+                else:
+                    row["displayName"] = []
+                self.write_snapshot(roots, [row])
+                with self.assertRaisesRegex(ValueError, "^Invalid action identity; "):
+                    reader.current_identity(roots)
+
+    def test_current_enabled_catalog_contract_remains_required(self):
+        from tempfile import TemporaryDirectory
+        for engine in ("nativescript", "expo"):
+            for damage in ("disabled", "generation", "package", "installed-id", "duplicate-entry",
+                           "runtime", "policy", "handler", "compatibility", "context", "symbol"):
+                with self.subTest(engine=engine, damage=damage), TemporaryDirectory() as directory:
+                    roots, row, catalog = self.installed_files(directory, engine)
+                    package = catalog["packages"]["owned-package"]
+                    entry = package["entrypoints"][0]
+                    if damage == "disabled":
+                        package["enabled"] = False
+                    elif damage == "generation":
+                        package["record"]["activeGeneration"] = 2
+                    elif damage == "package":
+                        package["record"]["packageID"] = "another-source-package"
+                    elif damage == "installed-id":
+                        package["record"]["installedPackageID"] = "another-installation"
+                    elif damage == "duplicate-entry":
+                        package["entrypoints"].append(copy.deepcopy(entry))
+                    elif damage == "runtime":
+                        entry["runtimeProfile"] = "hanlin-" + ("expo" if engine == "nativescript" else "nativescript")
+                    elif damage == "policy":
+                        entry["runtimePolicyID"] = "another-policy"
+                    elif damage == "handler":
+                        entry["sourcePath"] = reader.engine_contract(engine)["handler"]
+                    elif damage == "compatibility":
+                        entry["compatibility"] = "unsupported"
+                    elif damage == "context":
+                        entry["supportedContexts"] = ["foreground"]
+                    else:
+                        entry["exportedSymbol"] = "another-action"
+                    self.write_catalog(roots, catalog)
+                    with self.assertRaises(ValueError):
+                        reader.current_identity(roots, engine)
+
+    def test_committed_snapshot_and_unique_row_remain_required(self):
+        from tempfile import TemporaryDirectory
+        for damage in ("missing-row", "duplicate-row", "changed-hash"):
+            with self.subTest(damage=damage), TemporaryDirectory() as directory:
+                roots, row, catalog = self.installed_files(directory, "nativescript")
+                if damage == "changed-hash":
+                    commit = json.loads((roots["extensions"] / "commit.json").read_text())
+                    (roots["extensions"] / "Revisions" / (commit["snapshotHash"] + ".json")).write_text("{}")
+                else:
+                    self.write_snapshot(roots, [] if damage == "missing-row" else [row, copy.deepcopy(row)])
+                with self.assertRaises(ValueError):
+                    reader.current_identity(roots)
+
+    def test_identity_rejection_diagnostic_is_bounded_and_omits_unrelated_data(self):
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as directory:
+            roots, row, catalog = self.installed_files(directory, "nativescript")
+            private = "UNRELATED_PRIVATE_ROW_CONTENT"
+            row["displayName"] = private
+            row[private] = {"private": private * 1000}
+            row["identity"][private] = {"private": private * 1000}
+            for key in ("installedPackageID", "packageID", "variantID"):
+                row["identity"][key] = "\U0001f600" * 1000
+            row["identity"]["generation"] = -(2 ** 256)
+            row["hostActionHandler"] = "\U0001f600" * 1000
+            digest = self.write_snapshot(roots, [row])
+            with self.assertRaisesRegex(ValueError, "^Invalid action identity; ") as caught:
+                reader.current_identity(roots)
+            message = str(caught.exception)
+            self.assertLessEqual(len(message.encode()), 8192)
+            self.assertNotIn(private, message)
+            details = json.loads(message.split("; ", 1)[1])
+            self.assertEqual(details["snapshotSHA256"], digest)
+            self.assertEqual(details["expected"]["hostActionHandler"], "source/nativescript/app/bundle.mjs")
+            self.assertEqual(details["actual"]["hostActionHandler"]["value"], "\U0001f600" * 64)
+            self.assertTrue(details["actual"]["hostActionHandler"]["truncated"])
+            self.assertEqual(details["actual"]["unexpectedIdentityFieldCount"], 1)
+            self.assertFalse(details["actual"]["identity"]["generation"]["isUInt64"])
+            self.assertNotIn("value", details["actual"]["identity"]["generation"])
+            self.assertEqual(details["actual"]["displayName"], {"type": "str", "nonempty": True})
+
+
 if __name__ == "__main__":
     unittest.main()

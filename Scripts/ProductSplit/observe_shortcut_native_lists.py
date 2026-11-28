@@ -252,6 +252,41 @@ def current_inputs(args, evidence, roots, engine="nativescript"):
     return document
 
 
+def _identity_rejection_details(row, snapshot, contract):
+    # Only failed admission reaches this bounded, identity-only observation.
+    # Unknown row values and the user's display text are never serialized.
+    def field(value):
+        result = {"type": type(value).__name__}
+        if type(value) is str:
+            result.update(value=value[:64], characters=len(value), truncated=len(value) > 64)
+        elif type(value) is int:
+            result["isUInt64"] = 0 <= value <= 18446744073709551615
+            if result["isUInt64"]:
+                result["value"] = value
+        elif type(value) is bool:
+            result["value"] = value
+        return result
+
+    keys = ("installedPackageID", "packageID", "generation", "entrypointID", "variantID")
+    identity = row["identity"]
+    details = {
+        "schema": 1, "snapshotSHA256": snapshot["sha256"],
+        "expected": {"appID": contract["appID"], "actionID": ACTION, "entrypointID": ENTRYPOINT,
+                     "hostActionHandler": "source/" + contract["handler"]},
+        "actual": {
+            "identityFieldCount": len(identity),
+            "unexpectedIdentityFieldCount": sum(key not in keys for key in identity),
+            "identity": {key: {"present": key in identity, **field(identity.get(key))} for key in keys},
+            "hostActionHandler": field(row.get("hostActionHandler")),
+            "displayName": {"type": type(row.get("displayName")).__name__,
+                            "nonempty": type(row.get("displayName")) is str and bool(row["displayName"])},
+        },
+    }
+    # Six actual string values, each at most 64 Unicode characters, keep this
+    # complete ASCII JSON below 8 KiB even for escaped non-BMP code points.
+    return json.dumps(details, ensure_ascii=True, separators=(",", ":"), sort_keys=True)
+
+
 def current_identity(roots, engine="nativescript"):
     contract = engine_contract(engine)
     snapshot = shared.snapshot_document(roots["extensions"])
@@ -261,11 +296,14 @@ def current_identity(roots, engine="nativescript"):
     require(len(rows) == 1, "The actual installed native-list action is missing or ambiguous")
     row = rows[0]
     identity = row["identity"]
-    require(set(identity) == {"installedPackageID", "packageID", "generation", "entrypointID", "variantID"}
-            and all(type(identity[k]) is str and identity[k] for k in identity if k != "generation")
-            and type(identity["generation"]) is int and identity["generation"] > 0
-            and type(row.get("displayName")) is str and row["displayName"]
-            and row.get("hostActionHandler") == contract["handler"], "Invalid action identity")
+    try:
+        require(set(identity) == {"installedPackageID", "packageID", "generation", "entrypointID", "variantID"}
+                and all(type(identity[k]) is str and identity[k] for k in identity if k != "generation")
+                and type(identity["generation"]) is int and identity["generation"] > 0
+                and type(row.get("displayName")) is str and row["displayName"]
+                and row.get("hostActionHandler") == "source/" + contract["handler"], "Invalid action identity")
+    except shared.ObservationError as error:
+        raise shared.ObservationError(str(error) + "; " + _identity_rejection_details(row, snapshot, contract)) from error
     result = {"identity": identity, "appID": contract["appID"], "actionID": ACTION,
               "actionDisplayName": row["displayName"], "hostActionHandler": row["hostActionHandler"]}
     catalog = shared.installed_catalog(roots["data"], result)
